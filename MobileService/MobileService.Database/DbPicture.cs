@@ -97,5 +97,27 @@ namespace MobileService.Database
             }
             return pictures;
         }
+
+        public void Delete(int pictureId)
+        {
+            int changes;
+            using (SqlConnection connection = new SqlConnection(_connectionString))
+            {
+                connection.Open();
+                using (SqlCommand cmd = connection.CreateCommand())
+                {
+                    cmd.CommandText = "DELETE FROM Picture where PictureId = @PictureId";
+                    cmd.Parameters.AddWithValue("PictureId", pictureId);
+                    changes = cmd.ExecuteNonQuery();
+                }
+            }
+
+            bool status = changes > 0;
+            if (status == false)
+            {
+                throw new Exception();
+                //throw new FaultException<CustomerNotDeletedException>(new CustomerNotDeletedException(customer._phone));
+            }
+        }
     }
 }

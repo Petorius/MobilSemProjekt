@@ -121,5 +121,26 @@ namespace MobileService.Database
             return location;
         }
 
+        public void Delete(int locationId)
+        {
+            int changes;
+            using (SqlConnection connection = new SqlConnection(_connectionString))
+            {
+                connection.Open();
+                using (SqlCommand cmd = connection.CreateCommand())
+                {
+                    cmd.CommandText = "DELETE FROM Location where LocationId = @LocationId";
+                    cmd.Parameters.AddWithValue("LocationId", locationId);
+                    changes = cmd.ExecuteNonQuery();
+                }
+            }
+
+            bool status = changes > 0;
+            if (status == false)
+            {
+                throw new Exception();
+                //throw new FaultException<CustomerNotDeletedException>(new CustomerNotDeletedException(customer._phone));
+            }
+        }
     }
 }

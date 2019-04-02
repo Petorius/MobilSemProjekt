@@ -63,5 +63,27 @@ namespace MobileService.Database
             }
             return tag;
         }
+
+        public void Delete(int tagId)
+        {
+            int changes;
+            using (SqlConnection connection = new SqlConnection(_connectionString))
+            {
+                connection.Open();
+                using (SqlCommand cmd = connection.CreateCommand())
+                {
+                    cmd.CommandText = "DELETE FROM Tag where TagId = @TagId";
+                    cmd.Parameters.AddWithValue("TagId", tagId);
+                    changes = cmd.ExecuteNonQuery();
+                }
+            }
+
+            bool status = changes > 0;
+            if (status == false)
+            {
+                throw new Exception();
+                //throw new FaultException<CustomerNotDeletedException>(new CustomerNotDeletedException(customer._phone));
+            }
+        }
     }
 }

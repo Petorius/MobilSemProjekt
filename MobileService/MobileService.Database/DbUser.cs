@@ -87,5 +87,27 @@ namespace MobileService.Database
             }
             return user;
         }
+
+        public void Delete(int userId)
+        {
+            int changes;
+            using (SqlConnection connection = new SqlConnection(_connectionString))
+            {
+                connection.Open();
+                using (SqlCommand cmd = connection.CreateCommand())
+                {
+                    cmd.CommandText = "DELETE FROM User where UserId = @UserId";
+                    cmd.Parameters.AddWithValue("UserId", userId);
+                    changes = cmd.ExecuteNonQuery();
+                }
+            }
+
+            bool status = changes > 0;
+            if (status == false)
+            {
+                throw new Exception();
+                //throw new FaultException<CustomerNotDeletedException>(new CustomerNotDeletedException(customer._phone));
+            }
+        }
     }
 }

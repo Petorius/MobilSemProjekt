@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Configuration;
 using System.Data.SqlClient;
 using System.Linq;
+using System.ServiceModel;
 using System.Text;
 using System.Threading.Tasks;
 using MobileService.Model;
@@ -163,6 +164,27 @@ namespace MobileService.Database
             }
             return ratings;
         }
-        
+
+        public void Delete(int ratingId)
+        {
+            int changes;
+            using (SqlConnection connection = new SqlConnection(_connectionString))
+            {
+                connection.Open();
+                using (SqlCommand cmd = connection.CreateCommand())
+                {
+                    cmd.CommandText = "DELETE FROM Rating where RatingId = @RatingId";
+                    cmd.Parameters.AddWithValue("RatingId", ratingId);
+                    changes = cmd.ExecuteNonQuery();
+                }
+            }
+
+            bool status = changes > 0;
+            if (status == false)
+            {
+                throw new Exception();
+                //throw new FaultException<CustomerNotDeletedException>(new CustomerNotDeletedException(customer._phone));
+            }
+        }
     }
 }
