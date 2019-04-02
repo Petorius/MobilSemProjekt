@@ -18,9 +18,12 @@ namespace MobileService.Controller
 
         public Location GetLocationById(int locationId)
         {
-            return _dbLocation.GetLocationById(locationId);
+            return _dbLocation.FindById(locationId);
         }
 
-
+        public List<Location> GetLocationByTag(Tag tag)
+        {
+            return _dbLocation.FindByTagId(tag.TagId);
+        }
     }
 }
