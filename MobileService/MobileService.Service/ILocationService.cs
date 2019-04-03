@@ -12,7 +12,12 @@ namespace MobileService.Service
         Location GetLocationById(int locationId);
 
         [OperationContract]
-        List<Location> GetLocationsByTag(Tag tag);
+        List<Location> GetLocationsByTagName(string tagName);
 
+        [OperationContract]
+        Location GetLocationByLocationName(string locationName);
+
+        [OperationContract]
+        List<Location> GetAllLocations();
     }
 }

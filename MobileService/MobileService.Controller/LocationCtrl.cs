@@ -27,7 +27,7 @@ namespace MobileService.Controller
             return _dbLocation.FindAll();
         }
 
-        public List<Location> GetTagByTagName(string tagName)
+        public List<Location> GetLocationsByTagName(string tagName)
         {
             Tag tag = _dbTag.FindByName(tagName);
             return tag.Locations;
