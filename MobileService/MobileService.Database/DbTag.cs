@@ -12,7 +12,7 @@ namespace MobileService.Database
     public class DbTag
     {
         private readonly string _connectionString = ConfigurationManager.ConnectionStrings["DBString"].ConnectionString;
-        private DbLocation _dbLocation;
+        private readonly DbLocation _dbLocation;
 
         public DbTag()
         {
@@ -55,13 +55,65 @@ namespace MobileService.Database
                         tag = new Tag
                         {
                             TagId = tagId,
-                            Locations = _dbLocation.FindByTagId(tagId),
+                            Locations = GetLocationsByTagId(tagId),
                             TagName = reader.GetString(reader.GetOrdinal("TagName"))
                         };
                     }
                 }
             }
             return tag;
+        }
+
+        public Tag FindByName(string tagName)
+        {
+            Tag tag = null;
+            using (SqlConnection connection = new SqlConnection(_connectionString))
+            {
+                connection.Open();
+                using (SqlCommand cmd = connection.CreateCommand())
+                {
+                    cmd.CommandText = "SELECT * FROM Tag WHERE TagName = @TagName";
+                    cmd.Parameters.AddWithValue("TagName", tagName);
+                    SqlDataReader reader = cmd.ExecuteReader();
+
+                    while (reader.Read())
+                    {
+                        int tagId = reader.GetInt32(reader.GetOrdinal("TagId"));
+                        
+                        tag = new Tag
+                        {
+                            TagId = tagId,
+                            Locations = GetLocationsByTagId(tagId),
+                            TagName = tagName
+                        };
+                    }
+                }
+            }
+            return tag;
+        }
+
+
+        public List<Location> GetLocationsByTagId(int tagId)
+        {
+            List<Location> locations = new List<Location>();
+            using (SqlConnection connection = new SqlConnection(_connectionString))
+            {
+                connection.Open();
+                using (SqlCommand cmd = connection.CreateCommand())
+                {
+                    cmd.CommandText = "SELECT locationId FROM LocationTag WHERE TagId = @TagId";
+                    cmd.Parameters.AddWithValue("TagId", tagId);
+                    SqlDataReader reader = cmd.ExecuteReader();
+
+                    while (reader.Read())
+                    {
+                        int locationId = reader.GetInt32(reader.GetOrdinal("locationId"));
+                        Location location = _dbLocation.FindById(locationId);
+                        locations.Add(location);
+                    }
+                }
+            }
+            return locations;
         }
 
         public void Delete(int tagId)

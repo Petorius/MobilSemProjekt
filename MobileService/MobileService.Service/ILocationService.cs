@@ -1,10 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Runtime.Serialization;
+﻿using System.Collections.Generic;
 using System.ServiceModel;
-using System.ServiceModel.Web;
-using System.Text;
 using MobileService.Model;
 
 namespace MobileService.Service
@@ -17,7 +12,12 @@ namespace MobileService.Service
         Location GetLocationById(int locationId);
 
         [OperationContract]
-        List<Location> GetLocationsByTag(Tag tag);
+        List<Location> GetLocationsByTagName(string tagName);
 
+        [OperationContract]
+        Location GetLocationByLocationName(string locationName);
+
+        [OperationContract]
+        List<Location> GetAllLocations();
     }
 }
