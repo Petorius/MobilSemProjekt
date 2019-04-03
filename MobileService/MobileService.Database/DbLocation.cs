@@ -153,6 +153,41 @@ namespace MobileService.Database
             }
             return location;
         }
+        public List<Location> FindAll()
+        {
+            List<Location> locations = new List<Location>();
+            using (SqlConnection connection = new SqlConnection(_connectionString))
+            {
+                connection.Open();
+                using (SqlCommand cmd = connection.CreateCommand())
+                {
+                    cmd.CommandText = "SELECT * FROM Location";
+                    SqlDataReader reader = cmd.ExecuteReader();
+
+                    while (reader.Read())
+                    {
+                        int locationId = reader.GetInt32(reader.GetOrdinal("LocationId"));
+                        int userId = reader.GetInt32(reader.GetOrdinal("LocationId"));
+
+                        Location location = new Location
+                        {
+                            LocationId = locationId,
+                            LocationName = reader.GetString(reader.GetOrdinal("LocationName")),
+                            LocationDescription = reader.GetString(reader.GetOrdinal("LocationDescription")),
+                            Latitude = reader.GetDouble(reader.GetOrdinal("Latitude")),
+                            Longitude = reader.GetDouble(reader.GetOrdinal("Longitude")),
+                            Pictures = _dbPicture.FindByLocationId(locationId),
+                            Ratings = _dbRating.FindByLocationId(locationId),
+                            User = _dbUser.FindById(userId)
+                        };
+
+                        locations.Add(location);
+                    }
+                }
+            }
+
+            return locations;
+        }
 
         public void Update(Location location, int locationId)
         {
