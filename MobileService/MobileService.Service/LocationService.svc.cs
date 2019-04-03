@@ -1,11 +1,10 @@
-﻿using MobileService.Controller;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Runtime.Serialization;
 using System.ServiceModel;
-using System.ServiceModel.Web;
 using System.Text;
+using MobileService.Controller;
 using MobileService.Model;
 
 namespace MobileService.Service
@@ -15,7 +14,7 @@ namespace MobileService.Service
     public class LocationService : ILocationService
     {
         private LocationCtrl _locationCtrl;
-
+        
         public List<Location> GetAllLocations()
         {
             _locationCtrl = new LocationCtrl();

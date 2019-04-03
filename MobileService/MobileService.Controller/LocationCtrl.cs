@@ -6,8 +6,8 @@ namespace MobileService.Controller
 {
     public class LocationCtrl
     {
-        private DbLocation _dbLocation;
-        private DbTag _dbTag;
+        private readonly DbLocation _dbLocation;
+        private readonly DbTag _dbTag;
         public LocationCtrl()
         {
             _dbLocation = new DbLocation();
