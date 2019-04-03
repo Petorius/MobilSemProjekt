@@ -2,13 +2,15 @@
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:local="clr-namespace:MobilSemProjekt"
-             x:Class="MobilSemProjekt.MainPage">
+             x:Class="MobilSemProjekt.MainPage"
+             xmlns:maps="clr-namespace:Xamarin.Forms.GoogleMaps;assembly=Xamarin.Forms.GoogleMaps">
 
     <StackLayout>
-        <!-- Place new controls here -->
-        <Label Text="Mojn verden!" 
-           HorizontalOptions="Center"
-           VerticalOptions="CenterAndExpand" />
+        <maps:Map 
+                  x:Name="GGMAP"
+                  MyLocationEnabled="True"
+            Margin="0,0,0,0"/>
+        <Entry x:Name="OurEntry" Placeholder="Søg..." PlaceholderColor="LightSlateGray"/>
     </StackLayout>
 
 </ContentPage>
