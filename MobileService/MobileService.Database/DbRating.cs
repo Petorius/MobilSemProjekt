@@ -13,8 +13,8 @@ namespace MobileService.Database
     public class DbRating
     {
         private readonly string _connectionString = ConfigurationManager.ConnectionStrings["DBString"].ConnectionString;
-        private DbLocation _dbLocation;
-        private DbUser _dbUser;
+        private readonly DbLocation _dbLocation;
+        private readonly DbUser _dbUser;
 
         public DbRating()
         {

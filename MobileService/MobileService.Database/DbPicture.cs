@@ -98,6 +98,29 @@ namespace MobileService.Database
             return pictures;
         }
 
+        /*
+         * TOBE Updated
+         */
+        public void Update(Picture picture, int locationId, int pictureId)
+        {
+            using (SqlConnection connection = new SqlConnection(_connectionString))
+            {
+                connection.Open();
+                using (SqlCommand cmd = connection.CreateCommand())
+                {
+                    cmd.CommandText = "UPDATE Picture set URL = @URL, " +
+                                      "PictureName = @PictureName, Description = @Description, LocationId = @LocationId " +
+                                      "where PictureId = @PictureId";
+                    cmd.Parameters.AddWithValue("PictureId", pictureId);
+                    cmd.Parameters.AddWithValue("URL", picture.Url);
+                    cmd.Parameters.AddWithValue("PictureName", picture.PictureName);
+                    cmd.Parameters.AddWithValue("Description", picture.Description);
+                    cmd.Parameters.AddWithValue("LocationId", locationId);
+                    cmd.ExecuteNonQuery();
+                }
+            }
+        }
+
         public void Delete(int pictureId)
         {
             int changes;
