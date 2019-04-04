@@ -1,4 +1,4 @@
-﻿namespace MobilSemProjekt.Model
+﻿namespace MobilSemProjekt.MVVM.Model
 {
     public class User
     {

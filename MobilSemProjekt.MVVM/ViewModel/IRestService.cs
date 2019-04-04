@@ -1,8 +1,8 @@
 ﻿using System.Collections.Generic;
 using System.Threading.Tasks;
-using MobilSemProjekt.Model;
+using MobilSemProjekt.MVVM.Model;
 
-namespace MobilSemProjekt.ViewModel
+namespace MobilSemProjekt.MVVM.ViewModel
 {
     public interface IRestService
     {

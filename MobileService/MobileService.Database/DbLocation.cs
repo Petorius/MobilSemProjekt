@@ -11,7 +11,9 @@ namespace MobileService.Database
 {
     public class DbLocation
     {
-        private readonly string _connectionString = ConfigurationManager.ConnectionStrings["DBString"].ConnectionString;
+        private readonly string _connectionString = "Server=kraka.ucn.dk;Database=dmaa0917_1067347;User ID=dmaa0917_1067347;Password=Password1!;";
+        //ConfigurationManager.ConnectionStrings["DBString"].ConnectionString;
+
         private readonly DbPicture _dbPicture;
         private readonly DbRating _dbRating;
         private readonly DbUser _dbUser;

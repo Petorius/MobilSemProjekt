@@ -8,6 +8,7 @@ using Xamarin.Forms.Internals;
 using SQLite;
 using Xamarin.Essentials;
 using System.Linq;
+using MobilSemProjekt.ViewModel;
 
 
 namespace MobilSemProjekt {
@@ -26,6 +27,9 @@ namespace MobilSemProjekt {
                 }
 
             };
+
+            IRestService restService = new RestService();
+            restService.GetAllDataAsync();
         }
     }
 }

@@ -8,7 +8,9 @@ namespace MobileService.Database
 {
     public class DbRating
     {
-        private readonly string _connectionString = ConfigurationManager.ConnectionStrings["DBString"].ConnectionString;
+        private readonly string _connectionString = "Server=kraka.ucn.dk;Database=dmaa0917_1067347;User ID=dmaa0917_1067347;Password=Password1!;";
+        //ConfigurationManager.ConnectionStrings["DBString"].ConnectionString;
+
         private readonly DbLocation _dbLocation;
         private readonly DbUser _dbUser;
 
@@ -27,19 +29,11 @@ namespace MobileService.Database
 
                 using (SqlCommand cmd = connection.CreateCommand())
                 {
-                    cmd.CommandText = "INSERT INTO Rating(rate, comment) VALUES " +
-                                      "(@rate, @comment); ";
+                    cmd.CommandText = "INSERT INTO Rating(rate, comment, locationId, userId) VALUES " +
+                                      "(@rate, @comment, @locationId, @userId); ";
                     cmd.Parameters.AddWithValue("rate", rating.Rate);
                     cmd.Parameters.AddWithValue("comment", rating.Comment);
-                    if (rating.Location != null)
-                    {
-                        cmd.Parameters.AddWithValue("location", rating.Location.LocationId);
-                    }
-                    else
-                    {
-                        cmd.Parameters.AddWithValue("locationId", DBNull.Value);
-                    }
-
+                    
                     if (rating.User != null)
                     {
                         cmd.Parameters.AddWithValue("userId", rating.User.UserId);
@@ -69,12 +63,10 @@ namespace MobileService.Database
                     while (reader.Read())
                     {
                         int userId = reader.GetInt32(reader.GetOrdinal("UserId"));
-                        int locationId = reader.GetInt32(reader.GetOrdinal("LocationId"));
 
                         rating = new Rating
                         {
                             RatingId = ratingId,
-                            Location = _dbLocation.FindById(locationId),
                             User = _dbUser.FindById(userId),
                             Rate = reader.GetDouble(reader.GetOrdinal("Rate")),
                             Comment = reader.GetString(reader.GetOrdinal("Comment"))
@@ -99,7 +91,6 @@ namespace MobileService.Database
 
                     while (reader.Read())
                     {
-                        Location location = _dbLocation.FindById(locationId);
                         User user = null;
                         
                         if (!reader.IsDBNull(reader.GetOrdinal("userId")))
@@ -111,7 +102,6 @@ namespace MobileService.Database
                         Rating rating = new Rating
                         {
                             RatingId = reader.GetInt32(reader.GetOrdinal("id")),
-                            Location = location,
                             User = user,
                             Rate = reader.GetDouble(reader.GetOrdinal("rate")),
                             Comment = reader.GetString(reader.GetOrdinal("comment"))
@@ -137,19 +127,11 @@ namespace MobileService.Database
 
                     while (reader.Read())
                     {
-                        Location location = null;
                         User user = _dbUser.FindById(userId);
-
-                        if (!reader.IsDBNull(reader.GetOrdinal("locationId")))
-                        {
-                            int locationId = reader.GetInt32(reader.GetOrdinal("locationId"));
-                            location = _dbLocation.FindById(locationId);
-                        }
-
+                        
                         Rating rating = new Rating
                         {
                             RatingId = reader.GetInt32(reader.GetOrdinal("id")),
-                            Location = location,
                             User = user,
                             Rate = reader.GetDouble(reader.GetOrdinal("rate")),
                             Comment = reader.GetString(reader.GetOrdinal("comment"))

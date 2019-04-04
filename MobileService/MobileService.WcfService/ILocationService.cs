@@ -1,6 +1,5 @@
 ﻿using System.Collections.Generic;
 using System.ServiceModel;
-using System.Threading.Tasks;
 using MobileService.Model;
 
 namespace MobileService.Service
@@ -20,8 +19,5 @@ namespace MobileService.Service
 
         [OperationContract]
         List<Location> GetAllLocations();
-        
-        [OperationContract]
-        string TestMethod();
     }
 }

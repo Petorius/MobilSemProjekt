@@ -1,5 +1,4 @@
 ﻿using System.Collections.Generic;
-using System.Threading.Tasks;
 using MobileService.Controller;
 using MobileService.Model;
 
@@ -13,15 +12,11 @@ namespace MobileService.Service
         
         public List<Location> GetAllLocations()
         {
-            List<Location> list = new List<Location>();
-            Location l = new Location{ LocationName = "Olsen", User = new User() {UserName = "Ole"}};
-            
-            list.Add(l);
-            return list;
             //_locationCtrl = new LocationCtrl();
             //return _locationCtrl.GetAllLocations();
+            return new List<Location>();
         }
-        
+
         public Location GetLocationById(int locationId)
         {
             _locationCtrl = new LocationCtrl();
@@ -38,11 +33,6 @@ namespace MobileService.Service
         {
             _locationCtrl = new LocationCtrl();
             return _locationCtrl.GetLocationsByTagName(tagName);
-        }
-
-        public string TestMethod()
-        {
-            return "Oles nye autobil";
         }
     }
 }
