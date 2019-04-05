@@ -21,7 +21,13 @@ namespace MobileService.Service
             //_locationCtrl = new LocationCtrl();
             //return _locationCtrl.GetAllLocations();
         }
-        
+
+        public int CreateLocation(Location location)
+        {
+            _locationCtrl = new LocationCtrl();
+            return _locationCtrl.CreateLocation(location);
+        }
+
         public Location GetLocationById(int locationId)
         {
             _locationCtrl = new LocationCtrl();

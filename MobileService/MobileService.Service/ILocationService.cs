@@ -13,6 +13,9 @@ namespace MobileService.Service
         Location GetLocationById(int locationId);
 
         [OperationContract]
+        int CreateLocation(Location location);
+
+        [OperationContract]
         List<Location> GetLocationsByTagName(string tagName);
 
         [OperationContract]

@@ -56,7 +56,7 @@ namespace MobilSemProjekt.MVVM.ViewModel
 
                 //await lsr.OpenAsync();
                 //LocationServiceReference.Location[] response = await lsr.GetAllLocationsAsync();
-                response = lsr.Get
+                response = lsr.GetAllLocationsAsync();
                 //await lsr.CloseAsync();
                 Debug.WriteLine("ERROR: Der er " + response.Length + " locations i db.");
             }

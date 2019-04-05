@@ -14,6 +14,10 @@ namespace MobileService.Controller
             _dbTag = new DbTag();
         }
 
+        public int CreateLocation(Location location)
+        {
+            return _dbLocation.Create(location);
+        }
         public Location GetLocationById(int locationId)
         {
             return _dbLocation.FindById(locationId);
