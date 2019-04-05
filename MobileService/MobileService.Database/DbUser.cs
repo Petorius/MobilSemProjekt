@@ -11,19 +11,19 @@ namespace MobileService.Database
 {
     public class DbUser
     {
-        private readonly string _connectionString = "Server=kraka.ucn.dk;Database=dmaa0917_1067347;User ID=dmaa0917_1067347;Password=Password1!;";
-        //ConfigurationManager.ConnectionStrings["DBString"].ConnectionString;
-        
         public int Create(User user)
         {
+            DbConnection dbc = new DbConnection();
+            SqlConnection sqlC = dbc.Connection;
             int id;
-            using (SqlConnection connection = new SqlConnection(_connectionString))
-            {
-                connection.Open();
 
-                using (SqlCommand cmd = connection.CreateCommand())
+            using (sqlC)
+            {
+                sqlC.Open();
+
+                using (SqlCommand cmd = sqlC.CreateCommand())
                 {
-                    cmd.CommandText = "INSERT INTO User(rate, comment) VALUES " +
+                    cmd.CommandText = "INSERT INTO [User](rate, comment) VALUES " +
                                       "(@rate, @comment); ";
                     cmd.Parameters.AddWithValue("UserName", user.UserName);
                     cmd.Parameters.AddWithValue("HashPassword", user.HashPassword);
@@ -37,13 +37,16 @@ namespace MobileService.Database
 
         public User FindById(int userId)
         {
+            DbConnection dbc = new DbConnection();
+            SqlConnection sqlC = dbc.Connection;
             User user = null;
-            using (SqlConnection connection = new SqlConnection(_connectionString))
+
+            using (sqlC)
             {
-                connection.Open();
-                using (SqlCommand cmd = connection.CreateCommand())
+                sqlC.Open();
+                using (SqlCommand cmd = sqlC.CreateCommand())
                 {
-                    cmd.CommandText = "SELECT * FROM User WHERE UserId = @UserId";
+                    cmd.CommandText = "SELECT * FROM [User] WHERE UserId = @UserId";
                     cmd.Parameters.AddWithValue("UserId", userId);
                     SqlDataReader reader = cmd.ExecuteReader();
 
@@ -64,13 +67,16 @@ namespace MobileService.Database
 
         public User FindByName(string userName)
         {
+            DbConnection dbc = new DbConnection();
+            SqlConnection sqlC = dbc.Connection;
             User user = null;
-            using (SqlConnection connection = new SqlConnection(_connectionString))
+
+            using (sqlC)
             {
-                connection.Open();
-                using (SqlCommand cmd = connection.CreateCommand())
+                sqlC.Open();
+                using (SqlCommand cmd = sqlC.CreateCommand())
                 {
-                    cmd.CommandText = "SELECT * FROM User WHERE UserName = @UserName";
+                    cmd.CommandText = "SELECT * FROM [User] WHERE UserName = @UserName";
                     cmd.Parameters.AddWithValue("UserName", userName);
                     SqlDataReader reader = cmd.ExecuteReader();
 
@@ -91,13 +97,16 @@ namespace MobileService.Database
 
         public void Delete(int userId)
         {
+            DbConnection dbc = new DbConnection();
+            SqlConnection sqlC = dbc.Connection;
             int changes;
-            using (SqlConnection connection = new SqlConnection(_connectionString))
+
+            using (sqlC)
             {
-                connection.Open();
-                using (SqlCommand cmd = connection.CreateCommand())
+                sqlC.Open();
+                using (SqlCommand cmd = sqlC.CreateCommand())
                 {
-                    cmd.CommandText = "DELETE FROM User where UserId = @UserId";
+                    cmd.CommandText = "DELETE FROM [User] where UserId = @UserId";
                     cmd.Parameters.AddWithValue("UserId", userId);
                     changes = cmd.ExecuteNonQuery();
                 }

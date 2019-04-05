@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<ReferenceGroup xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" ID="0c328c2a-1202-4026-a2aa-13a71e643f54" xmlns="urn:schemas-microsoft-com:xml-wcfservicemap">
+<ReferenceGroup xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" ID="d9146f81-c2b6-497f-82a8-5489ac1123d1" xmlns="urn:schemas-microsoft-com:xml-wcfservicemap">
   <ClientOptions>
     <GenerateAsynchronousMethods>true</GenerateAsynchronousMethods>
     <EnableDataBinding>true</EnableDataBinding>
@@ -20,13 +20,13 @@
     <ServiceContractMappings />
   </ClientOptions>
   <MetadataSources>
-    <MetadataSource Address="http://localhost:8733/LocationService/?wsdl" Protocol="http" SourceId="1" />
+    <MetadataSource Address="http://localhost:8733/LocationService/mex" Protocol="mex" SourceId="1" />
   </MetadataSources>
   <Metadata>
-    <MetadataFile FileName="item.xsd" MetadataType="Schema" ID="5f16d24b-9ad2-492f-962e-69fb6539b7c0" SourceId="1" SourceUrl="http://localhost:8733/LocationService/?xsd=xsd0" />
-    <MetadataFile FileName="item1.xsd" MetadataType="Schema" ID="7b9847ef-401d-4c5c-ae9e-4f67354c5d61" SourceId="1" SourceUrl="http://localhost:8733/LocationService/?xsd=xsd1" />
-    <MetadataFile FileName="LocationService.wsdl" MetadataType="Wsdl" ID="ee87b681-1685-461f-83f4-aab1ccc74710" SourceId="1" SourceUrl="http://localhost:8733/LocationService/?wsdl" />
-    <MetadataFile FileName="item2.xsd" MetadataType="Schema" ID="abaee0f3-75e3-42f2-aeac-1e01b2c55216" SourceId="1" SourceUrl="http://localhost:8733/LocationService/?xsd=xsd2" />
+    <MetadataFile FileName="service.wsdl" MetadataType="Wsdl" ID="7ad67815-89c7-48aa-b54d-9dab2e44e1a3" SourceId="1" SourceUrl="http://localhost:8733/LocationService/mex" />
+    <MetadataFile FileName="service.xsd" MetadataType="Schema" ID="c495a4e1-1cbd-41b2-bffd-2662af738e1b" SourceId="1" SourceUrl="http://localhost:8733/LocationService/mex" />
+    <MetadataFile FileName="service1.xsd" MetadataType="Schema" ID="484eb255-7d9f-4589-8b66-6bd2f092649a" SourceId="1" SourceUrl="http://localhost:8733/LocationService/mex" />
+    <MetadataFile FileName="MobileService.Model.xsd" MetadataType="Schema" ID="31564363-315f-42db-82a3-e03bb51bceba" SourceId="1" SourceUrl="http://localhost:8733/LocationService/mex" />
   </Metadata>
   <Extensions>
     <ExtensionFile FileName="configuration91.svcinfo" Name="configuration91.svcinfo" />

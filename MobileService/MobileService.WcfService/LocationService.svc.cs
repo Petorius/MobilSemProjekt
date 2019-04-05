@@ -2,7 +2,7 @@
 using MobileService.Controller;
 using MobileService.Model;
 
-namespace MobileService.Service
+namespace MobileService.WcfService
 {
     // NOTE: You can use the "Rename" command on the "Refactor" menu to change the class name "Service1" in code, svc and config file together.
     // NOTE: In order to launch WCF Test Client for testing this service, please select Service1.svc or Service1.svc.cs at the Solution Explorer and start debugging.
@@ -12,15 +12,16 @@ namespace MobileService.Service
         
         public List<Location> GetAllLocations()
         {
-            //_locationCtrl = new LocationCtrl();
-            //return _locationCtrl.GetAllLocations();
-            return new List<Location>();
+            _locationCtrl = new LocationCtrl();
+            return _locationCtrl.GetAllLocations();
         }
 
-        public Location GetLocationById(int locationId)
+        public Location GetLocationById(string locationId)
         {
             _locationCtrl = new LocationCtrl();
-            return _locationCtrl.GetLocationById(locationId);
+            int locId = 0;
+            int.TryParse(locationId, out locId);
+            return _locationCtrl.GetLocationById(locId);
         }
 
         public Location GetLocationByLocationName(string locationName)

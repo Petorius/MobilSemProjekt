@@ -1,6 +1,6 @@
-<?xml version="1.0" encoding="utf-8"?>
+﻿<?xml version="1.0" encoding="utf-8"?>
 <xs:schema xmlns:tns="http://tempuri.org/" elementFormDefault="qualified" targetNamespace="http://tempuri.org/" xmlns:xs="http://www.w3.org/2001/XMLSchema">
-  <xs:import schemaLocation="http://localhost:8733/LocationService/?xsd=xsd2" namespace="http://schemas.datacontract.org/2004/07/MobileService.Model" />
+  <xs:import namespace="http://schemas.datacontract.org/2004/07/MobileService.Model" />
   <xs:element name="GetLocationById">
     <xs:complexType>
       <xs:sequence>
@@ -15,6 +15,20 @@
       </xs:sequence>
     </xs:complexType>
   </xs:element>
+  <xs:element name="CreateLocation">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element xmlns:q2="http://schemas.datacontract.org/2004/07/MobileService.Model" minOccurs="0" name="location" nillable="true" type="q2:Location" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="CreateLocationResponse">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" name="CreateLocationResult" type="xs:int" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
   <xs:element name="GetLocationsByTagName">
     <xs:complexType>
       <xs:sequence>
@@ -25,7 +39,7 @@
   <xs:element name="GetLocationsByTagNameResponse">
     <xs:complexType>
       <xs:sequence>
-        <xs:element xmlns:q2="http://schemas.datacontract.org/2004/07/MobileService.Model" minOccurs="0" name="GetLocationsByTagNameResult" nillable="true" type="q2:ArrayOfLocation" />
+        <xs:element xmlns:q3="http://schemas.datacontract.org/2004/07/MobileService.Model" minOccurs="0" name="GetLocationsByTagNameResult" nillable="true" type="q3:ArrayOfLocation" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>
@@ -39,7 +53,7 @@
   <xs:element name="GetLocationByLocationNameResponse">
     <xs:complexType>
       <xs:sequence>
-        <xs:element xmlns:q3="http://schemas.datacontract.org/2004/07/MobileService.Model" minOccurs="0" name="GetLocationByLocationNameResult" nillable="true" type="q3:Location" />
+        <xs:element xmlns:q4="http://schemas.datacontract.org/2004/07/MobileService.Model" minOccurs="0" name="GetLocationByLocationNameResult" nillable="true" type="q4:Location" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>
@@ -51,7 +65,7 @@
   <xs:element name="GetAllLocationsResponse">
     <xs:complexType>
       <xs:sequence>
-        <xs:element xmlns:q4="http://schemas.datacontract.org/2004/07/MobileService.Model" minOccurs="0" name="GetAllLocationsResult" nillable="true" type="q4:ArrayOfLocation" />
+        <xs:element xmlns:q5="http://schemas.datacontract.org/2004/07/MobileService.Model" minOccurs="0" name="GetAllLocationsResult" nillable="true" type="q5:ArrayOfLocation" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>

@@ -8,26 +8,24 @@ namespace MobileService.Database
 {
     public class DbRating
     {
-        private readonly string _connectionString = "Server=kraka.ucn.dk;Database=dmaa0917_1067347;User ID=dmaa0917_1067347;Password=Password1!;";
-        //ConfigurationManager.ConnectionStrings["DBString"].ConnectionString;
-
-        private readonly DbLocation _dbLocation;
         private readonly DbUser _dbUser;
 
         public DbRating()
         {
-            _dbLocation = new DbLocation();
             _dbUser = new DbUser();
         }
 
         public int Create(Rating rating)
         {
+            DbConnection dbc = new DbConnection();
+            SqlConnection sqlC = dbc.Connection;
             int id;
-            using (SqlConnection connection = new SqlConnection(_connectionString))
-            {
-                connection.Open();
 
-                using (SqlCommand cmd = connection.CreateCommand())
+            using (sqlC)
+            {
+                sqlC.Open();
+
+                using (SqlCommand cmd = sqlC.CreateCommand())
                 {
                     cmd.CommandText = "INSERT INTO Rating(rate, comment, locationId, userId) VALUES " +
                                       "(@rate, @comment, @locationId, @userId); ";
@@ -50,11 +48,14 @@ namespace MobileService.Database
 
         public Rating FindById(int ratingId)
         {
+            DbConnection dbc = new DbConnection();
+            SqlConnection sqlC = dbc.Connection;
             Rating rating = null;
-            using (SqlConnection connection = new SqlConnection(_connectionString))
+
+            using (sqlC)
             {
-                connection.Open();
-                using (SqlCommand cmd = connection.CreateCommand())
+                sqlC.Open();
+                using (SqlCommand cmd = sqlC.CreateCommand())
                 {
                     cmd.CommandText = "SELECT * FROM Rating WHERE RatingId = @RatingId";
                     cmd.Parameters.AddWithValue("RatingId", ratingId);
@@ -79,32 +80,35 @@ namespace MobileService.Database
 
         public List<Rating> FindByLocationId(int locationId)
         {
+            DbConnection dbc = new DbConnection();
+            SqlConnection sqlC = dbc.Connection;
             List<Rating> ratings = new List<Rating>();
-            using (SqlConnection connection = new SqlConnection(_connectionString))
+
+            using (sqlC)
             {
-                connection.Open();
-                using (SqlCommand cmd = connection.CreateCommand())
+                sqlC.Open();
+                using (SqlCommand cmd = sqlC.CreateCommand())
                 {
-                    cmd.CommandText = "SELECT * FROM Rating WHERE locationId = @locationId";
-                    cmd.Parameters.AddWithValue("locationId", locationId);
+                    cmd.CommandText = "SELECT * FROM Rating WHERE LocationId = @LocationId";
+                    cmd.Parameters.AddWithValue("LocationId", locationId);
                     SqlDataReader reader = cmd.ExecuteReader();
 
                     while (reader.Read())
                     {
                         User user = null;
                         
-                        if (!reader.IsDBNull(reader.GetOrdinal("userId")))
+                        if (!reader.IsDBNull(reader.GetOrdinal("UserId")))
                         {
-                            int userId = reader.GetInt32(reader.GetOrdinal("userId"));
+                            int userId = reader.GetInt32(reader.GetOrdinal("UserId"));
                             user = _dbUser.FindById(userId);
                         }
 
                         Rating rating = new Rating
                         {
-                            RatingId = reader.GetInt32(reader.GetOrdinal("id")),
+                            RatingId = reader.GetInt32(reader.GetOrdinal("RatingId")),
                             User = user,
-                            Rate = reader.GetDouble(reader.GetOrdinal("rate")),
-                            Comment = reader.GetString(reader.GetOrdinal("comment"))
+                            Rate = reader.GetDouble(reader.GetOrdinal("Rate")),
+                            Comment = reader.GetString(reader.GetOrdinal("Comment"))
                         };
                         ratings.Add(rating);
                     }
@@ -115,11 +119,14 @@ namespace MobileService.Database
 
         public List<Rating> FindByUserId(int userId)
         {
+            DbConnection dbc = new DbConnection();
+            SqlConnection sqlC = dbc.Connection;
             List<Rating> ratings = new List<Rating>();
-            using (SqlConnection connection = new SqlConnection(_connectionString))
+
+            using (sqlC)
             {
-                connection.Open();
-                using (SqlCommand cmd = connection.CreateCommand())
+                sqlC.Open();
+                using (SqlCommand cmd = sqlC.CreateCommand())
                 {
                     cmd.CommandText = "SELECT * FROM Rating WHERE userId = @userId";
                     cmd.Parameters.AddWithValue("userId", userId);
@@ -145,11 +152,14 @@ namespace MobileService.Database
 
         public void Delete(int ratingId)
         {
+            DbConnection dbc = new DbConnection();
+            SqlConnection sqlC = dbc.Connection;
             int changes;
-            using (SqlConnection connection = new SqlConnection(_connectionString))
+
+            using (sqlC)
             {
-                connection.Open();
-                using (SqlCommand cmd = connection.CreateCommand())
+                sqlC.Open();
+                using (SqlCommand cmd = sqlC.CreateCommand())
                 {
                     cmd.CommandText = "DELETE FROM Rating where RatingId = @RatingId";
                     cmd.Parameters.AddWithValue("RatingId", ratingId);

@@ -10,18 +10,18 @@ using MobileService.Model;
 namespace MobileService.Database
 {
     public class DbPicture
-    {
-        private readonly string _connectionString = "Server=kraka.ucn.dk;Database=dmaa0917_1067347;User ID=dmaa0917_1067347;Password=Password1!;";
-        //ConfigurationManager.ConnectionStrings["DBString"].ConnectionString;
-        
+    {   
         public int Create(Picture picture, int locationId)
         {
+            DbConnection dbc = new DbConnection();
+            SqlConnection sqlC = dbc.Connection;
             int id;
-            using (SqlConnection connection = new SqlConnection(_connectionString))
-            {
-                connection.Open();
 
-                using (SqlCommand cmd = connection.CreateCommand())
+            using (sqlC)
+            {
+                sqlC.Open();
+
+                using (SqlCommand cmd = sqlC.CreateCommand())
                 {
                     cmd.CommandText = "INSERT INTO Picture(URL, PictureName, Description, LocationId) VALUES " +
                                       "(@URL, @PictureName, @Description, @LocationId); ";
@@ -35,7 +35,7 @@ namespace MobileService.Database
                     }
                     else
                     {
-                        cmd.Parameters.AddWithValue("locationId", DBNull.Value);
+                        cmd.Parameters.AddWithValue("LocationId", DBNull.Value);
                     }
                     
                     id = Convert.ToInt32(cmd.ExecuteScalar());
@@ -45,11 +45,14 @@ namespace MobileService.Database
         }
         public Picture FindById(int pictureId)
         {
+            DbConnection dbc = new DbConnection();
+            SqlConnection sqlC = dbc.Connection;
             Picture picture = null;
-            using (SqlConnection connection = new SqlConnection(_connectionString))
+
+            using (sqlC)
             {
-                connection.Open();
-                using (SqlCommand cmd = connection.CreateCommand())
+                sqlC.Open();
+                using (SqlCommand cmd = sqlC.CreateCommand())
                 {
 
                     cmd.CommandText = "SELECT * FROM Picture WHERE PictureId = @PictureId";
@@ -72,13 +75,15 @@ namespace MobileService.Database
         }
         public List<Picture> FindByLocationId(int locationId)
         {
+            DbConnection dbc = new DbConnection();
+            SqlConnection sqlC = dbc.Connection;
             List<Picture> pictures = new List<Picture>();
-            using (SqlConnection connection = new SqlConnection(_connectionString))
+
+            using (sqlC)
             {
-                connection.Open();
-                using (SqlCommand cmd = connection.CreateCommand())
-                {
-                    
+                sqlC.Open();
+                using (SqlCommand cmd = sqlC.CreateCommand())
+                {   
                     cmd.CommandText = "SELECT * FROM Picture WHERE LocationId = @LocationId";
                     cmd.Parameters.AddWithValue("LocationId", locationId);
                     SqlDataReader reader = cmd.ExecuteReader();
@@ -104,10 +109,13 @@ namespace MobileService.Database
          */
         public void Update(Picture picture, int locationId, int pictureId)
         {
-            using (SqlConnection connection = new SqlConnection(_connectionString))
+            DbConnection dbc = new DbConnection();
+            SqlConnection sqlC = dbc.Connection;
+
+            using (sqlC)
             {
-                connection.Open();
-                using (SqlCommand cmd = connection.CreateCommand())
+                sqlC.Open();
+                using (SqlCommand cmd = sqlC.CreateCommand())
                 {
                     cmd.CommandText = "UPDATE Picture set URL = @URL, " +
                                       "PictureName = @PictureName, Description = @Description, LocationId = @LocationId " +
@@ -124,11 +132,14 @@ namespace MobileService.Database
 
         public void Delete(int pictureId)
         {
+            DbConnection dbc = new DbConnection();
+            SqlConnection sqlC = dbc.Connection;
             int changes;
-            using (SqlConnection connection = new SqlConnection(_connectionString))
+
+            using (sqlC)
             {
-                connection.Open();
-                using (SqlCommand cmd = connection.CreateCommand())
+                sqlC.Open();
+                using (SqlCommand cmd = sqlC.CreateCommand())
                 {
                     cmd.CommandText = "DELETE FROM Picture where PictureId = @PictureId";
                     cmd.Parameters.AddWithValue("PictureId", pictureId);

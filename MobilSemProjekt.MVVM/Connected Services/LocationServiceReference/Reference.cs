@@ -381,6 +381,11 @@ namespace MobilSemProjekt.MVVM.LocationServiceReference {
         
         MobilSemProjekt.MVVM.LocationServiceReference.Location EndGetLocationById(System.IAsyncResult result);
         
+        [System.ServiceModel.OperationContractAttribute(AsyncPattern=true, Action="http://tempuri.org/ILocationService/CreateLocation", ReplyAction="http://tempuri.org/ILocationService/CreateLocationResponse")]
+        System.IAsyncResult BeginCreateLocation(MobilSemProjekt.MVVM.LocationServiceReference.Location location, System.AsyncCallback callback, object asyncState);
+        
+        int EndCreateLocation(System.IAsyncResult result);
+        
         [System.ServiceModel.OperationContractAttribute(AsyncPattern=true, Action="http://tempuri.org/ILocationService/GetLocationsByTagName", ReplyAction="http://tempuri.org/ILocationService/GetLocationsByTagNameResponse")]
         System.IAsyncResult BeginGetLocationsByTagName(string tagName, System.AsyncCallback callback, object asyncState);
         
@@ -421,6 +426,25 @@ namespace MobilSemProjekt.MVVM.LocationServiceReference {
             get {
                 base.RaiseExceptionIfNecessary();
                 return ((MobilSemProjekt.MVVM.LocationServiceReference.Location)(this.results[0]));
+            }
+        }
+    }
+    
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
+    public partial class CreateLocationCompletedEventArgs : System.ComponentModel.AsyncCompletedEventArgs {
+        
+        private object[] results;
+        
+        public CreateLocationCompletedEventArgs(object[] results, System.Exception exception, bool cancelled, object userState) : 
+                base(exception, cancelled, userState) {
+            this.results = results;
+        }
+        
+        public int Result {
+            get {
+                base.RaiseExceptionIfNecessary();
+                return ((int)(this.results[0]));
             }
         }
     }
@@ -511,6 +535,12 @@ namespace MobilSemProjekt.MVVM.LocationServiceReference {
         
         private System.Threading.SendOrPostCallback onGetLocationByIdCompletedDelegate;
         
+        private BeginOperationDelegate onBeginCreateLocationDelegate;
+        
+        private EndOperationDelegate onEndCreateLocationDelegate;
+        
+        private System.Threading.SendOrPostCallback onCreateLocationCompletedDelegate;
+        
         private BeginOperationDelegate onBeginGetLocationsByTagNameDelegate;
         
         private EndOperationDelegate onEndGetLocationsByTagNameDelegate;
@@ -591,6 +621,8 @@ namespace MobilSemProjekt.MVVM.LocationServiceReference {
         
         public event System.EventHandler<GetLocationByIdCompletedEventArgs> GetLocationByIdCompleted;
         
+        public event System.EventHandler<CreateLocationCompletedEventArgs> CreateLocationCompleted;
+        
         public event System.EventHandler<GetLocationsByTagNameCompletedEventArgs> GetLocationsByTagNameCompleted;
         
         public event System.EventHandler<GetLocationByLocationNameCompletedEventArgs> GetLocationByLocationNameCompleted;
@@ -647,6 +679,52 @@ namespace MobilSemProjekt.MVVM.LocationServiceReference {
             }
             base.InvokeAsync(this.onBeginGetLocationByIdDelegate, new object[] {
                         locationId}, this.onEndGetLocationByIdDelegate, this.onGetLocationByIdCompletedDelegate, userState);
+        }
+        
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
+        System.IAsyncResult MobilSemProjekt.MVVM.LocationServiceReference.ILocationService.BeginCreateLocation(MobilSemProjekt.MVVM.LocationServiceReference.Location location, System.AsyncCallback callback, object asyncState) {
+            return base.Channel.BeginCreateLocation(location, callback, asyncState);
+        }
+        
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
+        int MobilSemProjekt.MVVM.LocationServiceReference.ILocationService.EndCreateLocation(System.IAsyncResult result) {
+            return base.Channel.EndCreateLocation(result);
+        }
+        
+        private System.IAsyncResult OnBeginCreateLocation(object[] inValues, System.AsyncCallback callback, object asyncState) {
+            MobilSemProjekt.MVVM.LocationServiceReference.Location location = ((MobilSemProjekt.MVVM.LocationServiceReference.Location)(inValues[0]));
+            return ((MobilSemProjekt.MVVM.LocationServiceReference.ILocationService)(this)).BeginCreateLocation(location, callback, asyncState);
+        }
+        
+        private object[] OnEndCreateLocation(System.IAsyncResult result) {
+            int retVal = ((MobilSemProjekt.MVVM.LocationServiceReference.ILocationService)(this)).EndCreateLocation(result);
+            return new object[] {
+                    retVal};
+        }
+        
+        private void OnCreateLocationCompleted(object state) {
+            if ((this.CreateLocationCompleted != null)) {
+                InvokeAsyncCompletedEventArgs e = ((InvokeAsyncCompletedEventArgs)(state));
+                this.CreateLocationCompleted(this, new CreateLocationCompletedEventArgs(e.Results, e.Error, e.Cancelled, e.UserState));
+            }
+        }
+        
+        public void CreateLocationAsync(MobilSemProjekt.MVVM.LocationServiceReference.Location location) {
+            this.CreateLocationAsync(location, null);
+        }
+        
+        public void CreateLocationAsync(MobilSemProjekt.MVVM.LocationServiceReference.Location location, object userState) {
+            if ((this.onBeginCreateLocationDelegate == null)) {
+                this.onBeginCreateLocationDelegate = new BeginOperationDelegate(this.OnBeginCreateLocation);
+            }
+            if ((this.onEndCreateLocationDelegate == null)) {
+                this.onEndCreateLocationDelegate = new EndOperationDelegate(this.OnEndCreateLocation);
+            }
+            if ((this.onCreateLocationCompletedDelegate == null)) {
+                this.onCreateLocationCompletedDelegate = new System.Threading.SendOrPostCallback(this.OnCreateLocationCompleted);
+            }
+            base.InvokeAsync(this.onBeginCreateLocationDelegate, new object[] {
+                        location}, this.onEndCreateLocationDelegate, this.onCreateLocationCompletedDelegate, userState);
         }
         
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
@@ -940,6 +1018,19 @@ namespace MobilSemProjekt.MVVM.LocationServiceReference {
             public MobilSemProjekt.MVVM.LocationServiceReference.Location EndGetLocationById(System.IAsyncResult result) {
                 object[] _args = new object[0];
                 MobilSemProjekt.MVVM.LocationServiceReference.Location _result = ((MobilSemProjekt.MVVM.LocationServiceReference.Location)(base.EndInvoke("GetLocationById", _args, result)));
+                return _result;
+            }
+            
+            public System.IAsyncResult BeginCreateLocation(MobilSemProjekt.MVVM.LocationServiceReference.Location location, System.AsyncCallback callback, object asyncState) {
+                object[] _args = new object[1];
+                _args[0] = location;
+                System.IAsyncResult _result = base.BeginInvoke("CreateLocation", _args, callback, asyncState);
+                return _result;
+            }
+            
+            public int EndCreateLocation(System.IAsyncResult result) {
+                object[] _args = new object[0];
+                int _result = ((int)(base.EndInvoke("CreateLocation", _args, result)));
                 return _result;
             }
             

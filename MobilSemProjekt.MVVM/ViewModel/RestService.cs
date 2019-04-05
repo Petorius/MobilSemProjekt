@@ -49,15 +49,14 @@ namespace MobilSemProjekt.MVVM.ViewModel
 
         public async Task<List<Location>> GetAllDataAsync()
         {
-            LocationServiceReference.Location[] response = null;
+            LocationServiceReference.Location response = null;
             try
             {
                 LocationServiceClient lsr = new LocationServiceClient();
-
-                //await lsr.OpenAsync();
+                    
                 //LocationServiceReference.Location[] response = await lsr.GetAllLocationsAsync();
-                response = lsr.GetAllLocationsAsync();
-                //await lsr.CloseAsync();
+                Task noget = lsr.GetLocationByIdAsync(1);
+                
                 Debug.WriteLine("ERROR: Der er " + response.Length + " locations i db.");
             }
             catch (Exception e)

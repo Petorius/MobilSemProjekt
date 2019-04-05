@@ -11,9 +11,6 @@ namespace MobileService.Database
 {
     public class DbTag
     {
-        private readonly string _connectionString = "Server=kraka.ucn.dk;Database=dmaa0917_1067347;User ID=dmaa0917_1067347;Password=Password1!;";
-        //ConfigurationManager.ConnectionStrings["DBString"].ConnectionString;
-
         private readonly DbLocation _dbLocation;
 
         public DbTag()
@@ -23,12 +20,15 @@ namespace MobileService.Database
 
         public int Create(Tag tag)
         {
+            DbConnection dbc = new DbConnection();
+            SqlConnection sqlC = dbc.Connection;
             int id;
-            using (SqlConnection connection = new SqlConnection(_connectionString))
-            {
-                connection.Open();
 
-                using (SqlCommand cmd = connection.CreateCommand())
+            using (sqlC)
+            {
+                sqlC.Open();
+
+                using (SqlCommand cmd = sqlC.CreateCommand())
                 {
                     cmd.CommandText = "INSERT INTO Tag(TagName) VALUES " +
                                       "(@TagName); ";
@@ -42,11 +42,14 @@ namespace MobileService.Database
 
         public Tag FindById(int tagId)
         {
+            DbConnection dbc = new DbConnection();
+            SqlConnection sqlC = dbc.Connection;
             Tag tag = null;
-            using (SqlConnection connection = new SqlConnection(_connectionString))
+
+            using (sqlC)
             {
-                connection.Open();
-                using (SqlCommand cmd = connection.CreateCommand())
+                sqlC.Open();
+                using (SqlCommand cmd = sqlC.CreateCommand())
                 {
                     cmd.CommandText = "SELECT * FROM Tag WHERE TagId = @TagId";
                     cmd.Parameters.AddWithValue("TagId", tagId);
@@ -68,11 +71,14 @@ namespace MobileService.Database
 
         public Tag FindByName(string tagName)
         {
+            DbConnection dbc = new DbConnection();
+            SqlConnection sqlC = dbc.Connection;
             Tag tag = null;
-            using (SqlConnection connection = new SqlConnection(_connectionString))
+
+            using (sqlC)
             {
-                connection.Open();
-                using (SqlCommand cmd = connection.CreateCommand())
+                sqlC.Open();
+                using (SqlCommand cmd = sqlC.CreateCommand())
                 {
                     cmd.CommandText = "SELECT * FROM Tag WHERE TagName = @TagName";
                     cmd.Parameters.AddWithValue("TagName", tagName);
@@ -97,11 +103,14 @@ namespace MobileService.Database
 
         public List<Location> GetLocationsByTagId(int tagId)
         {
+            DbConnection dbc = new DbConnection();
+            SqlConnection sqlC = dbc.Connection;
             List<Location> locations = new List<Location>();
-            using (SqlConnection connection = new SqlConnection(_connectionString))
+
+            using (sqlC)
             {
-                connection.Open();
-                using (SqlCommand cmd = connection.CreateCommand())
+                sqlC.Open();
+                using (SqlCommand cmd = sqlC.CreateCommand())
                 {
                     cmd.CommandText = "SELECT locationId FROM LocationTag WHERE TagId = @TagId";
                     cmd.Parameters.AddWithValue("TagId", tagId);
@@ -120,11 +129,14 @@ namespace MobileService.Database
 
         public void Delete(int tagId)
         {
+            DbConnection dbc = new DbConnection();
+            SqlConnection sqlC = dbc.Connection;
             int changes;
-            using (SqlConnection connection = new SqlConnection(_connectionString))
+
+            using (sqlC)
             {
-                connection.Open();
-                using (SqlCommand cmd = connection.CreateCommand())
+                sqlC.Open();
+                using (SqlCommand cmd = sqlC.CreateCommand())
                 {
                     cmd.CommandText = "DELETE FROM Tag where TagId = @TagId";
                     cmd.Parameters.AddWithValue("TagId", tagId);

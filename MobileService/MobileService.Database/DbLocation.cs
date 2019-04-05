@@ -11,9 +11,6 @@ namespace MobileService.Database
 {
     public class DbLocation
     {
-        private readonly string _connectionString = "Server=kraka.ucn.dk;Database=dmaa0917_1067347;User ID=dmaa0917_1067347;Password=Password1!;";
-        //ConfigurationManager.ConnectionStrings["DBString"].ConnectionString;
-
         private readonly DbPicture _dbPicture;
         private readonly DbRating _dbRating;
         private readonly DbUser _dbUser;
@@ -28,11 +25,14 @@ namespace MobileService.Database
         public int Create(Location location)
         {
             int id;
-            using (SqlConnection connection = new SqlConnection(_connectionString))
-            {
-                connection.Open();
+            DbConnection dbc = new DbConnection();
+            SqlConnection sqlC = dbc.Connection;
 
-                using (SqlCommand cmd = connection.CreateCommand())
+            using (sqlC)
+            {
+                sqlC.Open();
+
+                using (SqlCommand cmd = sqlC.CreateCommand())
                 {
                     cmd.CommandText = "INSERT INTO Location(LocationName, Latitude, Longitude, UserId, LocationDescription) VALUES " +
                                       "(@LocationName, @Latitude, @Longitude, @UserId, @LocationDescription); ";
@@ -55,55 +55,19 @@ namespace MobileService.Database
             }
             return id;
         }
-        /*
-        public List<Location> FindByTagId(int tagId)
-        {
-            List<Location> locations = new List<Location>();
-            using (SqlConnection connection = new SqlConnection(_connectionString))
-            {
-                connection.Open();
-                using (SqlCommand cmd = connection.CreateCommand())
-                {
-                    cmd.CommandText = "SELECT * FROM Location WHERE TagId = @TagId";
-                    cmd.Parameters.AddWithValue("TagId", tagId);
-                    SqlDataReader reader = cmd.ExecuteReader();
-
-                    while (reader.Read())
-                    {
-                        int locationId = reader.GetInt32(reader.GetOrdinal("LocationId"));
-                        int userId = reader.GetInt32(reader.GetOrdinal("LocationId"));
-
-                        Location location = new Location
-                        {
-                            LocationId = locationId,
-                            LocationName = reader.GetString(reader.GetOrdinal("LocationName")),
-                            LocationDescription = reader.GetString(reader.GetOrdinal("LocationDescription")),
-                            Latitude = reader.GetDouble(reader.GetOrdinal("Latitude")),
-                            Longitude = reader.GetDouble(reader.GetOrdinal("Longitude")),
-                            Pictures = _dbPicture.FindByLocationId(locationId),
-                            Ratings = _dbRating.FindByLocationId(locationId),
-                            User = _dbUser.FindById(userId)
-                        };
-
-                        locations.Add(location);
-                    }
-                }
-            }
-
-            return locations;
-        }
-
-*/
-
+        
         public Location FindById(int locationId)
         {
             Location location = null;
-            using (SqlConnection connection = new SqlConnection(_connectionString))
+            DbConnection dbc= new DbConnection();
+            SqlConnection sqlC = dbc.Connection;
+            
+            using (sqlC)
             {
-                connection.Open();
-                using (SqlCommand cmd = connection.CreateCommand())
+                sqlC.Open();
+                using (SqlCommand cmd = sqlC.CreateCommand())
                 {
-                    cmd.CommandText = "SELECT * FROM Location WHERE LocationId = @LocationId";
+                    cmd.CommandText = "SELECT * FROM Locations WHERE LocationId = @LocationId";
                     cmd.Parameters.AddWithValue("LocationId", locationId);
                     SqlDataReader reader = cmd.ExecuteReader();
 
@@ -128,12 +92,15 @@ namespace MobileService.Database
         public Location FindByName(string locationName)
         {
             Location location = null;
-            using (SqlConnection connection = new SqlConnection(_connectionString))
+            DbConnection dbc = new DbConnection();
+            SqlConnection sqlC = dbc.Connection;
+
+            using (sqlC)
             {
-                connection.Open();
-                using (SqlCommand cmd = connection.CreateCommand())
+                sqlC.Open();
+                using (SqlCommand cmd = sqlC.CreateCommand())
                 {
-                    cmd.CommandText = "SELECT * FROM Location WHERE LocationName = @LocationName";
+                    cmd.CommandText = "SELECT * FROM Locations WHERE LocationName = @LocationName";
                     cmd.Parameters.AddWithValue("LocationName", locationName);
                     SqlDataReader reader = cmd.ExecuteReader();
 
@@ -157,13 +124,16 @@ namespace MobileService.Database
         }
         public List<Location> FindAll()
         {
+            DbConnection dbc = new DbConnection();
+            SqlConnection sqlC = dbc.Connection;
             List<Location> locations = new List<Location>();
-            using (SqlConnection connection = new SqlConnection(_connectionString))
+
+            using (sqlC)
             {
-                connection.Open();
-                using (SqlCommand cmd = connection.CreateCommand())
+                sqlC.Open();
+                using (SqlCommand cmd = sqlC.CreateCommand())
                 {
-                    cmd.CommandText = "SELECT * FROM Location";
+                    cmd.CommandText = "SELECT * FROM Locations";
                     SqlDataReader reader = cmd.ExecuteReader();
 
                     while (reader.Read())
@@ -193,10 +163,13 @@ namespace MobileService.Database
 
         public void Update(Location location, int locationId)
         {
-            using (SqlConnection connection = new SqlConnection(_connectionString))
+            DbConnection dbc = new DbConnection();
+            SqlConnection sqlC = dbc.Connection;
+
+            using (sqlC)
             {
-                connection.Open();
-                using (SqlCommand cmd = connection.CreateCommand())
+                sqlC.Open();
+                using (SqlCommand cmd = sqlC.CreateCommand())
                 {
                     cmd.CommandText = "UPDATE Location set LocationName = @LocationName, Latitude = @Latitude, " +
                                       "Longitude = @Longitude, UserId = @UserId, LocationDescription = @LocationDescription " +
@@ -214,13 +187,16 @@ namespace MobileService.Database
 
         public void Delete(int locationId)
         {
+            DbConnection dbc = new DbConnection();
+            SqlConnection sqlC = dbc.Connection;
             int changes;
-            using (SqlConnection connection = new SqlConnection(_connectionString))
+
+            using (sqlC)
             {
-                connection.Open();
-                using (SqlCommand cmd = connection.CreateCommand())
+                sqlC.Open();
+                using (SqlCommand cmd = sqlC.CreateCommand())
                 {
-                    cmd.CommandText = "DELETE FROM Location where LocationId = @LocationId";
+                    cmd.CommandText = "DELETE FROM Locations where LocationId = @LocationId";
                     cmd.Parameters.AddWithValue("LocationId", locationId);
                     changes = cmd.ExecuteNonQuery();
                 }

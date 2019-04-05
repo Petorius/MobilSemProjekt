@@ -1,1 +1,1 @@
-﻿<%@ ServiceHost Language="C#" Debug="true" Service="MobileService.Service.LocationService" CodeBehind="LocationService.svc.cs" %>
+﻿<%@ ServiceHost Language="C#" Debug="true" Service="MobileService.WcfService.LocationService" CodeBehind="LocationService.svc.cs" %>
