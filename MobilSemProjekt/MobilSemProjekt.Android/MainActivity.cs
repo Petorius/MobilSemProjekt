@@ -5,6 +5,7 @@ using Android;
 using Android.Util;
 using Permission = Android.Content.PM.Permission;
 using System.IO;
+using Acr.UserDialogs;
 
 namespace MobilSemProjekt.Droid {
     [Activity(Label = "XamarinMapsGarbage", Icon = "@mipmap/icon", Theme = "@style/MainTheme", MainLauncher = true,
@@ -44,6 +45,7 @@ namespace MobilSemProjekt.Droid {
 
             Xamarin.FormsGoogleMaps.Init(this, savedInstanceState);
             global::Xamarin.Forms.Forms.Init(this, savedInstanceState);
+            UserDialogs.Init(this);
             LoadApplication(new App());
 
 
