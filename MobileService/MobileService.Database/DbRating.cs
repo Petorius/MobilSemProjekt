@@ -9,6 +9,10 @@ namespace MobileService.Database
     public class DbRating
     {
         private readonly DbUser _dbUser;
+        private static SqlConnection _connection;
+        private readonly string _connectionString = "Server=kraka.ucn.dk;" +
+                                                    "Database=dmaa0917_1067347;User ID=dmaa0917_1067347;" +
+                                                    "Password=Password1!;";
 
         public DbRating()
         {
@@ -17,15 +21,13 @@ namespace MobileService.Database
 
         public int Create(Rating rating)
         {
-            DbConnection dbc = new DbConnection();
-            SqlConnection sqlC = dbc.Connection;
             int id;
 
-            using (sqlC)
+            using (_connection = new SqlConnection(_connectionString))
             {
-                sqlC.Open();
+                _connection.Open();
 
-                using (SqlCommand cmd = sqlC.CreateCommand())
+                using (SqlCommand cmd = _connection.CreateCommand())
                 {
                     cmd.CommandText = "INSERT INTO Rating(rate, comment, locationId, userId) VALUES " +
                                       "(@rate, @comment, @locationId, @userId); ";
@@ -42,20 +44,19 @@ namespace MobileService.Database
                     }
                     id = Convert.ToInt32(cmd.ExecuteScalar());
                 }
+                _connection.Close();
             }
             return id;
         }
 
         public Rating FindById(int ratingId)
         {
-            DbConnection dbc = new DbConnection();
-            SqlConnection sqlC = dbc.Connection;
             Rating rating = null;
 
-            using (sqlC)
+            using (_connection = new SqlConnection(_connectionString))
             {
-                sqlC.Open();
-                using (SqlCommand cmd = sqlC.CreateCommand())
+                _connection.Open();
+                using (SqlCommand cmd = _connection.CreateCommand())
                 {
                     cmd.CommandText = "SELECT * FROM Rating WHERE RatingId = @RatingId";
                     cmd.Parameters.AddWithValue("RatingId", ratingId);
@@ -74,20 +75,19 @@ namespace MobileService.Database
                         };
                     }
                 }
+                _connection.Close();
             }
             return rating;
         }
 
         public List<Rating> FindByLocationId(int locationId)
         {
-            DbConnection dbc = new DbConnection();
-            SqlConnection sqlC = dbc.Connection;
             List<Rating> ratings = new List<Rating>();
 
-            using (sqlC)
+            using (_connection = new SqlConnection(_connectionString))
             {
-                sqlC.Open();
-                using (SqlCommand cmd = sqlC.CreateCommand())
+                _connection.Open();
+                using (SqlCommand cmd = _connection.CreateCommand())
                 {
                     cmd.CommandText = "SELECT * FROM Rating WHERE LocationId = @LocationId";
                     cmd.Parameters.AddWithValue("LocationId", locationId);
@@ -113,20 +113,19 @@ namespace MobileService.Database
                         ratings.Add(rating);
                     }
                 }
+                _connection.Close();
             }
             return ratings;
         }
 
         public List<Rating> FindByUserId(int userId)
         {
-            DbConnection dbc = new DbConnection();
-            SqlConnection sqlC = dbc.Connection;
             List<Rating> ratings = new List<Rating>();
 
-            using (sqlC)
+            using (_connection = new SqlConnection(_connectionString))
             {
-                sqlC.Open();
-                using (SqlCommand cmd = sqlC.CreateCommand())
+                _connection.Open();
+                using (SqlCommand cmd = _connection.CreateCommand())
                 {
                     cmd.CommandText = "SELECT * FROM Rating WHERE userId = @userId";
                     cmd.Parameters.AddWithValue("userId", userId);
@@ -146,25 +145,25 @@ namespace MobileService.Database
                         ratings.Add(rating);
                     }
                 }
+                _connection.Close();
             }
             return ratings;
         }
 
         public void Delete(int ratingId)
         {
-            DbConnection dbc = new DbConnection();
-            SqlConnection sqlC = dbc.Connection;
             int changes;
 
-            using (sqlC)
+            using (_connection = new SqlConnection(_connectionString))
             {
-                sqlC.Open();
-                using (SqlCommand cmd = sqlC.CreateCommand())
+                _connection.Open();
+                using (SqlCommand cmd = _connection.CreateCommand())
                 {
                     cmd.CommandText = "DELETE FROM Rating where RatingId = @RatingId";
                     cmd.Parameters.AddWithValue("RatingId", ratingId);
                     changes = cmd.ExecuteNonQuery();
                 }
+                _connection.Close();
             }
 
             bool status = changes > 0;

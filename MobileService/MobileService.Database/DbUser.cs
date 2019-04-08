@@ -11,17 +11,20 @@ namespace MobileService.Database
 {
     public class DbUser
     {
+        private static SqlConnection _connection;
+        private readonly string _connectionString = "Server=kraka.ucn.dk;" +
+                        "Database=dmaa0917_1067347;User ID=dmaa0917_1067347;" +
+                        "Password=Password1!;";
+
         public int Create(User user)
         {
-            DbConnection dbc = new DbConnection();
-            SqlConnection sqlC = dbc.Connection;
             int id;
 
-            using (sqlC)
+            using (_connection = new SqlConnection(_connectionString))
             {
-                sqlC.Open();
+                _connection.Open();
 
-                using (SqlCommand cmd = sqlC.CreateCommand())
+                using (SqlCommand cmd = _connection.CreateCommand())
                 {
                     cmd.CommandText = "INSERT INTO [User](rate, comment) VALUES " +
                                       "(@rate, @comment); ";
@@ -31,20 +34,19 @@ namespace MobileService.Database
                     
                     id = Convert.ToInt32(cmd.ExecuteScalar());
                 }
+                _connection.Close();
             }
             return id;
         }
 
         public User FindById(int userId)
         {
-            DbConnection dbc = new DbConnection();
-            SqlConnection sqlC = dbc.Connection;
             User user = null;
 
-            using (sqlC)
+            using (_connection = new SqlConnection(_connectionString))
             {
-                sqlC.Open();
-                using (SqlCommand cmd = sqlC.CreateCommand())
+                _connection.Open();
+                using (SqlCommand cmd = _connection.CreateCommand())
                 {
                     cmd.CommandText = "SELECT * FROM [User] WHERE UserId = @UserId";
                     cmd.Parameters.AddWithValue("UserId", userId);
@@ -61,20 +63,19 @@ namespace MobileService.Database
                         };
                     }
                 }
+                _connection.Close();
             }
             return user;
         }
 
         public User FindByName(string userName)
         {
-            DbConnection dbc = new DbConnection();
-            SqlConnection sqlC = dbc.Connection;
             User user = null;
 
-            using (sqlC)
+            using (_connection = new SqlConnection(_connectionString))
             {
-                sqlC.Open();
-                using (SqlCommand cmd = sqlC.CreateCommand())
+                _connection.Open();
+                using (SqlCommand cmd = _connection.CreateCommand())
                 {
                     cmd.CommandText = "SELECT * FROM [User] WHERE UserName = @UserName";
                     cmd.Parameters.AddWithValue("UserName", userName);
@@ -91,25 +92,25 @@ namespace MobileService.Database
                         };
                     }
                 }
+                _connection.Close();
             }
             return user;
         }
 
         public void Delete(int userId)
         {
-            DbConnection dbc = new DbConnection();
-            SqlConnection sqlC = dbc.Connection;
             int changes;
 
-            using (sqlC)
+            using (_connection = new SqlConnection(_connectionString))
             {
-                sqlC.Open();
-                using (SqlCommand cmd = sqlC.CreateCommand())
+                _connection.Open();
+                using (SqlCommand cmd = _connection.CreateCommand())
                 {
                     cmd.CommandText = "DELETE FROM [User] where UserId = @UserId";
                     cmd.Parameters.AddWithValue("UserId", userId);
                     changes = cmd.ExecuteNonQuery();
                 }
+                _connection.Close();
             }
 
             bool status = changes > 0;

@@ -34,7 +34,12 @@ namespace MobileService.Controller
         public List<Location> GetLocationsByTagName(string tagName)
         {
             Tag tag = _dbTag.FindByName(tagName);
-            return tag.Locations;
+            List<Location> locations = null;
+            if (tag != null)
+            {
+                locations = tag.Locations;
+            }
+            return locations;
         }
     }
 }

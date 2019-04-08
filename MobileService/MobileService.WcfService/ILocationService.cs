@@ -10,19 +10,34 @@ namespace MobileService.WcfService
     public interface ILocationService
     {
         [OperationContract]
-        [WebGet(UriTemplate = "GetLocationById/{locationId}")]
+        [WebGet(UriTemplate = "GetLocationById/{locationId}",
+            RequestFormat = WebMessageFormat.Json,
+            ResponseFormat = WebMessageFormat.Json)]
         Location GetLocationById(string locationId);
 
         [OperationContract]
-        [WebGet(UriTemplate = "GetLocationsByTagName/{tagName}")]
+        [WebInvoke(Method = "POST",
+            UriTemplate = "CreateLocation",
+            RequestFormat = WebMessageFormat.Json,
+            ResponseFormat = WebMessageFormat.Json)]
+        int CreateLocation(Location location);
+
+        [OperationContract]
+        [WebGet(UriTemplate = "GetLocationsByTagName/{tagName}",
+            RequestFormat = WebMessageFormat.Json,
+            ResponseFormat = WebMessageFormat.Json)]
         List<Location> GetLocationsByTagName(string tagName);
 
         [OperationContract]
-        [WebGet(UriTemplate = "GetLocationByLocationName/{locationName}")]
+        [WebGet(UriTemplate = "GetLocationByLocationName/{locationName}",
+            RequestFormat = WebMessageFormat.Json,
+            ResponseFormat = WebMessageFormat.Json)]
         Location GetLocationByLocationName(string locationName);
 
         [OperationContract]
-        [WebGet(UriTemplate = "GetAllLocations")]
+        [WebGet(UriTemplate = "GetAllLocations",
+            RequestFormat = WebMessageFormat.Json,
+            ResponseFormat = WebMessageFormat.Json)]
         List<Location> GetAllLocations();
     }
 }

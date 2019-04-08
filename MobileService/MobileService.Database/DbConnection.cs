@@ -11,30 +11,21 @@ namespace MobileService.Database
 {
     public class DbConnection
     {
-        private readonly string _connectionString = "Server=kraka.ucn.dk;Database=dmaa0917_1067347;User ID=dmaa0917_1067347;Password=Password1!;";
-        private SqlConnection connection;
-
-        public SqlConnection Connection
-        {
-            get { return connection; }
-        }
-
-        public DbConnection()
-        {
-            connection = new SqlConnection(_connectionString);
-        }
-
+        private static SqlConnection _connection;
+        private readonly string _connectionString = "Server=kraka.ucn.dk;" +
+                                                    "Database=dmaa0917_1067347;User ID=dmaa0917_1067347;" +
+                                                    "Password=Password1!;";
+        
         public bool ConnectionTest()
         {
             bool status = true;
             try
             {
-                using (connection = new SqlConnection(_connectionString))
+                using (_connection = new SqlConnection(_connectionString))
                 {
+                    _connection.Open();
 
-                    connection.Open();
-
-                    using (SqlCommand cmd = connection.CreateCommand())
+                    using (SqlCommand cmd = _connection.CreateCommand())
                     {
                         cmd.CommandText = "SELECT 1";
                         int idStatus = Convert.ToInt32(cmd.ExecuteScalar());
@@ -45,6 +36,7 @@ namespace MobileService.Database
                             //throw new FaultException<DbConnectionError>(new DbConnectionError());
                         }
                     }
+                   _connection.Close();
                 }
             }
             catch (SqlException e)

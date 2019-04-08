@@ -16,6 +16,12 @@ namespace MobileService.WcfService
             return _locationCtrl.GetAllLocations();
         }
 
+        public int CreateLocation(Location location)
+        {
+            _locationCtrl = new LocationCtrl();
+            return _locationCtrl.CreateLocation(location);
+        }
+
         public Location GetLocationById(string locationId)
         {
             _locationCtrl = new LocationCtrl();

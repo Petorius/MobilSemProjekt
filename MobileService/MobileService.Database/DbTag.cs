@@ -12,6 +12,10 @@ namespace MobileService.Database
     public class DbTag
     {
         private readonly DbLocation _dbLocation;
+        private static SqlConnection _connection;
+        private readonly string _connectionString = "Server=kraka.ucn.dk;" +
+                                                    "Database=dmaa0917_1067347;User ID=dmaa0917_1067347;" +
+                                                    "Password=Password1!;";
 
         public DbTag()
         {
@@ -20,15 +24,13 @@ namespace MobileService.Database
 
         public int Create(Tag tag)
         {
-            DbConnection dbc = new DbConnection();
-            SqlConnection sqlC = dbc.Connection;
             int id;
 
-            using (sqlC)
+            using (_connection = new SqlConnection(_connectionString))
             {
-                sqlC.Open();
+                _connection.Open();
 
-                using (SqlCommand cmd = sqlC.CreateCommand())
+                using (SqlCommand cmd = _connection.CreateCommand())
                 {
                     cmd.CommandText = "INSERT INTO Tag(TagName) VALUES " +
                                       "(@TagName); ";
@@ -36,20 +38,19 @@ namespace MobileService.Database
                     
                     id = Convert.ToInt32(cmd.ExecuteScalar());
                 }
+                _connection.Close();
             }
             return id;
         }
 
         public Tag FindById(int tagId)
         {
-            DbConnection dbc = new DbConnection();
-            SqlConnection sqlC = dbc.Connection;
             Tag tag = null;
 
-            using (sqlC)
+            using (_connection = new SqlConnection(_connectionString))
             {
-                sqlC.Open();
-                using (SqlCommand cmd = sqlC.CreateCommand())
+                _connection.Open();
+                using (SqlCommand cmd = _connection.CreateCommand())
                 {
                     cmd.CommandText = "SELECT * FROM Tag WHERE TagId = @TagId";
                     cmd.Parameters.AddWithValue("TagId", tagId);
@@ -65,20 +66,19 @@ namespace MobileService.Database
                         };
                     }
                 }
+                _connection.Close();
             }
             return tag;
         }
 
         public Tag FindByName(string tagName)
         {
-            DbConnection dbc = new DbConnection();
-            SqlConnection sqlC = dbc.Connection;
             Tag tag = null;
 
-            using (sqlC)
+            using (_connection = new SqlConnection(_connectionString))
             {
-                sqlC.Open();
-                using (SqlCommand cmd = sqlC.CreateCommand())
+                _connection.Open();
+                using (SqlCommand cmd = _connection.CreateCommand())
                 {
                     cmd.CommandText = "SELECT * FROM Tag WHERE TagName = @TagName";
                     cmd.Parameters.AddWithValue("TagName", tagName);
@@ -96,6 +96,7 @@ namespace MobileService.Database
                         };
                     }
                 }
+                _connection.Close();
             }
             return tag;
         }
@@ -103,14 +104,12 @@ namespace MobileService.Database
 
         public List<Location> GetLocationsByTagId(int tagId)
         {
-            DbConnection dbc = new DbConnection();
-            SqlConnection sqlC = dbc.Connection;
             List<Location> locations = new List<Location>();
 
-            using (sqlC)
+            using (_connection = new SqlConnection(_connectionString))
             {
-                sqlC.Open();
-                using (SqlCommand cmd = sqlC.CreateCommand())
+                _connection.Open();
+                using (SqlCommand cmd = _connection.CreateCommand())
                 {
                     cmd.CommandText = "SELECT locationId FROM LocationTag WHERE TagId = @TagId";
                     cmd.Parameters.AddWithValue("TagId", tagId);
@@ -123,25 +122,25 @@ namespace MobileService.Database
                         locations.Add(location);
                     }
                 }
+                _connection.Close();
             }
             return locations;
         }
 
         public void Delete(int tagId)
         {
-            DbConnection dbc = new DbConnection();
-            SqlConnection sqlC = dbc.Connection;
             int changes;
 
-            using (sqlC)
+            using (_connection = new SqlConnection(_connectionString))
             {
-                sqlC.Open();
-                using (SqlCommand cmd = sqlC.CreateCommand())
+                _connection.Open();
+                using (SqlCommand cmd = _connection.CreateCommand())
                 {
                     cmd.CommandText = "DELETE FROM Tag where TagId = @TagId";
                     cmd.Parameters.AddWithValue("TagId", tagId);
                     changes = cmd.ExecuteNonQuery();
                 }
+                _connection.Close();
             }
 
             bool status = changes > 0;
