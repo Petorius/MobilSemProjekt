@@ -10,6 +10,7 @@
                   x:Name="GGMAP"
                   MyLocationEnabled="True"
             Margin="0,0,0,0"/>
+        <Button x:Name="Beton" Text="Faggot" Clicked="Beton_OnClicked"/>
         <Entry x:Name="OurEntry" Placeholder="Søg..." PlaceholderColor="LightSlateGray"/>
     </StackLayout>
 

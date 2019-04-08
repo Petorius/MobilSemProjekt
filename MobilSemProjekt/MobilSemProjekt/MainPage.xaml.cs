@@ -10,6 +10,12 @@ using Xamarin.Essentials;
 using System.Linq;
 using MobilSemProjekt.ViewModel;
 using Acr.UserDialogs;
+using System.Net;
+using System.IO;
+using MobilSemProjekt.MVVM.Model;
+using Newtonsoft.Json;
+using System.Net.Http;
+using System.Text;
 
 namespace MobilSemProjekt {
     public partial class MainPage : ContentPage {
@@ -23,7 +29,8 @@ namespace MobilSemProjekt {
                 Children =
                 {
                     GGMAP,
-                    OurEntry
+                    OurEntry,
+                    Beton
                 }
 
             };
@@ -86,6 +93,44 @@ namespace MobilSemProjekt {
                 });
                 //To be added: InfoWindow that contain most of the description and are tied to markers..
             }
+        }
+
+        private async Task PushDataThingyAsync()
+        {
+            var thingy = new MVVM.Model.Location
+            {
+                LocationName = "Ole",
+                LocationDescription = "En person, der har fået ny autobil",
+                Latitude = 57,
+                Longitude = 9,
+                User = null
+            };
+
+            // Serialize our concrete class into a JSON String
+            var stringThingy = await Task.Run(() => JsonConvert.SerializeObject(thingy));
+
+            // Wrap our JSON inside a StringContent which then can be used by the HttpClient class
+            var httpContent = new StringContent(stringThingy, Encoding.UTF8, "application/json");
+
+            using (var httpClient = new HttpClient())
+            {
+
+                // Do the actual request and await the response
+                var httpResponse = await httpClient.PostAsync("http://dmax0917.hegr.dk/LocationService.svc/CreateLocation", httpContent);
+
+                // If the response contains content we want to read it!
+                if (httpResponse.Content != null)
+                {
+                    var responseContent = await httpResponse.Content.ReadAsStringAsync();
+
+                    // From here on you could deserialize the ResponseContent back again to a concrete C# type using Json.Net
+                }
+            }
+        }
+
+        private void Beton_OnClicked(object sender, EventArgs e)
+        {
+            Task.Run(() => PushDataThingyAsync());
         }
     }
 }
