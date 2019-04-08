@@ -9,7 +9,7 @@ namespace MobilSemProjekt.MVVM.ViewModel
         Task<List<Location>> GetAllDataAsync();
         Task<List<Location>> ReadLocationByTagName(string tagName);
         Task<Location> ReadLocationByName(string name);
-        Task SaveLocationAsync(Location location, bool isNew);
+        Task Create(Location location);
         Task DeleteLocationAsync(string name);
     }
 }

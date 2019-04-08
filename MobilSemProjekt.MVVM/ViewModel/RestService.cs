@@ -1,6 +1,8 @@
-﻿using System;
+﻿using Newtonsoft.Json;
+using System;
 using System.Collections.Generic;
 using System.Net.Http;
+using System.Text;
 using System.Threading.Tasks;
 //using LocationServiceReference;
 using Location = MobilSemProjekt.MVVM.Model.Location;
@@ -34,9 +36,28 @@ namespace MobilSemProjekt.MVVM.ViewModel
         }
 
 
-        public Task SaveLocationAsync(Location location, bool isNew)
+        public async Task Create(Location location)
         {
-            throw new NotImplementedException();
+            // Serialize our concrete class into a JSON String
+            var stringThingy = await Task.Run(() => JsonConvert.SerializeObject(location));
+
+            // Wrap our JSON inside a StringContent which then can be used by the HttpClient class
+            var httpContent = new StringContent(stringThingy, Encoding.UTF8, "application/json");
+
+            using (var httpClient = new HttpClient())
+            {
+
+                // Do the actual request and await the response
+                var httpResponse = await httpClient.PostAsync("http://dmax0917.hegr.dk/LocationService.svc/CreateLocation", httpContent);
+
+                // If the response contains content we want to read it!
+                if (httpResponse.Content != null)
+                {
+                    var responseContent = await httpResponse.Content.ReadAsStringAsync();
+
+                    // From here on you could deserialize the ResponseContent back again to a concrete C# type using Json.Net
+                }
+            }
         }
 
         public Task<List<Location>> GetAllDataAsync()

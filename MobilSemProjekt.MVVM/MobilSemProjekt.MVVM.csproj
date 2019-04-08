@@ -37,11 +37,6 @@
     <WCFMetadata Include="Connected Services\" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Connected Services\LocationServiceReference\Reference.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>Reference.svcmap</DependentUpon>
-    </Compile>
     <Compile Include="Model\Location.cs" />
     <Compile Include="Model\Picture.cs" />
     <Compile Include="Model\Rating.cs" />
@@ -52,35 +47,13 @@
     <Compile Include="ViewModel\RestService.cs" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="Connected Services\LocationServiceReference\item.xsd">
-      <SubType>Designer</SubType>
-    </None>
-    <None Include="Connected Services\LocationServiceReference\item1.xsd">
-      <SubType>Designer</SubType>
-    </None>
-    <None Include="Connected Services\LocationServiceReference\item2.xsd">
-      <SubType>Designer</SubType>
-    </None>
-    <None Include="Connected Services\LocationServiceReference\LocationService.wsdl" />
-    <None Include="Connected Services\LocationServiceReference\MobilSemProjekt.MVVM.LocationServiceReference.Location.datasource">
-      <DependentUpon>Reference.svcmap</DependentUpon>
-    </None>
+    <None Include="packages.config" />
     <None Include="Properties\ServiceReferences.Designer.ClientConfig" />
   </ItemGroup>
   <ItemGroup>
-    <WCFMetadataStorage Include="Connected Services\LocationServiceReference\" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Connected Services\LocationServiceReference\configuration91.svcinfo" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Connected Services\LocationServiceReference\configuration.svcinfo" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Connected Services\LocationServiceReference\Reference.svcmap">
-      <Generator>WCF Proxy Generator</Generator>
-      <LastGenOutput>Reference.cs</LastGenOutput>
-    </None>
+    <Reference Include="Newtonsoft.Json, Version=12.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+      <HintPath>..\packages\Newtonsoft.Json.12.0.1\lib\portable-net45+win8+wp8+wpa81\Newtonsoft.Json.dll</HintPath>
+    </Reference>
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\Portable\$(TargetFrameworkVersion)\Microsoft.Portable.CSharp.targets" />
 </Project>
