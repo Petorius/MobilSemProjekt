@@ -1,0 +1,36 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="MobilSemProjekt.View.SearchListView">
+
+    <ListView x:Name="SearchListViewDisplay"
+            ItemsSource="{Binding Items}"
+            ItemTapped="Handle_ItemTapped"
+            CachingStrategy="RecycleElement"
+            HasUnevenRows="True">
+            
+    <!--Built in Cells--><!--
+    <ListView.ItemTemplate>
+        <DataTemplate>
+            <TextCell Text="{Binding .}" />
+        </DataTemplate>
+    </ListView.ItemTemplate>-->
+    
+    <!--Custom View Cells-->
+    <ListView.ItemTemplate>
+      <DataTemplate>
+        <ViewCell Height="100">
+          <StackLayout>
+            <Label Text="{Binding LocationName}" 
+                   Style="{DynamicResource ListItemTextStyle}" />
+                 <Label Text="{Binding LocationDescription}" 
+                   Style="{DynamicResource ListItemDetailTextStyle}"/>
+          </StackLayout>
+        </ViewCell>
+      </DataTemplate>
+    </ListView.ItemTemplate>
+    
+  </ListView>
+    <!--<Entry x:Name="EntrySearchListView" Placeholder="Søg..." PlaceholderColor="LightSlateGray"/>-->
+
+</ContentPage>

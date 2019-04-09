@@ -1,6 +1,7 @@
 ﻿using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Net.Http;
 using System.Text;
 using System.Threading.Tasks;
@@ -12,27 +13,62 @@ namespace MobilSemProjekt.MVVM.ViewModel
     public class RestService : IRestService
     {
         private HttpClient _client;
-        private const string RestUrl = "http://localhost:8733/";
-        public List<Location> Items { get; private set;}
-        
+        private const string RestUrl = "http://dmax0917.hegr.dk/";
+        public List<Location> Items { get; private set; }
+
         public RestService()
         {
-            //_client = new HttpClient();
+            _client = new HttpClient();
         }
-        
+
         public Task DeleteLocationAsync(string name)
         {
             throw new NotImplementedException();
         }
 
-        public Task<Location> ReadLocationByName(string name)
+        public async Task<Location> ReadLocationByNameAsync(string name)
         {
-            throw new NotImplementedException();
+            Location location = new Location();
+            string locService = "LocationService.svc/GetLocationByLocationName/" + name;
+            var uri = new Uri(string.Format(RestUrl + locService));
+            var response = new HttpResponseMessage();
+            try {
+                response = await _client.GetAsync(uri);
+                if (response.IsSuccessStatusCode) {
+                    var content = await response.Content.ReadAsStringAsync();
+                    location = JsonConvert.DeserializeObject<Location>(content);
+                }
+
+                Debug.WriteLine("Error: you aren't catched - " + response);
+            }
+            catch (Exception e) {
+                Debug.WriteLine("ERROR:" + e.Message + " hej " + response);
+            }
+
+            return location;
         }
 
-        public Task<List<Location>> ReadLocationByTagName(string tagName)
+        public async Task<List<Location>> ReadLocationByTagNameAsync(string tagName)
         {
-            throw new NotImplementedException();
+            Items = new List<Location>();
+            string locService = "LocationService.svc/GetLocationsByTagName/" + tagName;
+            var uri = new Uri(string.Format(RestUrl + locService));
+            var response = new HttpResponseMessage();
+            try {
+                response = await _client.GetAsync(uri);
+                if (response.IsSuccessStatusCode) {
+                    var content = await response.Content.ReadAsStringAsync();
+                    Items = JsonConvert.DeserializeObject<List<Location>>(content);
+                    Debug.WriteLine(Items.Count);
+                }
+
+                Debug.WriteLine("Error: you aren't catched - " + response);
+            }
+            catch (Exception e) {
+                Debug.WriteLine("ERROR:" + e.Message + " hej " + response);
+            }
+
+            return Items;
         }
 
 
@@ -48,7 +84,9 @@ namespace MobilSemProjekt.MVVM.ViewModel
             {
 
                 // Do the actual request and await the response
-                var httpResponse = await httpClient.PostAsync("http://dmax0917.hegr.dk/LocationService.svc/CreateLocation", httpContent);
+                var httpResponse =
+                    await httpClient.PostAsync(RestUrl + "LocationService.svc/CreateLocation",
+                        httpContent);
 
                 // If the response contains content we want to read it!
                 if (httpResponse.Content != null)
@@ -60,50 +98,55 @@ namespace MobilSemProjekt.MVVM.ViewModel
             }
         }
 
-        public Task<List<Location>> GetAllDataAsync()
+
+        public async Task<List<Location>> GetAllDataAsync()
         {
-            throw new NotImplementedException();
+
+            Items = new List<Location>();
+            string locService = "LocationService.svc/GetAllLocations";
+            var uri = new Uri(string.Format(RestUrl + locService));
+            var response = new HttpResponseMessage();
+            try
+            {
+                response = await _client.GetAsync(uri);
+                if (response.IsSuccessStatusCode)
+                {
+                    var content = await response.Content.ReadAsStringAsync();
+                    Items = JsonConvert.DeserializeObject<List<Location>>(content);
+                    Debug.WriteLine(Items.Count);
+                }
+
+                Debug.WriteLine("Error: you aren't catched - " + response);
+            }
+            catch (Exception e)
+            {
+                Debug.WriteLine("ERROR:" + e.Message + " hej " + response);
+            }
+
+            return Items;
         }
-        /*
-public async Task<List<Location>> GetAllDataAsync()
-{
-   LocationServiceReference.Location response = null;
-   try
-   {
-       LocationServiceClient lsr = new LocationServiceClient();
 
-       //LocationServiceReference.Location[] response = await lsr.GetAllLocationsAsync();
-       Task noget = lsr.GetLocationByIdAsync(1);
+        public async Task<List<Location>> GetLocationsByUserNameAsync(string name) {
+            Items = new List<Location>();
+            string locService = "LocationService.svc/GetLocationsByUserName/" + name;
+            var uri = new Uri(string.Format(RestUrl + locService));
+            var response = new HttpResponseMessage();
+            try {
+                response = await _client.GetAsync(uri);
+                if (response.IsSuccessStatusCode) {
+                    var content = await response.Content.ReadAsStringAsync();
+                    Items = JsonConvert.DeserializeObject<List<Location>>(content);
+                    Debug.WriteLine(Items.Count);
+                }
 
-       Debug.WriteLine("ERROR: Der er " + response.Length + " locations i db.");
-   }
-   catch (Exception e)
-   {
-       Debug.WriteLine("ERROR: " + e.Message + " "+ response);
-   }
+                Debug.WriteLine("Error: you aren't catched - " + response);
+            }
+            catch (Exception e) {
+                Debug.WriteLine("ERROR:" + e.Message + " hej " + response);
+            }
 
-   /*
-   Items = new List<Location>();
-   string locService = "LocationService/GetAllLocations/";
-   var uri = new Uri(string.Format(RestUrl + locService, string.Empty));
-   var response = new HttpResponseMessage();
-   try
-   {
-       response = await _client.GetAsync(uri);
-       / *if (response.IsSuccessStatusCode)
-       {
-           var content = await response.Content.ReadAsStringAsync();
-           Items = JsonConvert.DeserializeObject<List<Location>>(content);
-           Debug.WriteLine(Items.Count);
-       }* /
-       Debug.WriteLine("Error: you aren't catched - " + response);
-   }
-   catch (Exception e)
-   {
-       Debug.WriteLine("ERROR:" + e.Message + " hej " + response);
-   }
+            return Items;
 
-   return Items;
-}*/
+        }
     }
 }

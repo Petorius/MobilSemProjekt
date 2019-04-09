@@ -10,7 +10,7 @@
                   x:Name="GGMAP"
                   MyLocationEnabled="True"
             Margin="0,0,0,0"/>
-        <Entry x:Name="OurEntry" Placeholder="Søg..." PlaceholderColor="LightSlateGray"/>
+        <Entry x:Name="OurEntry" Placeholder="Søg..." PlaceholderColor="LightSlateGray" Completed="OurEntry_OnCompleted"/>
     </StackLayout>
 
 </ContentPage>

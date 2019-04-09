@@ -17,7 +17,10 @@ using Newtonsoft.Json;
 using System.Net.Http;
 using System.Text;
 using MobilSemProjekt.MVVM.ViewModel;
+using MobilSemProjekt.View;
 using Location = MobilSemProjekt.MVVM.Model.Location;
+using System.Collections.ObjectModel;
+using System.Diagnostics;
 
 namespace MobilSemProjekt {
     public partial class MainPage : ContentPage {
@@ -46,8 +49,10 @@ namespace MobilSemProjekt {
         {
             base.OnAppearing();
             List<Location> list = await GetLocations();
+            Debug.WriteLine("Tal her " + list.Count);
             foreach (var location in list)
             {
+                Debug.WriteLine(location.LocationName);
                 GGMAP.Pins.Add(new Pin
                 {
                     Label = location.LocationDescription,
@@ -102,7 +107,9 @@ namespace MobilSemProjekt {
                 }
 
 
-                catch (Exception ex) {
+                catch (Exception ex)
+                {
+                    Console.WriteLine(ex.StackTrace);
                     // Handle exception that may have occurred in geocoding
                 }
 
@@ -121,6 +128,31 @@ namespace MobilSemProjekt {
                 await restService.Create(fagurt);
                 //To be added: InfoWindow that contain most of the description and are tied to markers..
             }
+        }
+
+        private async void OurEntry_OnCompleted(object sender, EventArgs e)
+        {
+            List<Location> combinedList = new List<Location>();
+            RestService restService = new RestService();
+            var locationListVar = await restService.ReadLocationByTagNameAsync(OurEntry.Text.ToString());
+            var locationVar = await restService.ReadLocationByNameAsync(OurEntry.Text.ToString());
+            var locationListUserVar = await restService.GetLocationsByUserNameAsync(OurEntry.Text.ToString());
+            if (locationListVar != null)
+            {
+                combinedList.AddRange(locationListVar);
+            }
+            if (locationVar != null)
+            {
+                combinedList.Add(locationVar);
+            }
+
+            if (locationListUserVar != null)
+            {
+                combinedList.AddRange(locationListUserVar);
+            }
+            SearchListView searchListView = new SearchListView();
+            searchListView.locations = new ObservableCollection<Location>(combinedList);
+            await Navigation.PushAsync(searchListView);
         }
     }
 }
