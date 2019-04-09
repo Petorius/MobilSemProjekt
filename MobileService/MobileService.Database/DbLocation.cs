@@ -94,7 +94,7 @@ namespace MobileService.Database
         public Location FindByName(string locationName)
         {
             Location location = null;
-            
+
             using (_connection = new SqlConnection(_connectionString))
             {
                 _connection.Open();
@@ -122,6 +122,46 @@ namespace MobileService.Database
                 _connection.Close();
             }
             return location;
+        }
+
+        public List<Location> FindByUserName(string userName)
+        {
+            List<Location> locations = new List<Location>();
+            User user = _dbUser.FindByName(userName);
+            if (user != null)
+            {
+                int userId = user.UserId;
+                using (_connection = new SqlConnection(_connectionString))
+                {
+                    _connection.Open();
+                    using (SqlCommand cmd = _connection.CreateCommand())
+                    {
+                        cmd.CommandText = "SELECT * FROM Locations WHERE UserId = @UserId";
+                        cmd.Parameters.AddWithValue("UserId", userId);
+                        SqlDataReader reader = cmd.ExecuteReader();
+
+                        while (reader.Read())
+                        {
+                            int locationId = reader.GetInt32(reader.GetOrdinal("LocationId"));
+                            Location location = new Location
+                            {
+                                LocationId = locationId,
+                                LocationName = reader.GetString(reader.GetOrdinal("LocationName")),
+                                LocationDescription = reader.GetString(reader.GetOrdinal("LocationDescription")),
+                                Latitude = reader.GetDouble(reader.GetOrdinal("Latitude")),
+                                Longitude = reader.GetDouble(reader.GetOrdinal("Longitude")),
+                                Pictures = _dbPicture.FindByLocationId(locationId),
+                                Ratings = _dbRating.FindByLocationId(locationId),
+                                User = user
+                            };
+                            locations.Add(location);
+                        }
+                    }
+                    _connection.Close();
+                }
+            }
+
+            return locations;
         }
         public List<Location> FindAll()
         {

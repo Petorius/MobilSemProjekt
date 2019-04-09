@@ -8,10 +8,12 @@ namespace MobileService.Controller
     {
         private readonly DbLocation _dbLocation;
         private readonly DbTag _dbTag;
+        private readonly DbRating _dbRating;
         public LocationCtrl()
         {
             _dbLocation = new DbLocation();
             _dbTag = new DbTag();
+            _dbRating = new DbRating();
         }
 
         public int CreateLocation(Location location)
@@ -40,6 +42,16 @@ namespace MobileService.Controller
                 locations = tag.Locations;
             }
             return locations;
+        }
+
+        public List<Location> GetLocationsByUserName(string userName)
+        {
+            return _dbLocation.FindByUserName(userName);
+        }
+
+        public double GetAverageRating(int locationId)
+        {
+            return _dbRating.GetAverageRating(locationId);
         }
     }
 }

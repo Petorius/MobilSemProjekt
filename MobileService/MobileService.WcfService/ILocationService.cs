@@ -35,6 +35,18 @@ namespace MobileService.WcfService
         Location GetLocationByLocationName(string locationName);
 
         [OperationContract]
+        [WebGet(UriTemplate = "GetAverageRating/{locationId}",
+            RequestFormat = WebMessageFormat.Json,
+            ResponseFormat = WebMessageFormat.Json)]
+        double GetAverageRating(string locationId);
+
+        [OperationContract]
+        [WebGet(UriTemplate = "GetLocationsByUserName/{userName}",
+            RequestFormat = WebMessageFormat.Json,
+            ResponseFormat = WebMessageFormat.Json)]
+        List<Location> GetLocationsByUserName(string userName);
+
+        [OperationContract]
         [WebGet(UriTemplate = "GetAllLocations",
             RequestFormat = WebMessageFormat.Json,
             ResponseFormat = WebMessageFormat.Json)]

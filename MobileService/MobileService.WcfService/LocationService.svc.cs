@@ -25,8 +25,7 @@ namespace MobileService.WcfService
         public Location GetLocationById(string locationId)
         {
             _locationCtrl = new LocationCtrl();
-            int locId = 0;
-            int.TryParse(locationId, out locId);
+            int.TryParse(locationId, out int locId);
             return _locationCtrl.GetLocationById(locId);
         }
 
@@ -40,6 +39,19 @@ namespace MobileService.WcfService
         {
             _locationCtrl = new LocationCtrl();
             return _locationCtrl.GetLocationsByTagName(tagName);
+        }
+
+        public List<Location> GetLocationsByUserName(string userName)
+        {
+            _locationCtrl = new LocationCtrl();
+            return _locationCtrl.GetLocationsByUserName(userName);
+        }
+
+        public double GetAverageRating(string locationId)
+        {
+            _locationCtrl = new LocationCtrl();
+            int.TryParse(locationId, out int locId);
+            return _locationCtrl.GetAverageRating(locId);
         }
     }
 }

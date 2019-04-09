@@ -150,6 +150,54 @@ namespace MobileService.Database
             return ratings;
         }
 
+        public double GetAverageRating(int locationId)
+        {
+            double avgValue = 0;
+            using (_connection = new SqlConnection(_connectionString))
+            {
+                _connection.Open();
+                using (SqlCommand cmd = _connection.CreateCommand())
+                {
+                    cmd.CommandText = "SELECT AVG(rate) as avgRate FROM Rating WHERE LocationId = @locationId";
+                    cmd.Parameters.AddWithValue("LocationId", locationId);
+                    SqlDataReader reader = cmd.ExecuteReader();
+
+                    while (reader.Read())
+                    {
+                        if (!reader.IsDBNull(reader.GetOrdinal("avgRate")))
+                        {
+                            avgValue = reader.GetDouble(reader.GetOrdinal("avgRate"));
+                        }
+                        else
+                        {
+                            avgValue = 0;
+                        }
+                    }
+                }
+                _connection.Close();
+            }
+            return avgValue;
+        }
+
+        public void Update(Rating rating, int ratingId)
+        {
+            using (_connection = new SqlConnection(_connectionString))
+            {
+                _connection.Open();
+                using (SqlCommand cmd = _connection.CreateCommand())
+                {
+                    cmd.CommandText = "UPDATE Rating set Rate = @Rate, Comment = @Comment, " +
+                                      "LocationId = @LocationId, UserId = @UserId where RatingId = @RatingId";
+                    cmd.Parameters.AddWithValue("Rate", rating.Rate);
+                    cmd.Parameters.AddWithValue("Comment", rating.Comment);
+                    cmd.Parameters.AddWithValue("UserId", rating.User.UserId);
+                    cmd.Parameters.AddWithValue("RatingId", ratingId);
+                    cmd.ExecuteNonQuery();
+                }
+                _connection.Close();
+            }
+        }
+
         public void Delete(int ratingId)
         {
             int changes;
