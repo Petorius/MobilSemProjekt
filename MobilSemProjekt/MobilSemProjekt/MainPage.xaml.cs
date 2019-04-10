@@ -20,13 +20,16 @@ using MobilSemProjekt.MVVM.ViewModel;
 using MobilSemProjekt.View;
 using Location = MobilSemProjekt.MVVM.Model.Location;
 using System.Collections.ObjectModel;
+using System.Data.SqlTypes;
 using System.Diagnostics;
 
 namespace MobilSemProjekt {
     public partial class MainPage : ContentPage {
+        public bool StartUp = true;
+
         public MainPage() {
             InitializeComponent();
-            
+
             Content = new StackLayout() {
                 Spacing = 5,
                 Children =
@@ -35,34 +38,31 @@ namespace MobilSemProjekt {
                     OurEntry
                 }
 
+
+
             };
 
             GGMAP.MapClicked += (sender, e) => placeMarker(e);
-            
-            //    IRestService restService = new RestService();
-            //  restService.GetAllDataAsync();
 
+            if (StartUp)
+            {
+                Task task = Task.Run(async () => await GoToCurrentLocation());
+            }
 
         }
 
-        protected async override void OnAppearing()
-        {
+        protected async override void OnAppearing() {
             base.OnAppearing();
             List<Location> list = await GetLocations();
-            Debug.WriteLine("Tal her " + list.Count);
-            foreach (var location in list)
-            {
-                Debug.WriteLine(location.LocationName);
-                GGMAP.Pins.Add(new Pin
-                {
+            foreach (var location in list) {
+                GGMAP.Pins.Add(new Pin {
                     Label = location.LocationDescription,
                     Position = new Position(location.Latitude, location.Longitude)
                 });
             }
         }
 
-        private async Task<List<Location>> GetLocations()
-        {
+        private async Task<List<Location>> GetLocations() {
             IRestService restService = new RestService();
             return await restService.GetAllDataAsync();
         }
@@ -100,15 +100,14 @@ namespace MobilSemProjekt {
                                 }
                             }
                             catch (Exception exception) {
-
+                                Console.WriteLine(exception.StackTrace);
                             }
                         }
                     }
                 }
 
 
-                catch (Exception ex)
-                {
+                catch (Exception ex) {
                     Console.WriteLine(ex.StackTrace);
                     // Handle exception that may have occurred in geocoding
                 }
@@ -117,8 +116,7 @@ namespace MobilSemProjekt {
                     Label = geocodeAddress,
                     Position = new Position(e.Point.Latitude, e.Point.Longitude)
                 });
-                Location fagurt = new Location()
-                {
+                Location fagurt = new Location() {
                     LocationName = nameMarker,
                     Latitude = e.Point.Latitude,
                     Longitude = e.Point.Longitude,
@@ -130,29 +128,104 @@ namespace MobilSemProjekt {
             }
         }
 
-        private async void OurEntry_OnCompleted(object sender, EventArgs e)
-        {
+        private async void OurEntry_OnCompleted(object sender, EventArgs e) {
             List<Location> combinedList = new List<Location>();
             RestService restService = new RestService();
             var locationListVar = await restService.ReadLocationByTagNameAsync(OurEntry.Text.ToString());
             var locationVar = await restService.ReadLocationByNameAsync(OurEntry.Text.ToString());
             var locationListUserVar = await restService.GetLocationsByUserNameAsync(OurEntry.Text.ToString());
-            if (locationListVar != null)
-            {
+            if (locationListVar != null) {
                 combinedList.AddRange(locationListVar);
             }
-            if (locationVar != null)
-            {
+
+            if (locationVar != null) {
                 combinedList.Add(locationVar);
             }
 
-            if (locationListUserVar != null)
-            {
+            if (locationListUserVar != null) {
                 combinedList.AddRange(locationListUserVar);
             }
-            SearchListView searchListView = new SearchListView();
-            searchListView.locations = new ObservableCollection<Location>(combinedList);
-            await Navigation.PushAsync(searchListView);
+
+            if (combinedList.Count == 0) {
+                try {
+                    var address = OurEntry.Text.ToString();
+                    var geocodeLocationList = await Geocoding.GetLocationsAsync(address);
+                    if (geocodeLocationList != null) {
+                        foreach (var geocodeLocationVar in geocodeLocationList) {
+                            var placemarks = await Geocoding.GetPlacemarksAsync(geocodeLocationVar.Latitude,
+                                geocodeLocationVar.Longitude);
+
+                            foreach (var placemark in placemarks) {
+                                if (!string.IsNullOrWhiteSpace(placemark.CountryName) && !string.IsNullOrWhiteSpace(placemark.Locality) &&
+                                    !string.IsNullOrWhiteSpace(placemark.PostalCode) && !string.IsNullOrWhiteSpace(placemark.Thoroughfare)) {
+                                    string oldGeocodeDescription = "";
+                                    string geocodeLocationVarDescription =
+                                        $"{placemark.CountryName}, " +
+                                        $"{placemark.Locality}, " +
+                                        $"{placemark.PostalCode}, " +
+                                        $"{placemark.Thoroughfare} " +
+                                        $"{placemark.SubThoroughfare} ";
+
+                                    if (!oldGeocodeDescription.Equals(geocodeLocationVarDescription)) {
+                                        Location locationFromLocationVar = new Location();
+                                        locationFromLocationVar.Latitude = geocodeLocationVar.Latitude;
+                                        locationFromLocationVar.Longitude = geocodeLocationVar.Longitude;
+                                        locationFromLocationVar.LocationDescription = geocodeLocationVarDescription;
+                                        oldGeocodeDescription = geocodeLocationVarDescription;
+
+                                        if (combinedList.Count <= 10 && combinedList.Count > 0) {
+                                            foreach (var locationFromLocationVarInCombinedList in combinedList) {
+                                                if (locationFromLocationVarInCombinedList.Latitude !=
+                                                    locationFromLocationVar.Latitude
+                                                    && locationFromLocationVarInCombinedList.Longitude !=
+                                                    locationFromLocationVar.Longitude) {
+                                                    combinedList.Add(locationFromLocationVar);
+                                                }
+                                            }
+
+                                        }
+
+                                        if (combinedList.Count == 0) {
+                                            combinedList.Add(locationFromLocationVar);
+                                        }
+                                    }
+                                }
+                            }
+
+                        }
+                    }
+
+                }
+
+
+                catch (Exception geocodeException) {
+                    Console.WriteLine(geocodeException.StackTrace);
+                }
+            }
+
+            if (combinedList.Count > 0) {
+                SearchListView searchListView = new SearchListView();
+                searchListView.Locations = new ObservableCollection<Location>(combinedList);
+                await Navigation.PushAsync(searchListView);
+                //Location location = combinedList.First();
+                //Debug.Write("GPS punkter " + location.Latitude + " " + location.Longitude);
+            }
         }
+
+        public void GoToLocation(double Latitude, double Longitude) {
+
+
+            GGMAP.MoveToRegion(MapSpan.FromCenterAndRadius(new Position(Latitude, Longitude),
+                Distance.FromMiles(1)));
+        }
+
+        public async Task GoToCurrentLocation() {
+            var locator = CrossGeolocator.Current;
+            var position = await locator.GetPositionAsync(TimeSpan.FromSeconds(1));
+            GoToLocation(position.Latitude, position.Longitude);
+        }
+
     }
+
+
 }
