@@ -124,10 +124,10 @@ namespace MobileService.Database
             return location;
         }
 
-        public List<Location> FindByUserName(string userName)
+        public List<Location> FindLocationsByUserName(string userName)
         {
             List<Location> locations = new List<Location>();
-            User user = _dbUser.FindByName(userName);
+            User user = _dbUser.FindUserByUserName(userName, false);
             if (user != null)
             {
                 int userId = user.UserId;
@@ -242,7 +242,7 @@ namespace MobileService.Database
             bool status = changes > 0;
             if (status == false)
             {
-                throw new Exception();
+                throw new System.Exception();
                 //throw new FaultException<CustomerNotDeletedException>(new CustomerNotDeletedException(customer._phone));
             }
         }

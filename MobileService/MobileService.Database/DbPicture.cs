@@ -149,7 +149,7 @@ namespace MobileService.Database
             bool status = changes > 0;
             if (status == false)
             {
-                throw new Exception();
+                throw new System.Exception();
                 //throw new FaultException<CustomerNotDeletedException>(new CustomerNotDeletedException(customer._phone));
             }
         }

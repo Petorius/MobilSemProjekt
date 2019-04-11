@@ -3,8 +3,10 @@ using System.Collections.Generic;
 using System.Configuration;
 using System.Data.SqlClient;
 using System.Linq;
+using System.ServiceModel;
 using System.Text;
 using System.Threading.Tasks;
+using MobileService.Exception;
 using MobileService.Model;
 
 namespace MobileService.Database
@@ -68,7 +70,7 @@ namespace MobileService.Database
             return user;
         }
 
-        public User FindByName(string userName)
+        public User FindUserByUserName(string userName, bool login)
         {
             User user = null;
 
@@ -90,6 +92,15 @@ namespace MobileService.Database
                             HashPassword = reader.GetString(reader.GetOrdinal("HashPassword")),
                             Salt = reader.GetString(reader.GetOrdinal("Salt"))
                         };
+                    }
+
+                    if (user == null)
+                    {
+                        if (login)
+                        {
+                            throw new FaultException<UserOrPasswordException>(new UserOrPasswordException());
+                        }
+                        throw new FaultException<UserNotFoundException>(new UserNotFoundException(userName));
                     }
                 }
                 _connection.Close();
@@ -116,7 +127,7 @@ namespace MobileService.Database
             bool status = changes > 0;
             if (status == false)
             {
-                throw new Exception();
+                throw new System.Exception();
                 //throw new FaultException<CustomerNotDeletedException>(new CustomerNotDeletedException(customer._phone));
             }
         }
