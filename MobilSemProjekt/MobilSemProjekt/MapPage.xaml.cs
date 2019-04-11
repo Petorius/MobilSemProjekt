@@ -25,7 +25,6 @@ using System.Diagnostics;
 
 namespace MobilSemProjekt {
     public partial class MainPage : ContentPage {
-        public bool StartUp = true;
 
         public MainPage() {
             InitializeComponent();
@@ -36,18 +35,17 @@ namespace MobilSemProjekt {
                 {
                     GGMAP,
                     OurEntry
+                    
                 }
-
 
 
             };
 
+
             GGMAP.MapClicked += (sender, e) => placeMarker(e);
 
-            if (StartUp)
-            {
                 Task task = Task.Run(async () => await GoToCurrentLocation());
-            }
+            
 
         }
 

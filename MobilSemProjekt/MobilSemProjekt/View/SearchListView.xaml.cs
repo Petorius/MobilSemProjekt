@@ -44,8 +44,6 @@ namespace MobilSemProjekt.View
         {
             Location location = (Location) e.Item;
             MainPage mainPage = new MainPage();
-            mainPage.StartUp = false;
-            await Navigation.PopAsync();
             await Navigation.PushAsync(mainPage);
             mainPage.GoToLocation(location.Latitude, location.Longitude);
             Debug.WriteLine("Gå til " + location.Latitude + " " + location.Longitude);
