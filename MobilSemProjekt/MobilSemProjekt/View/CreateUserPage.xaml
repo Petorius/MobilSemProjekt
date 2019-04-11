@@ -1,0 +1,42 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="MobilSemProjekt.View.CreateUserPage">
+    <ContentPage.Content>
+        <StackLayout>
+            <StackLayout Orientation="Horizontal">
+                <Label Text="Username"
+                       VerticalOptions="CenterAndExpand" 
+                       HorizontalOptions="Start"
+                       x:Name="CreateUserNameLabel"/>
+                <Entry Placeholder="Choose a username..." 
+                       PlaceholderColor="DarkSlateGray" 
+                       x:Name="CreateUserNameEntry"
+                       HorizontalOptions="FillAndExpand"/>
+            </StackLayout>
+            <StackLayout Orientation="Horizontal">
+                <Label Text="Password"
+                       VerticalOptions="CenterAndExpand" 
+                       HorizontalOptions="Start"
+                       x:Name="CreatePasswordLabel"/>
+                <Entry Placeholder="Choose password..." 
+                       PlaceholderColor="DarkSlateGray" 
+                       x:Name="CreatePasswordEntry"
+                       HorizontalOptions="FillAndExpand"
+                       IsPassword="True"/>
+                <Entry Placeholder="Confirm password..." 
+                       PlaceholderColor="DarkSlateGray" 
+                       x:Name="CreatePasswordConfirmationEntry"
+                       HorizontalOptions="FillAndExpand"
+                       IsPassword="True"/>
+            </StackLayout>
+            <StackLayout Orientation="Horizontal">
+                <Button Text="Create account"
+                        VerticalOptions="CenterAndExpand" 
+                        HorizontalOptions="CenterAndExpand"
+                        x:Name="CreateAccountButton"
+                        Clicked="CreateAccountButton_OnClicked"/>
+            </StackLayout>
+        </StackLayout>
+    </ContentPage.Content>
+</ContentPage>

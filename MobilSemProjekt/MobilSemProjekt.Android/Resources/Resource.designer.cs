@@ -63,6 +63,8 @@ namespace MobilSemProjekt.Droid
 			global::AndroidHUD.Resource.Styleable.ProgressWheel_ahText = global::MobilSemProjekt.Droid.Resource.Styleable.ProgressWheel_ahText;
 			global::AndroidHUD.Resource.Styleable.ProgressWheel_ahTextColor = global::MobilSemProjekt.Droid.Resource.Styleable.ProgressWheel_ahTextColor;
 			global::AndroidHUD.Resource.Styleable.ProgressWheel_ahTextSize = global::MobilSemProjekt.Droid.Resource.Styleable.ProgressWheel_ahTextSize;
+			global::PCLCrypto.Resource.String.ApplicationName = global::MobilSemProjekt.Droid.Resource.String.ApplicationName;
+			global::PCLCrypto.Resource.String.Hello = global::MobilSemProjekt.Droid.Resource.String.Hello;
 			global::Xamarin.Essentials.Resource.Attribute.font = global::MobilSemProjekt.Droid.Resource.Attribute.font;
 			global::Xamarin.Essentials.Resource.Attribute.fontProviderAuthority = global::MobilSemProjekt.Droid.Resource.Attribute.fontProviderAuthority;
 			global::Xamarin.Essentials.Resource.Attribute.fontProviderCerts = global::MobilSemProjekt.Droid.Resource.Attribute.fontProviderCerts;
@@ -6434,6 +6436,12 @@ namespace MobilSemProjekt.Droid
 		public partial class String
 		{
 			
+			// aapt resource value: 0x7f0a004e
+			public const int ApplicationName = 2131361870;
+			
+			// aapt resource value: 0x7f0a004d
+			public const int Hello = 2131361869;
+			
 			// aapt resource value: 0x7f0a0026
 			public const int abc_action_bar_home_description = 2131361830;
 			
@@ -6581,8 +6589,8 @@ namespace MobilSemProjekt.Droid
 			// aapt resource value: 0x7f0a0010
 			public const int common_signin_button_text_long = 2131361808;
 			
-			// aapt resource value: 0x7f0a004d
-			public const int library_name = 2131361869;
+			// aapt resource value: 0x7f0a004f
+			public const int library_name = 2131361871;
 			
 			// aapt resource value: 0x7f0a0011
 			public const int mr_button_content_description = 2131361809;

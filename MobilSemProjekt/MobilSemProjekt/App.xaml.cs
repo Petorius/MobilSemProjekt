@@ -1,6 +1,7 @@
 ﻿using System;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
+using MobilSemProjekt.View;
 
 [assembly: XamlCompilation(XamlCompilationOptions.Compile)]
 namespace MobilSemProjekt {
@@ -8,7 +9,7 @@ namespace MobilSemProjekt {
         public App() {
             InitializeComponent();
 
-            MainPage = new NavigationPage( new MainPage());
+            MainPage = new NavigationPage( new StartUpPage());
         }
 
         protected override void OnStart() {

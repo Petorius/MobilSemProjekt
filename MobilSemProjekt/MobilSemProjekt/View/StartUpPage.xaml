@@ -1,0 +1,50 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="MobilSemProjekt.View.StartUpPage">
+    <ContentPage.Content>
+        <StackLayout>
+            <StackLayout Orientation="Horizontal">
+                <Label Text="Username"
+                VerticalOptions="CenterAndExpand" 
+                HorizontalOptions="Start"
+                x:Name="UserNameLabel"/>
+                <Entry Placeholder="Enter username..." 
+                       PlaceholderColor="DarkSlateGray" 
+                       x:Name="UserNameEntry"
+                       HorizontalOptions="FillAndExpand"/>
+            </StackLayout>
+            <StackLayout Orientation="Horizontal">
+                <Label Text="Password"
+                      VerticalOptions="CenterAndExpand" 
+                      HorizontalOptions="Start"
+                       x:Name="PasswordLabel"/>
+                <Entry Placeholder="Enter password..." 
+                       PlaceholderColor="DarkSlateGray" 
+                       x:Name="PasswordEntry"
+                       HorizontalOptions="FillAndExpand"
+                       IsPassword="True"/>
+            </StackLayout>
+            <StackLayout Orientation="Horizontal">
+                <Button Text="Sign in"
+                       VerticalOptions="CenterAndExpand" 
+                       HorizontalOptions="CenterAndExpand"
+                       x:Name="SignInButton"
+                       Clicked="SignInButton_OnClicked"/>
+                <Button Text="Create account" 
+                        VerticalOptions="CenterAndExpand" 
+                        HorizontalOptions="CenterAndExpand"
+                        x:Name="SignUpButton"
+                        Clicked="SignUpButton_OnClicked"/>
+            </StackLayout>
+            <StackLayout Orientation="Horizontal">
+                <Button Text="Continue without account" 
+                        VerticalOptions="CenterAndExpand" 
+                        HorizontalOptions="CenterAndExpand"
+                        x:Name="ContinueWithoutAccountButton"
+                        Clicked="ContinueWithoutAccountButton_OnClicked"/>
+            </StackLayout>
+
+        </StackLayout>
+    </ContentPage.Content>
+</ContentPage>
