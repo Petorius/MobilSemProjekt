@@ -18,6 +18,10 @@ namespace MobileService.Controller
         {
             _dbUser = new DbUser();
         }
+        public int CreateUser(User user)
+        {
+            return _dbUser.Create(user);
+        }
 
         public bool CompareHashes(string userName, string userHash)
         {   
@@ -55,7 +59,6 @@ namespace MobileService.Controller
             }
             return val;
         }
-
     }
 }
 

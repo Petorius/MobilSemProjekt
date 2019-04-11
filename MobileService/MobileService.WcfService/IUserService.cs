@@ -11,6 +11,13 @@ namespace MobileService.WcfService
     public interface IUserService
     {
         [OperationContract]
+        [WebInvoke(Method = "POST",
+            UriTemplate = "CreateLocation",
+            RequestFormat = WebMessageFormat.Json,
+            ResponseFormat = WebMessageFormat.Json)]
+        int CreateUser(User user);
+
+        [OperationContract]
         [WebGet(UriTemplate = "CompareHashes/{userName}/{userHash}",
             RequestFormat = WebMessageFormat.Json,
             ResponseFormat = WebMessageFormat.Json)]

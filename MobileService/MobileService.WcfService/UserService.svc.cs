@@ -10,6 +10,12 @@ namespace MobileService.WcfService
     {
         private UserCtrl _userCtrl;
 
+        public int CreateUser(User user)
+        {
+            _userCtrl = new UserCtrl();
+            return _userCtrl.CreateUser(user);
+        }
+
         public bool CompareHashes(string userName, string userHash)
         {
             _userCtrl = new UserCtrl();

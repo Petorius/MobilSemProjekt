@@ -5,8 +5,7 @@ using System.Diagnostics;
 using System.Net.Http;
 using System.Text;
 using System.Threading.Tasks;
-//using LocationServiceReference;
-using Location = MobilSemProjekt.MVVM.Model.Location;
+using MobilSemProjekt.MVVM.Model;
 
 namespace MobilSemProjekt.MVVM.ViewModel
 {
@@ -42,7 +41,7 @@ namespace MobilSemProjekt.MVVM.ViewModel
                 Debug.WriteLine("Error: you aren't catched - " + response);
             }
             catch (Exception e) {
-                Debug.WriteLine("ERROR:" + e.Message + " hej " + response);
+                Debug.WriteLine("Error: " + e.Message + " hej " + response);
             }
 
             return location;
@@ -65,7 +64,7 @@ namespace MobilSemProjekt.MVVM.ViewModel
                 Debug.WriteLine("Error: you aren't catched - " + response);
             }
             catch (Exception e) {
-                Debug.WriteLine("ERROR:" + e.Message + " hej " + response);
+                Debug.WriteLine("Error: " + e.Message + " hej " + response);
             }
 
             return Items;
@@ -120,7 +119,7 @@ namespace MobilSemProjekt.MVVM.ViewModel
             }
             catch (Exception e)
             {
-                Debug.WriteLine("ERROR:" + e.Message + " hej " + response);
+                Debug.WriteLine("Error: " + e.Message + " hej " + response);
             }
 
             return Items;
@@ -142,7 +141,7 @@ namespace MobilSemProjekt.MVVM.ViewModel
                 Debug.WriteLine("Error: you aren't catched - " + response);
             }
             catch (Exception e) {
-                Debug.WriteLine("ERROR:" + e.Message + " hej " + response);
+                Debug.WriteLine("Error: " + e.Message + " hej " + response);
             }
 
             return Items;
