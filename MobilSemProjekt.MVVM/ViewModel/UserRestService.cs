@@ -5,8 +5,7 @@ using System.Diagnostics;
 using System.Net.Http;
 using System.Text;
 using System.Threading.Tasks;
-//using LocationServiceReference;
-using Location = MobilSemProjekt.MVVM.Model.Location;
+using MobilSemProjekt.MVVM.Model;
 
 namespace MobilSemProjekt.MVVM.ViewModel
 {
@@ -14,11 +13,37 @@ namespace MobilSemProjekt.MVVM.ViewModel
     {
         private HttpClient _client;
         private const string RestUrl = "http://dmax0917.hegr.dk/";
-        public List<Location> Items { get; private set; }
+        public List<User> Items { get; private set; }
 
         public UserRestService()
         {
             _client = new HttpClient();
+        }
+
+        public async Task Create(User user)
+        {
+            // Serialize our concrete class into a JSON String
+            var stringThingy = await Task.Run(() => JsonConvert.SerializeObject(user));
+
+            // Wrap our JSON inside a StringContent which then can be used by the HttpClient class
+            var httpContent = new StringContent(stringThingy, Encoding.UTF8, "application/json");
+
+            using (var httpClient = new HttpClient())
+            {
+
+                // Do the actual request and await the response
+                var httpResponse =
+                    await httpClient.PostAsync(RestUrl + "UserService.svc/CreateUser",
+                        httpContent);
+
+                // If the response contains content we want to read it!
+                if (httpResponse.Content != null)
+                {
+                    var responseContent = await httpResponse.Content.ReadAsStringAsync();
+
+                    // From here on you could deserialize the ResponseContent back again to a concrete C# type using Json.Net
+                }
+            }
         }
 
         public async Task<bool> CompareHashes(string userName, string userHash)
