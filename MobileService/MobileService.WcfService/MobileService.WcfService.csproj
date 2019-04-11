@@ -61,13 +61,23 @@
     <Reference Include="System.Xml.Linq" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="UserService.svc" />
+    <Content Include="RatingService.svc" />
     <Content Include="LocationService.svc" />
     <Content Include="Web.config">
       <SubType>Designer</SubType>
     </Content>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="IUserService.cs" />
+    <Compile Include="IRatingService.cs" />
     <Compile Include="ILocationService.cs" />
+    <Compile Include="UserService.svc.cs">
+      <DependentUpon>UserService.svc</DependentUpon>
+    </Compile>
+    <Compile Include="RatingService.svc.cs">
+      <DependentUpon>RatingService.svc</DependentUpon>
+    </Compile>
     <Compile Include="LocationService.svc.cs">
       <DependentUpon>LocationService.svc</DependentUpon>
     </Compile>
@@ -90,6 +100,10 @@
     <ProjectReference Include="..\MobileService.Controller\MobileService.Controller.csproj">
       <Project>{B2818C85-0F67-4C01-A4B5-6744977F3559}</Project>
       <Name>MobileService.Controller</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\MobileService.Exception\MobileService.Exception.csproj">
+      <Project>{A30EF766-1A70-45E6-9BA0-69DCEEC28112}</Project>
+      <Name>MobileService.Exception</Name>
     </ProjectReference>
     <ProjectReference Include="..\MobileService.Model\MobileService.Model.csproj">
       <Project>{2B24AA55-3FB2-4B29-88C1-9274DE39E949}</Project>

@@ -16,16 +16,13 @@ namespace MobileService.Controller
             _dbRating = new DbRating();
         }
 
-
         public int CreateRating(Rating rating)
         {
             return _dbRating.Create(rating);
         }
-        public int Update(Rating rating, int id)
+        public void Update(Rating rating, int ratingId)
         {
-            return _dbRating.Update
+            _dbRating.Update(rating, ratingId);
         }
-
-
     }
 }

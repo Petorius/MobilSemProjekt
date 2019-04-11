@@ -5,11 +5,11 @@
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
     <ProductVersion>8.0.50727</ProductVersion>
     <SchemaVersion>2.0</SchemaVersion>
-    <ProjectGuid>{51B0E1D7-FA89-4C34-BBC7-BB36F44A55D6}</ProjectGuid>
+    <ProjectGuid>{A30EF766-1A70-45E6-9BA0-69DCEEC28112}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>MobileService.Database</RootNamespace>
-    <AssemblyName>MobileService.Database</AssemblyName>
+    <RootNamespace>MobileService.Exception</RootNamespace>
+    <AssemblyName>MobileService.Exception</AssemblyName>
     <ProjectTypeGuids>{3D9AD99F-2412-4246-B90B-4EAA41C64699};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
     <StartArguments>/client:"WcfTestClient.exe"</StartArguments>
     <TargetFrameworkVersion>v4.6.1</TargetFrameworkVersion>
@@ -36,7 +36,6 @@
   <ItemGroup>
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="System" />
-    <Reference Include="System.Configuration" />
     <Reference Include="System.Core" />
     <Reference Include="System.Data" />
     <Reference Include="System.Runtime.Serialization" />
@@ -45,23 +44,9 @@
     <Reference Include="System.Xml.Linq" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="DbConnection.cs" />
-    <Compile Include="DbLocation.cs" />
-    <Compile Include="DbPicture.cs" />
-    <Compile Include="DbRating.cs" />
-    <Compile Include="DbTag.cs" />
-    <Compile Include="DbUser.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-  </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\MobileService.Exception\MobileService.Exception.csproj">
-      <Project>{A30EF766-1A70-45E6-9BA0-69DCEEC28112}</Project>
-      <Name>MobileService.Exception</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\MobileService.Model\MobileService.Model.csproj">
-      <Project>{2B24AA55-3FB2-4B29-88C1-9274DE39E949}</Project>
-      <Name>MobileService.Model</Name>
-    </ProjectReference>
+    <Compile Include="UserNotFoundException.cs" />
+    <Compile Include="UserOrPasswordException.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>
