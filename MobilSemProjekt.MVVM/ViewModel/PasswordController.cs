@@ -9,20 +9,27 @@ namespace MobilSemProjekt.MVVM.ViewModel {
     public class PasswordController {
 
   
-            public static byte[] CreateSalt(int lengthInBytes) {
-                return WinRTCrypto.CryptographicBuffer.GenerateRandom(lengthInBytes);
+            public static byte[] CreateSalt(int bytes) {
+                return WinRTCrypto.CryptographicBuffer.GenerateRandom(bytes);
             }
 
 
-            public string generateSaltedAndHashedPassword(string password)
+            public string GenerateHashedPassword(string password, byte[] salt)
             {
-                byte[] salt = CreateSalt(64);
                 int iterations = 5000;
                 int keyLengthInBytes = 256;
                 byte[] key = NetFxCrypto.DeriveBytes.GetBytes(password, salt, iterations, keyLengthInBytes);
                 return Convert.ToBase64String(key);
             }
+
+            public string GenerateSalt()
+            {
+                return Convert.ToBase64String(CreateSalt(64));
+            }
+
+
+
     }
-    }
+}
 
 
