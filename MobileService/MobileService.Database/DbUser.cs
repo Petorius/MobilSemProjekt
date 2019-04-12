@@ -1,11 +1,6 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Configuration;
 using System.Data.SqlClient;
-using System.Linq;
 using System.ServiceModel;
-using System.Text;
-using System.Threading.Tasks;
 using MobileService.Exception;
 using MobileService.Model;
 
@@ -28,8 +23,8 @@ namespace MobileService.Database
 
                 using (SqlCommand cmd = _connection.CreateCommand())
                 {
-                    cmd.CommandText = "INSERT INTO [User](rate, comment) VALUES " +
-                                      "(@rate, @comment); ";
+                    cmd.CommandText = "INSERT INTO [User](UserName, HashPassword, Salt) VALUES " +
+                                      "(@UserName, @HashPassword, @Salt); ";
                     cmd.Parameters.AddWithValue("UserName", user.UserName);
                     cmd.Parameters.AddWithValue("HashPassword", user.HashPassword);
                     cmd.Parameters.AddWithValue("Salt", user.Salt);

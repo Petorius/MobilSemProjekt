@@ -13,6 +13,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MobileService.Service", "Mo
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MobileService.WcfService", "MobileService.WcfService\MobileService.WcfService.csproj", "{A500AAEA-C690-49C7-9EE9-F069C5CA6CAE}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MobileService.Exception", "MobileService.Exception\MobileService.Exception.csproj", "{A30EF766-1A70-45E6-9BA0-69DCEEC28112}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -39,6 +41,10 @@ Global
 		{A500AAEA-C690-49C7-9EE9-F069C5CA6CAE}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{A500AAEA-C690-49C7-9EE9-F069C5CA6CAE}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{A500AAEA-C690-49C7-9EE9-F069C5CA6CAE}.Release|Any CPU.Build.0 = Release|Any CPU
+		{A30EF766-1A70-45E6-9BA0-69DCEEC28112}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A30EF766-1A70-45E6-9BA0-69DCEEC28112}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A30EF766-1A70-45E6-9BA0-69DCEEC28112}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A30EF766-1A70-45E6-9BA0-69DCEEC28112}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

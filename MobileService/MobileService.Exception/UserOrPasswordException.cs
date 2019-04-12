@@ -8,11 +8,16 @@ namespace MobileService.Exception
     public class UserOrPasswordException
     {
         [DataMember]
-        public string Message { get; set; }
+        public string ReturnMessage { get; set; }
 
         public UserOrPasswordException()
         {
-            Message = $"Brugernavnet eller koden er forkert.";
+            ReturnMessage = $"Brugernavnet eller koden er forkert.";
+        }
+
+        public override string ToString()
+        {
+            return ReturnMessage;
         }
     }
 }
