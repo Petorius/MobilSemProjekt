@@ -12,7 +12,7 @@ namespace MobilSemProjekt.MVVM.ViewModel
     public class UserRestService : IUserRestService
     {
         private HttpClient _client;
-        private const string RestUrl = "http://dmax0917.hegr.dk/";
+        private const string RestUrl = "http://localhost:24090/";
         public List<User> Items { get; private set; }
 
         public UserRestService()
@@ -24,23 +24,23 @@ namespace MobilSemProjekt.MVVM.ViewModel
         {
             // Serialize our concrete class into a JSON String
             var stringThingy = await Task.Run(() => JsonConvert.SerializeObject(user));
-
+            Debug.WriteLine("Welcome "+ user.UserName + " " + user.HashPassword + " " + user.Salt);
             // Wrap our JSON inside a StringContent which then can be used by the HttpClient class
             var httpContent = new StringContent(stringThingy, Encoding.UTF8, "application/json");
-
+            Debug.WriteLine("Welcome-1");
             using (var httpClient = new HttpClient())
             {
-
+                Debug.WriteLine("Welcome0");
                 // Do the actual request and await the response
                 var httpResponse =
                     await httpClient.PostAsync(RestUrl + "UserService.svc/CreateUser",
                         httpContent);
-
+                Debug.WriteLine("Welcome1");
                 // If the response contains content we want to read it!
                 if (httpResponse.Content != null)
                 {
                     var responseContent = await httpResponse.Content.ReadAsStringAsync();
-
+                    Debug.WriteLine("Welcome2");
                     // From here on you could deserialize the ResponseContent back again to a concrete C# type using Json.Net
                 }
             }

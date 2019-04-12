@@ -4,24 +4,14 @@ using System.Threading.Tasks;
 using Xamarin.Forms;
 using Xamarin.Forms.GoogleMaps;
 using Plugin.Geolocator;
-using Xamarin.Forms.Internals;
-using SQLite;
 using Xamarin.Essentials;
 using System.Linq;
 using MobilSemProjekt.MVVM.ViewModel;
 using Acr.UserDialogs;
-using System.Net;
-using System.IO;
 using MobilSemProjekt.MVVM.Model;
-using Newtonsoft.Json;
-using System.Net.Http;
-using System.Text;
-using MobilSemProjekt.MVVM.ViewModel;
 using MobilSemProjekt.View;
-using Location = MobilSemProjekt.MVVM.Model.Location;
 using System.Collections.ObjectModel;
-using System.Data.SqlTypes;
-using System.Diagnostics;
+using Location = MobilSemProjekt.MVVM.Model.Location;
 
 namespace MobilSemProjekt {
     public partial class MainPage : ContentPage {
@@ -42,7 +32,7 @@ namespace MobilSemProjekt {
             };
 
 
-            GGMAP.MapClicked += (sender, e) => placeMarker(e);
+            GGMAP.MapClicked += (sender, e) => PlaceMarker(e);
 
                 Task task = Task.Run(async () => await GoToCurrentLocation());
             
@@ -65,7 +55,7 @@ namespace MobilSemProjekt {
             return await restService.GetAllDataAsync();
         }
 
-        private async void placeMarker(MapClickedEventArgs e) {
+        private async void PlaceMarker(MapClickedEventArgs e) {
             var answer = await DisplayAlert("Marker", "Would you like to place a marker", "Yes", "No");
             string geocodeAddress = "";
             string nameMarker = "";

@@ -12,7 +12,7 @@ namespace MobileService.WcfService
     {
         [OperationContract]
         [WebInvoke(Method = "POST",
-            UriTemplate = "CreateLocation",
+            UriTemplate = "CreateUser",
             RequestFormat = WebMessageFormat.Json,
             ResponseFormat = WebMessageFormat.Json)]
         int CreateUser(User user);
