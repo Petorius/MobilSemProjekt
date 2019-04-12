@@ -20,29 +20,44 @@ namespace MobilSemProjekt.MVVM.ViewModel
             _client = new HttpClient();
         }
 
-        public async Task Create(User user)
+        public async Task Create(User user0)
         {
+            User user = new User()
+            {
+                UserName = "New Larsy",
+                HashPassword = "kokain",
+                Salt = "pulver"
+            };
+
             // Serialize our concrete class into a JSON String
             var stringThingy = await Task.Run(() => JsonConvert.SerializeObject(user));
-            Debug.WriteLine("Welcome "+ user.UserName + " " + user.HashPassword + " " + user.Salt);
+
             // Wrap our JSON inside a StringContent which then can be used by the HttpClient class
             var httpContent = new StringContent(stringThingy, Encoding.UTF8, "application/json");
-            Debug.WriteLine("Welcome-1");
+
             using (var httpClient = new HttpClient())
             {
-                Debug.WriteLine("Welcome0");
+
                 // Do the actual request and await the response
                 var httpResponse =
                     await httpClient.PostAsync(RestUrl + "UserService.svc/CreateUser",
                         httpContent);
-                Debug.WriteLine("Welcome1");
-                // If the response contains content we want to read it!
-                if (httpResponse.Content != null)
+                try
                 {
-                    var responseContent = await httpResponse.Content.ReadAsStringAsync();
-                    Debug.WriteLine("Lille Ole i skoven: " + responseContent);
-                    Debug.WriteLine("Welcome2");
-                    // From here on you could deserialize the ResponseContent back again to a concrete C# type using Json.Net
+                    // If the response contains content we want to read it!
+                    if (httpResponse.IsSuccessStatusCode)
+                    {
+                        //var responseContent = await httpResponse.Content.ReadAsStringAsync();
+                        Debug.WriteLine("Success!");
+                    }
+                    else
+                    {
+                        Debug.WriteLine("Failure");
+                    }
+                }
+                catch (Exception e)
+                {
+                    Debug.WriteLine("Error: " + e.Message);
                 }
             }
         }

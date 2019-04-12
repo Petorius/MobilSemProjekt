@@ -87,12 +87,22 @@ namespace MobilSemProjekt.MVVM.ViewModel
                     await httpClient.PostAsync(RestUrl + "LocationService.svc/CreateLocation",
                         httpContent);
 
-                // If the response contains content we want to read it!
-                if (httpResponse.Content != null)
+                try
                 {
-                    var responseContent = await httpResponse.Content.ReadAsStringAsync();
-
-                    // From here on you could deserialize the ResponseContent back again to a concrete C# type using Json.Net
+                    // If the response contains content we want to read it!
+                    if (httpResponse.IsSuccessStatusCode)
+                    {
+                        //var responseContent = await httpResponse.Content.ReadAsStringAsync();
+                        Debug.WriteLine("Success!");
+                    }
+                    else
+                    {
+                        Debug.WriteLine("Failure");
+                    }
+                }
+                catch (Exception e)
+                {
+                    Debug.WriteLine("Error: " + e.Message);
                 }
             }
         }
