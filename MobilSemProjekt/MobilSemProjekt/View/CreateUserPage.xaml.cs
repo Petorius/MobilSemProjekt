@@ -20,7 +20,7 @@ namespace MobilSemProjekt.View
 			InitializeComponent ();
 		}
 
-        private void CreateAccountButton_OnClicked(object sender, EventArgs e)
+        private async void CreateAccountButton_OnClicked(object sender, EventArgs e)
         {
             if (CreatePasswordEntry.Text.ToString().Equals(CreatePasswordConfirmationEntry.Text.ToString()))
             {
@@ -30,7 +30,7 @@ namespace MobilSemProjekt.View
                 user.Salt = passwordController.GenerateSalt();
                 user.HashPassword = passwordController.GenerateHashedPassword(CreatePasswordEntry.Text.ToString(), Encoding.ASCII.GetBytes(user.Salt));
                 IUserRestService userRestService = new UserRestService();
-                userRestService.Create(user);
+                await userRestService.Create(user);
                 Debug.WriteLine("Hashes and salt be here: " + user.HashPassword + " " + user.Salt);
             }
             else

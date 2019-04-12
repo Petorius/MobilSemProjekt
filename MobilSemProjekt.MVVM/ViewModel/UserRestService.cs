@@ -12,7 +12,7 @@ namespace MobilSemProjekt.MVVM.ViewModel
     public class UserRestService : IUserRestService
     {
         private HttpClient _client;
-        private const string RestUrl = "http://localhost:24090/";
+        private const string RestUrl = "http://dmax0917.hegr.dk/";
         public List<User> Items { get; private set; }
 
         public UserRestService()
@@ -40,6 +40,7 @@ namespace MobilSemProjekt.MVVM.ViewModel
                 if (httpResponse.Content != null)
                 {
                     var responseContent = await httpResponse.Content.ReadAsStringAsync();
+                    Debug.WriteLine("Lille Ole i skoven: " + responseContent);
                     Debug.WriteLine("Welcome2");
                     // From here on you could deserialize the ResponseContent back again to a concrete C# type using Json.Net
                 }
