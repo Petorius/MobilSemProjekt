@@ -15,7 +15,6 @@ using Location = MobilSemProjekt.MVVM.Model.Location;
 
 namespace MobilSemProjekt {
     public partial class MainPage : ContentPage {
-
         public MainPage() {
             InitializeComponent();
 
@@ -23,27 +22,20 @@ namespace MobilSemProjekt {
                 Spacing = 5,
                 Children =
                 {
-                    GGMAP,
+                    GoogleMap,
                     OurEntry
-                    
                 }
-
-
             };
 
-
-            GGMAP.MapClicked += (sender, e) => PlaceMarker(e);
-
-                Task task = Task.Run(async () => await GoToCurrentLocation());
-            
-
+            GoogleMap.MapClicked += (sender, e) => PlaceMarker(e);
+            Task.Run(async () => await GoToCurrentLocation());
         }
 
-        protected async override void OnAppearing() {
+        protected override async void OnAppearing() {
             base.OnAppearing();
             List<Location> list = await GetLocations();
             foreach (var location in list) {
-                GGMAP.Pins.Add(new Pin {
+                GoogleMap.Pins.Add(new Pin {
                     Label = location.LocationDescription,
                     Position = new Position(location.Latitude, location.Longitude)
                 });
@@ -93,25 +85,23 @@ namespace MobilSemProjekt {
                         }
                     }
                 }
-
-
                 catch (Exception ex) {
                     Console.WriteLine(ex.StackTrace);
                     // Handle exception that may have occurred in geocoding
                 }
 
-                GGMAP.Pins.Add(new Pin {
+                GoogleMap.Pins.Add(new Pin {
                     Label = geocodeAddress,
                     Position = new Position(e.Point.Latitude, e.Point.Longitude)
                 });
-                Location fagurt = new Location() {
+                Location location = new Location() {
                     LocationName = nameMarker,
                     Latitude = e.Point.Latitude,
                     Longitude = e.Point.Longitude,
                     LocationDescription = geocodeAddress
                 };
-                MVVM.ViewModel.IRestService restService = new MVVM.ViewModel.RestService();
-                await restService.Create(fagurt);
+                IRestService restService = new RestService();
+                await restService.Create(location);
                 //To be added: InfoWindow that contain most of the description and are tied to markers..
             }
         }
@@ -155,19 +145,20 @@ namespace MobilSemProjekt {
                                         $"{placemark.SubThoroughfare} ";
 
                                     if (!oldGeocodeDescription.Equals(geocodeLocationVarDescription)) {
-                                        Location locationFromLocationVar = new Location();
-                                        locationFromLocationVar.Latitude = geocodeLocationVar.Latitude;
-                                        locationFromLocationVar.Longitude = geocodeLocationVar.Longitude;
-                                        locationFromLocationVar.LocationDescription = geocodeLocationVarDescription;
-                                        oldGeocodeDescription = geocodeLocationVarDescription;
+                                        Location locationFromLocationVar = new Location()
+                                        {
+                                            Latitude = geocodeLocationVar.Latitude,
+                                            Longitude = geocodeLocationVar.Longitude,
+                                            LocationDescription = geocodeLocationVarDescription
+                                        };
+                                        
+                                        //oldGeocodeDescription = geocodeLocationVarDescription;
 
                                         if (combinedList.Count <= 10 && combinedList.Count > 0) {
                                             foreach (var locationFromLocationVarInCombinedList in combinedList) {
-                                                if (locationFromLocationVarInCombinedList.Latitude !=
-                                                    locationFromLocationVar.Latitude
-                                                    && locationFromLocationVarInCombinedList.Longitude !=
-                                                    locationFromLocationVar.Longitude) {
-                                                    combinedList.Add(locationFromLocationVar);
+                                                if (Math.Abs(locationFromLocationVarInCombinedList.Latitude - locationFromLocationVar.Latitude) > 0.001
+                                                    && Math.Abs(locationFromLocationVarInCombinedList.Longitude - locationFromLocationVar.Longitude) > 0.001) {
+                                                        combinedList.Add(locationFromLocationVar);
                                                 }
                                             }
 
@@ -203,7 +194,7 @@ namespace MobilSemProjekt {
         public void GoToLocation(double Latitude, double Longitude) {
 
 
-            GGMAP.MoveToRegion(MapSpan.FromCenterAndRadius(new Position(Latitude, Longitude),
+            GoogleMap.MoveToRegion(MapSpan.FromCenterAndRadius(new Position(Latitude, Longitude),
                 Distance.FromMiles(1)));
         }
 

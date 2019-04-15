@@ -16,10 +16,10 @@ namespace MobileService.WcfService
             return _userCtrl.CreateUser(user);
         }
 
-        public bool CompareHashes(string userName, string userHash)
+        public bool CompareHashes(User user)
         {
             _userCtrl = new UserCtrl();
-            return _userCtrl.CompareHashes(userName, userHash);
+            return _userCtrl.CompareHashes(user.UserName, user.HashPassword);
         }
 
         public string FindSaltByUserName(string userName)

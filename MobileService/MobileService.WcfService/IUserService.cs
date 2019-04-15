@@ -18,12 +18,13 @@ namespace MobileService.WcfService
         int CreateUser(User user);
 
         [OperationContract]
-        [WebGet(UriTemplate = "CompareHashes/{userName}/{userHash}",
+        [WebInvoke(Method = "POST",
+            UriTemplate = "CompareHashes",
             RequestFormat = WebMessageFormat.Json,
             ResponseFormat = WebMessageFormat.Json)]
         [FaultContract(typeof(UserNotFoundException))]
         [FaultContract(typeof(UserOrPasswordException))]
-        bool CompareHashes(string userName, string userHash);
+        bool CompareHashes(User user);
         
         [OperationContract]
         [WebGet(UriTemplate = "FindSaltByUserName/{userName}",

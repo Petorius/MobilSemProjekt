@@ -3,7 +3,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-
+using Android.OS;
+using MobilSemProjekt.MVVM.ViewModel;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
 
@@ -32,8 +33,11 @@ namespace MobilSemProjekt.View
 
         private void SignInButton_OnClicked(object sender, EventArgs e)
         {
-            
-
+            var uName = UserNameEntry.Text;
+            var pWord = PasswordEntry.Text;
+            Console.WriteLine("Ib is a Console!");
+            PasswordController pCtrl = new PasswordController();
+            pCtrl.VerifyLogin(uName, pWord);
         }
     }
 }

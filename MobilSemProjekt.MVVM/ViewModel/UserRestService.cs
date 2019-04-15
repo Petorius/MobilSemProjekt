@@ -20,15 +20,8 @@ namespace MobilSemProjekt.MVVM.ViewModel
             _client = new HttpClient();
         }
 
-        public async Task Create(User user0)
+        public async Task Create(User user)
         {
-            User user = new User()
-            {
-                UserName = "New Larsy",
-                HashPassword = "kokain",
-                Salt = "pulver"
-            };
-
             // Serialize our concrete class into a JSON String
             var stringThingy = await Task.Run(() => JsonConvert.SerializeObject(user));
 
@@ -62,31 +55,45 @@ namespace MobilSemProjekt.MVVM.ViewModel
             }
         }
 
-        public async Task<bool> CompareHashes(string userName, string userHash)
+        public async Task<bool> CompareHashes(User user)
         {
+            // Serialize our concrete class into a JSON String
+            var stringThingy = await Task.Run(() => JsonConvert.SerializeObject(user));
             bool result = false;
-            string locService = "UserService.svc/CompareHashes/" + userName + "/" + userHash;
-            var uri = new Uri(string.Format(RestUrl + locService));
-            var response = new HttpResponseMessage();
-            try
-            {
-                response = await _client.GetAsync(uri);
-                if (response.IsSuccessStatusCode)
-                {
-                    var content = await response.Content.ReadAsStringAsync();
-                    result = JsonConvert.DeserializeObject<bool>(content);
-                }
+            // Wrap our JSON inside a StringContent which then can be used by the HttpClient class
+            var httpContent = new StringContent(stringThingy, Encoding.UTF8, "application/json");
 
-                Debug.WriteLine("Error: you aren't catched - the result is: " + response);
-            }
-            catch (Exception e)
+            using (var httpClient = new HttpClient())
             {
-                Debug.WriteLine("Error: " + e.Message);
+                // Do the actual request and await the response
+                var httpResponse =
+                    await httpClient.PostAsync(RestUrl + "UserService.svc/CompareHashes",
+                        httpContent);
+                try
+                {
+                    // If the response contains content we want to read it!
+                    if (httpResponse.IsSuccessStatusCode)
+                    {
+                        //var responseContent = await httpResponse.Content.ReadAsStringAsync();
+                        Debug.WriteLine("Success!");
+                    
+                        var content = await httpResponse.Content.ReadAsStringAsync();
+                        result = JsonConvert.DeserializeObject<bool>(content);
+                    }
+                    else
+                    {
+                        Debug.WriteLine("Failure");
+                    }
+                }
+                catch (Exception e)
+                {
+                    Debug.WriteLine("Error: " + e.Message);
+                }
             }
 
             return result;
         }
-
+        
         public async Task<string> FindSaltByUserName(string userName)
         {
             string result = "";
