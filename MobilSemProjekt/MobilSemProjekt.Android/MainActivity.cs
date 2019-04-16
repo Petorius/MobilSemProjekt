@@ -8,8 +8,7 @@ using System.IO;
 using Acr.UserDialogs;
 
 namespace MobilSemProjekt.Droid {
-    [Activity(Label = "XamarinMapsGarbage", Icon = "@mipmap/icon", Theme = "@style/MainTheme", MainLauncher = true,
-        ConfigurationChanges = ConfigChanges.ScreenSize | ConfigChanges.Orientation)]
+    [Activity(Label = "LocationXamarinMaps", Icon = "@mipmap/icon", Theme = "@style/MainTheme", MainLauncher = true,        ConfigurationChanges = ConfigChanges.ScreenSize | ConfigChanges.Orientation)]
     public class MainActivity : global::Xamarin.Forms.Platform.Android.FormsAppCompatActivity {
 
         readonly string[] PermissionsLocation =

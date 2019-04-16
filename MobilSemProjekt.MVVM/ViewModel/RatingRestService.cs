@@ -54,9 +54,9 @@ namespace MobilSemProjekt.MVVM.ViewModel
             }
         }
 
-        public async Task<int> GetAverageRating(Location location)
+        public async Task<double> GetAverageRating(Location location)
         {
-            int result = 0;
+            double result = 0;
             string locService = "RatingService.svc/GetAverageRating/" + location.LocationId;
             var uri = new Uri(string.Format(RestUrl + locService));
             var response = new HttpResponseMessage();
@@ -66,7 +66,7 @@ namespace MobilSemProjekt.MVVM.ViewModel
                 if (response.IsSuccessStatusCode)
                 {
                     var content = await response.Content.ReadAsStringAsync();
-                    result = JsonConvert.DeserializeObject<int>(content);
+                    result = JsonConvert.DeserializeObject<double>(content);
                 }
 
                 Debug.WriteLine("Error: you aren't catched - the result is: " + result);
@@ -79,7 +79,7 @@ namespace MobilSemProjekt.MVVM.ViewModel
             return result;
         }
 
-        public async Task Update(Rating rating, int ratingId)
+        public Task Update(Rating rating, int ratingId) //TOBE async
         {
             throw new NotImplementedException();
         }

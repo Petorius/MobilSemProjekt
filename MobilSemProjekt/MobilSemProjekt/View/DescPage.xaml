@@ -10,7 +10,7 @@
             <Label x:Name="locationName" Text="{Binding LocationName}" />
             <Label x:Name="locationDesc" Text="{Binding LocationDescription}" />
             <StackLayout x:Name="starBar" Orientation="Horizontal">
-                <Image x:Name="star1" Aspect="AspectFit" Cl />
+                <Image x:Name="star1" Aspect="AspectFit" />
                 <Image x:Name="star2" Aspect="AspectFit" />
                 <Image x:Name="star3" Aspect="AspectFit" />
                 <Image x:Name="star4" Aspect="AspectFit" />
