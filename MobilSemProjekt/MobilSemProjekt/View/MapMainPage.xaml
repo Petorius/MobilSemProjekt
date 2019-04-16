@@ -2,13 +2,13 @@
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:local="clr-namespace:MobilSemProjekt"
-             x:Class="MobilSemProjekt.MainPage"
+             x:Class="MobilSemProjekt.View.MapMainPage"
              xmlns:maps="clr-namespace:Xamarin.Forms.GoogleMaps;assembly=Xamarin.Forms.GoogleMaps">
 
     <StackLayout>
         <maps:Map 
-                  x:Name="GoogleMap"
-                  MyLocationEnabled="True"
+            x:Name="GoogleMap"
+            MyLocationEnabled="True"
             Margin="0,0,0,0"/>
         <Entry x:Name="OurEntry" Placeholder="Søg..." PlaceholderColor="LightSlateGray" Completed="OurEntry_OnCompleted"/>
     </StackLayout>

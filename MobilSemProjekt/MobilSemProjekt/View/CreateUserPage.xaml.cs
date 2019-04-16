@@ -27,9 +27,11 @@ namespace MobilSemProjekt.View
                 PasswordController passwordController = new PasswordController();
                 IUserRestService userRestService = new UserRestService();
 
-                User user = new User();
-                user.UserName = CreateUserNameEntry.Text;
-                user.Salt = passwordController.GenerateSalt();
+                User user = new User
+                {
+                    UserName = CreateUserNameEntry.Text,
+                    Salt = passwordController.GenerateSalt()
+                };
                 user.HashPassword = passwordController.GenerateHashedPassword(CreatePasswordEntry.Text, Encoding.ASCII.GetBytes(user.Salt));
                 
                 await userRestService.Create(user);
