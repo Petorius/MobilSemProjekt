@@ -36,8 +36,10 @@ namespace MobilSemProjekt {
             List<Location> list = await GetLocations();
             foreach (var location in list) {
                 GoogleMap.Pins.Add(new Pin {
-                    Label = location.LocationDescription,
-                    Position = new Position(location.Latitude, location.Longitude)
+                    Label = location.LocationName,
+                    Position = new Position(location.Latitude, location.Longitude),
+                    Address = location.LocationDescription
+                    //Burde opdateres til at tage en location address
                 });
             }
         }
