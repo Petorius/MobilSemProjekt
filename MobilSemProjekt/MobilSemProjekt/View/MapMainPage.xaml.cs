@@ -30,6 +30,19 @@ namespace MobilSemProjekt {
             
             GoogleMap.MapClicked += (sender, e) => PlaceMarker(e);
             Task.Run(async () => await GoToCurrentLocation());
+            GoogleMap.PinClicked += (sender, e) => OnTouchAsync(e);
+        }
+        
+        private async void OnTouchAsync(PinClickedEventArgs e)
+        {
+            RestService restservice = new RestService();
+            Location location = await restservice.ReadLocationByNameAsync(e.Pin.Label);
+         
+            var Page = new DescPage();
+            Page.Location = location;
+                //.BindingContext = new{location.LocationName, location.LocationDescription};
+
+            await Navigation.PushAsync(Page);
         }
 
         protected override async void OnAppearing() {
@@ -106,6 +119,7 @@ namespace MobilSemProjekt {
                 };
                 IRestService restService = new RestService();
                 await restService.Create(location);
+                
                 //To be added: InfoWindow that contain most of the description and are tied to markers..
             }
         }

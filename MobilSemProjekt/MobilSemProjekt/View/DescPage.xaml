@@ -1,0 +1,21 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="MobilSemProjekt.View.DescPage">
+
+    <ContentPage.Content>
+
+        <StackLayout Orientation="Vertical" >
+            <Image x:Name="picture" Aspect="AspectFit" />
+            <Label x:Name="locationName" Text="{Binding LocationName}" />
+            <Label x:Name="locationDesc" Text="{Binding LocationDescription}" />
+            <StackLayout Orientation="Horizontal">
+                <Image x:Name="star1" Aspect="AspectFit" />
+                <Image x:Name="star2" Aspect="AspectFit" />
+                <Image x:Name="star3" Aspect="AspectFit" />
+                <Image x:Name="star4" Aspect="AspectFit" />
+                <Image x:Name="star5" Aspect="AspectFit" />
+            </StackLayout>
+        </StackLayout>
+    </ContentPage.Content>
+</ContentPage>
