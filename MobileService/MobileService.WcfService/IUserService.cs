@@ -18,6 +18,13 @@ namespace MobileService.WcfService
         int CreateUser(User user);
 
         [OperationContract]
+        [WebGet(UriTemplate = "FindByUserName/{userName}",
+            RequestFormat = WebMessageFormat.Json,
+            ResponseFormat = WebMessageFormat.Json)]
+        [FaultContract(typeof(UserNotFoundException))]
+        User FindByUserName(string userName);
+
+        [OperationContract]
         [WebInvoke(Method = "POST",
             UriTemplate = "CompareHashes",
             RequestFormat = WebMessageFormat.Json,

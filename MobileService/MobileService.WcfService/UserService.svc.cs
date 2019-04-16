@@ -27,5 +27,11 @@ namespace MobileService.WcfService
             _userCtrl = new UserCtrl();
             return _userCtrl.FindSaltByUserName(userName);
         }
+
+        public User FindByUserName(string userName)
+        {
+            _userCtrl = new UserCtrl();
+            return _userCtrl.FindByUserName(userName);
+        }
     }
 }

@@ -8,13 +8,14 @@ using Xamarin.Essentials;
 using System.Linq;
 using MobilSemProjekt.MVVM.ViewModel;
 using Acr.UserDialogs;
-using MobilSemProjekt.MVVM.Model;
 using MobilSemProjekt.View;
 using System.Collections.ObjectModel;
+using MobilSemProjekt.MVVM.Model;
 using Location = MobilSemProjekt.MVVM.Model.Location;
 
 namespace MobilSemProjekt {
     public partial class MainPage : ContentPage {
+        public User User { private get; set; }
         public MainPage() {
             InitializeComponent();
 
@@ -26,7 +27,7 @@ namespace MobilSemProjekt {
                     OurEntry
                 }
             };
-
+            
             GoogleMap.MapClicked += (sender, e) => PlaceMarker(e);
             Task.Run(async () => await GoToCurrentLocation());
         }
@@ -100,7 +101,8 @@ namespace MobilSemProjekt {
                     LocationName = nameMarker,
                     Latitude = e.Point.Latitude,
                     Longitude = e.Point.Longitude,
-                    LocationDescription = geocodeAddress
+                    LocationDescription = geocodeAddress,
+                    User = User
                 };
                 IRestService restService = new RestService();
                 await restService.Create(location);
@@ -163,7 +165,6 @@ namespace MobilSemProjekt {
                                                         combinedList.Add(locationFromLocationVar);
                                                 }
                                             }
-
                                         }
 
                                         if (combinedList.Count == 0) {
@@ -172,13 +173,10 @@ namespace MobilSemProjekt {
                                     }
                                 }
                             }
-
                         }
                     }
-
                 }
-
-
+                
                 catch (Exception geocodeException) {
                     Console.WriteLine(geocodeException.StackTrace);
                 }
@@ -194,8 +192,6 @@ namespace MobilSemProjekt {
         }
 
         public void GoToLocation(double Latitude, double Longitude) {
-
-
             GoogleMap.MoveToRegion(MapSpan.FromCenterAndRadius(new Position(Latitude, Longitude),
                 Distance.FromMiles(1)));
         }

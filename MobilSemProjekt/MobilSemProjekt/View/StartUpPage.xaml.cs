@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Android.OS;
+using MobilSemProjekt.MVVM.Model;
 using MobilSemProjekt.MVVM.ViewModel;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
@@ -12,10 +14,14 @@ namespace MobilSemProjekt.View
 	[XamlCompilation(XamlCompilationOptions.Compile)]
 	public partial class StartUpPage : ContentPage
 	{
-		public StartUpPage ()
+	    private MainPage MapMainPage;
+
+        public StartUpPage ()
 		{
 			InitializeComponent ();
-		}
+		    MapMainPage = new MainPage();
+		    MapMainPage.User = null;
+        }
 
         private async void ContinueWithoutAccountButton_OnClicked(object sender, EventArgs e)
         {
@@ -30,13 +36,24 @@ namespace MobilSemProjekt.View
             await Navigation.PushAsync(createUserPage);
         }
 
-        private void SignInButton_OnClicked(object sender, EventArgs e)
+        private async void SignInButton_OnClicked(object sender, EventArgs e)
         {
             var uName = UserNameEntry.Text;
             var pWord = PasswordEntry.Text;
-            Console.WriteLine("Ib is a Console!");
             PasswordController pCtrl = new PasswordController();
-            pCtrl.VerifyLogin(uName, pWord);
+            bool status = await pCtrl.VerifyLogin(uName, pWord);
+            if (status)
+            {
+                IUserRestService restService = new UserRestService();
+                User user = await restService.FindByUserName(uName);
+
+                if (user != null)
+                {
+                    MapMainPage.User = user;
+                    await Navigation.PushAsync(MapMainPage);
+                }
+            }
+            
         }
     }
 }

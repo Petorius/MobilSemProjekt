@@ -33,6 +33,11 @@ namespace MobileService.Controller
             return true;
         }
 
+        public User FindByUserName(string userName)
+        {
+            return _dbUser.FindUserByUserName(userName, false);
+        }
+
         private User FindUserForLogin(string userName)
         {
             return _dbUser.FindUserByUserName(userName, true);
