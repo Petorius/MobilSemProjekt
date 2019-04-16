@@ -7,6 +7,7 @@ namespace MobilSemProjekt.MVVM.ViewModel
     public interface IUserRestService
     {
         Task Create(User user);
+        Task<User> FindByUserName(string userName);
         Task<bool> CompareHashes(User userToCompare);
         Task<string> FindSaltByUserName(string userName);
     }

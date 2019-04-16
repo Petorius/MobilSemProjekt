@@ -22,14 +22,16 @@ namespace MobilSemProjekt.View
 
         private async void CreateAccountButton_OnClicked(object sender, EventArgs e)
         {
-            if (CreatePasswordEntry.Text.ToString().Equals(CreatePasswordConfirmationEntry.Text.ToString()))
+            if (CreatePasswordEntry.Text.Equals(CreatePasswordConfirmationEntry.Text))
             {
-                User user = new User();
-                user.UserName = CreateUserNameEntry.Text.ToString();
                 PasswordController passwordController = new PasswordController();
-                user.Salt = passwordController.GenerateSalt();
-                user.HashPassword = passwordController.GenerateHashedPassword(CreatePasswordEntry.Text.ToString(), Encoding.ASCII.GetBytes(user.Salt));
                 IUserRestService userRestService = new UserRestService();
+
+                User user = new User();
+                user.UserName = CreateUserNameEntry.Text;
+                user.Salt = passwordController.GenerateSalt();
+                user.HashPassword = passwordController.GenerateHashedPassword(CreatePasswordEntry.Text, Encoding.ASCII.GetBytes(user.Salt));
+                
                 await userRestService.Create(user);
                 Debug.WriteLine("Hashes and salt be here: " + user.HashPassword + " " + user.Salt);
             }

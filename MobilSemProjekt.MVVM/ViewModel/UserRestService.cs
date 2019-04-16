@@ -93,7 +93,32 @@ namespace MobilSemProjekt.MVVM.ViewModel
 
             return result;
         }
-        
+
+        public async Task<User> FindByUserName(string userName)
+        {
+            User result = null;
+            string locService = "UserService.svc/FindByUserName/" + userName;
+            var uri = new Uri(string.Format(RestUrl + locService));
+            var response = new HttpResponseMessage();
+            try
+            {
+                response = await _client.GetAsync(uri);
+                if (response.IsSuccessStatusCode)
+                {
+                    var content = await response.Content.ReadAsStringAsync();
+                    result = JsonConvert.DeserializeObject<User>(content);
+                }
+
+                Debug.WriteLine("Error: you aren't catched - the result is: " + result);
+            }
+            catch (Exception e)
+            {
+                Debug.WriteLine("Error: " + e.Message);
+            }
+
+            return result;
+        }
+
         public async Task<string> FindSaltByUserName(string userName)
         {
             string result = "";
