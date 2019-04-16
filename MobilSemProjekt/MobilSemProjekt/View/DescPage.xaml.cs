@@ -45,7 +45,7 @@ namespace MobilSemProjekt.View
             locationName.Text = Location.LocationName;
 
 	        locationDesc.Text = Location.LocationDescription;
-	        star1.Source = ImageSource.FromResource("MobilSemProjekt.img.Stjerne.png");
+	        star1.Source = ImageSource.FromFile("img/Stjerne.png");
 	        star2.Source = ImageSource.FromUri(new Uri("http://dmax0917.hegr.dk/img.png"));
 	        star3.Source = ImageSource.FromUri(new Uri("http://dmax0917.hegr.dk/img.png"));
 	        star4.Source = ImageSource.FromUri(new Uri("http://dmax0917.hegr.dk/img.png"));
