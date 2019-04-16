@@ -15,11 +15,13 @@ namespace MobilSemProjekt.View
 	{
 	    public Location Location { get; set; }
 	    public string StarURL { get; set; }
+	    private string startUrl;
 
 	    public DescPage ()
 		{
-			InitializeComponent ();
-		    StarURL = @"img\stjerne.png";
+            InitializeComponent ();
+		    startUrl = "http://dmax0917.hegr.dk/";
+            StarURL = @"img\stjerne.png";
 		    Content = new StackLayout()
 		    {
 		        Spacing = 5,
@@ -28,28 +30,23 @@ namespace MobilSemProjekt.View
 		            picture,
                     locationName,
                     locationDesc,
-                    star1,
-                    star2,
-                    star3,
-                    star4,
-                    star5
-                    
-		        }
+		            starBar
+                }
 		    };
         }
 
 	    protected override void OnAppearing()
 	    {
             base.OnAppearing();
-            picture.Source = ImageSource.FromUri(new Uri("http://dmax0917.hegr.dk/img.png"));
+            picture.Source = ImageSource.FromUri(new Uri(startUrl + "img.png"));
             locationName.Text = Location.LocationName;
 
 	        locationDesc.Text = Location.LocationDescription;
-	        star1.Source = ImageSource.FromResource("MobilSemProjekt.img.Stjerne.png");
-	        star2.Source = ImageSource.FromUri(new Uri("http://dmax0917.hegr.dk/img.png"));
-	        star3.Source = ImageSource.FromUri(new Uri("http://dmax0917.hegr.dk/img.png"));
-	        star4.Source = ImageSource.FromUri(new Uri("http://dmax0917.hegr.dk/img.png"));
-	        star5.Source = ImageSource.FromUri(new Uri("http://dmax0917.hegr.dk/img.png"));
+	        star1.Source = ImageSource.FromUri(new Uri(startUrl + "star.png"));
+            star2.Source = ImageSource.FromUri(new Uri(startUrl + "star.png"));
+	        star3.Source = ImageSource.FromUri(new Uri(startUrl + "star.png"));
+	        star4.Source = ImageSource.FromUri(new Uri(startUrl + "star.png"));
+	        star5.Source = ImageSource.FromUri(new Uri(startUrl + "star.png"));
         }
 
 

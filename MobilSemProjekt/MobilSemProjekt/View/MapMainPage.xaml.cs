@@ -8,11 +8,12 @@ using Xamarin.Essentials;
 using System.Linq;
 using MobilSemProjekt.MVVM.ViewModel;
 using Acr.UserDialogs;
+using MobilSemProjekt.View;
 using System.Collections.ObjectModel;
 using MobilSemProjekt.MVVM.Model;
 using Location = MobilSemProjekt.MVVM.Model.Location;
 
-namespace MobilSemProjekt.View
+namespace MobilSemProjekt
 {
     public partial class MainPage : ContentPage
     {

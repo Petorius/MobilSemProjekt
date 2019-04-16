@@ -17,6 +17,12 @@ namespace MobileService.WcfService
         int CreateRating(Rating rating);
 
         [OperationContract]
+        [WebGet(UriTemplate = "GetAverageRating/{locationId}",
+            RequestFormat = WebMessageFormat.Json,
+            ResponseFormat = WebMessageFormat.Json)]
+        double GetAverageRating(string locationId);
+
+        [OperationContract]
         [WebInvoke(Method = "POST",
             UriTemplate = "UpdateLocation/{ratingId}",
             RequestFormat = WebMessageFormat.Json,

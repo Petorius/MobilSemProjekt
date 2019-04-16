@@ -20,6 +20,12 @@ namespace MobileService.Controller
         {
             return _dbRating.Create(rating);
         }
+
+        public double GetAverageRating(int locationId)
+        {
+            return _dbRating.GetAverageRating(locationId);
+        }
+
         public void Update(Rating rating, int ratingId)
         {
             _dbRating.Update(rating, ratingId);
