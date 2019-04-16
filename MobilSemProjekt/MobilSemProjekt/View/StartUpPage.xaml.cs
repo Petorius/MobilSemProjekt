@@ -14,18 +14,18 @@ namespace MobilSemProjekt.View
 	[XamlCompilation(XamlCompilationOptions.Compile)]
 	public partial class StartUpPage : ContentPage
 	{
-	    private MapMainPage MapMainPage;
+	    private MainPage MapMainPage;
 
         public StartUpPage ()
 		{
 			InitializeComponent ();
-		    MapMainPage = new MapMainPage();
+		    MapMainPage = new MainPage();
 		    MapMainPage.User = null;
         }
 
         private async void ContinueWithoutAccountButton_OnClicked(object sender, EventArgs e)
         {
-            MapMainPage mainPage = new MapMainPage();
+            MainPage mainPage = new MainPage();
             await Navigation.PushAsync(mainPage);
             Navigation.RemovePage(this);
         }
