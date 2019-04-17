@@ -1,5 +1,6 @@
 ﻿using MobilSemProjekt.MVVM.Model;
 using System;
+using System.Collections.Generic;
 using MobilSemProjekt.MVVM.ViewModel;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
@@ -58,27 +59,20 @@ namespace MobilSemProjekt.View
 	    {
             IRatingRestService ratingRestService = new RatingRestService();
 	        AvgStars = await ratingRestService.GetAverageRating(Location);
-	    
-	        if (AvgStars >= 1)
+	        
+	        MakeStarYellow(1, star1);
+	        MakeStarYellow(2, star2);
+	        MakeStarYellow(3, star3);
+	        MakeStarYellow(4, star4);
+	        MakeStarYellow(5, star5);
+	    }
+
+	    private void MakeStarYellow(int maxValue, Image image)
+	    {
+	        if (AvgStars >= maxValue)
 	        {
-	            star1.Source = ImageSource.FromUri(new Uri(startUrl + yellowStar));
-            }
-	        if (AvgStars >= 2)
-	        {
-	            star2.Source = ImageSource.FromUri(new Uri(startUrl + yellowStar));
-            }
-	        if (AvgStars >= 3)
-	        {
-	            star3.Source = ImageSource.FromUri(new Uri(startUrl + yellowStar));
-            }
-	        if (AvgStars >= 4)
-	        {
-	            star4.Source = ImageSource.FromUri(new Uri(startUrl + yellowStar));
-            }
-	        if (AvgStars >= 5)
-	        {
-	            star5.Source = ImageSource.FromUri(new Uri(startUrl + yellowStar));
-            }
+	            image.Source = ImageSource.FromUri(new Uri(startUrl + yellowStar));
+	        }
 	    }
 	}
 }
