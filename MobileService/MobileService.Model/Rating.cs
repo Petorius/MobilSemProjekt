@@ -13,5 +13,7 @@ namespace MobileService.Model
         public string Comment { get; set; }
         [DataMember]
         public User User { get; set; }
+        [DataMember]
+        public int LocationId { get; set; }
     }
 }

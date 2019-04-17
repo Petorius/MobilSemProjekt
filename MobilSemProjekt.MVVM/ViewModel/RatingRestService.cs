@@ -21,7 +21,7 @@ namespace MobilSemProjekt.MVVM.ViewModel
         }
 
         public async Task Create(Rating rating)
-        {
+        {   
             // Serialize our concrete class into a JSON String
             var stringThingy = await Task.Run(() => JsonConvert.SerializeObject(rating));
 

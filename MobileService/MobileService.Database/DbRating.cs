@@ -34,6 +34,16 @@ namespace MobileService.Database
                     cmd.Parameters.AddWithValue("rate", rating.Rate);
                     cmd.Parameters.AddWithValue("comment", rating.Comment);
                     
+                    int locId = rating.LocationId;
+                    if (locId != 0)
+                    {
+                        cmd.Parameters.AddWithValue("locationId", locId);
+                    }
+                    else
+                    {
+                        cmd.Parameters.AddWithValue("locationId", DBNull.Value);
+                    }
+
                     if (rating.User != null)
                     {
                         cmd.Parameters.AddWithValue("userId", rating.User.UserId);

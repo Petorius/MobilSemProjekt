@@ -1,6 +1,7 @@
 ﻿using MobilSemProjekt.MVVM.Model;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using MobilSemProjekt.MVVM.ViewModel;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
@@ -10,8 +11,8 @@ namespace MobilSemProjekt.View
 	[XamlCompilation(XamlCompilationOptions.Compile)]
 	public partial class DescPage : ContentPage
 	{
-	    public Location Location { get; set; }
-	    public string StarURL { get; set; }
+	    public User User { private get; set; }
+        public Location Location { private get; set; }
 	    private double AvgStars;
 	    private string startUrl;
 	    private string grayStar;
@@ -25,7 +26,7 @@ namespace MobilSemProjekt.View
             grayStar = "star-gray.png";
             yellowStar = "star.png";
 
-            StarURL = @"img\stjerne.png";
+            //StarURL = @"img\stjerne.png";
 		    star1.GestureRecognizers.Add(ReturnCall(1));
             star2.GestureRecognizers.Add(ReturnCall(2));
             star3.GestureRecognizers.Add(ReturnCall(3));
@@ -53,12 +54,6 @@ namespace MobilSemProjekt.View
 
 	        locationName.Text = Location.LocationName;
             locationDesc.Text = Location.LocationDescription;
-
-	        star1.Source = ImageSource.FromUri(new Uri(startUrl + grayStar));
-            star2.Source = ImageSource.FromUri(new Uri(startUrl + grayStar));
-	        star3.Source = ImageSource.FromUri(new Uri(startUrl + grayStar));
-	        star4.Source = ImageSource.FromUri(new Uri(startUrl + grayStar));
-	        star5.Source = ImageSource.FromUri(new Uri(startUrl + grayStar));
             LoadStars();
 	    }
 
@@ -80,6 +75,10 @@ namespace MobilSemProjekt.View
 	        {
 	            image.Source = ImageSource.FromUri(new Uri(startUrl + yellowStar));
 	        }
+	        else
+	        {
+	            image.Source = ImageSource.FromUri(new Uri(startUrl + grayStar));
+            }
 	    }
 
 	    private TapGestureRecognizer ReturnCall(int starNo)
@@ -96,36 +95,16 @@ namespace MobilSemProjekt.View
 	        IRatingRestService ratingRestService = new RatingRestService();
 	        Rating rating = new Rating
 	        {
-	            Comment = "It is nice!",
-	            Location = Location,
-	            User = null,
-	            Rate = Convert.ToDouble(starNo)
+	            Comment = ratingComment.Text,
+	            User = User,
+	            Rate = starNo,
+                LocationId = Location.LocationId
 	        };
 	        ratingRestService.Create(rating);
+	        LoadStars();
+
 	    }
-
-        private void OnTap1(Xamarin.Forms.View obj)
-        {
-	        SendVote(1);
-	    }
-
-	    private void OnTap2(Xamarin.Forms.View obj)
-        {
-	        SendVote(2);
-        }
-	    private void OnTap3(Xamarin.Forms.View obj)
-        {
-	        SendVote(3);
-        }
-	    private void OnTap4(Xamarin.Forms.View obj)
-        {
-	        SendVote(4);
-        }
-	    private void OnTap5(Xamarin.Forms.View obj)
-        {
-	        SendVote(5);
-        }
-
+        
 
     }
 }

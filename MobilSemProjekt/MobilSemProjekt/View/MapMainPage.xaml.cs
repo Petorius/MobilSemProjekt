@@ -43,7 +43,7 @@ namespace MobilSemProjekt.View
 
             var Page = new DescPage();
             Page.Location = location;
-            //.BindingContext = new{location.LocationName, location.LocationDescription};
+            Page.User = User;
 
             await Navigation.PushAsync(Page);
         }
