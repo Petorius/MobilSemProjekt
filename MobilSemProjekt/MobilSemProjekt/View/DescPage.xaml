@@ -16,6 +16,9 @@
                 <Image x:Name="star4" Aspect="AspectFit" />
                 <Image x:Name="star5" Aspect="AspectFit" />
             </StackLayout>
+            <Editor VerticalOptions="FillAndExpand"
+                    x:Name="ratingComment"
+                    Margin="10" />
         </StackLayout>
     </ContentPage.Content>
 </ContentPage>

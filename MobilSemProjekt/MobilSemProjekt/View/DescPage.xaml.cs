@@ -26,7 +26,13 @@ namespace MobilSemProjekt.View
             yellowStar = "star.png";
 
             StarURL = @"img\stjerne.png";
-		    Content = new StackLayout()
+		    star1.GestureRecognizers.Add(ReturnCall(1));
+            star2.GestureRecognizers.Add(ReturnCall(2));
+            star3.GestureRecognizers.Add(ReturnCall(3));
+            star4.GestureRecognizers.Add(ReturnCall(4));
+		    star5.GestureRecognizers.Add(ReturnCall(5));
+
+            Content = new StackLayout()
 		    {
 		        Spacing = 5,
 		        Children =
@@ -34,11 +40,12 @@ namespace MobilSemProjekt.View
 		            picture,
                     locationName,
                     locationDesc,
-		            starBar
+		            starBar,
+                    ratingComment
                 }
 		    };
         }
-
+        
 	    protected override void OnAppearing()
 	    {
             base.OnAppearing();
@@ -74,5 +81,51 @@ namespace MobilSemProjekt.View
 	            image.Source = ImageSource.FromUri(new Uri(startUrl + yellowStar));
 	        }
 	    }
-	}
+
+	    private TapGestureRecognizer ReturnCall(int starNo)
+	    {
+	        return new TapGestureRecognizer
+	        {
+	            Command = new Command(() => { SendVote(starNo); }),
+	            NumberOfTapsRequired = 1
+	        };
+	    }
+
+	    private void SendVote(int starNo)
+	    {
+	        IRatingRestService ratingRestService = new RatingRestService();
+	        Rating rating = new Rating
+	        {
+	            Comment = "It is nice!",
+	            Location = Location,
+	            User = null,
+	            Rate = Convert.ToDouble(starNo)
+	        };
+	        ratingRestService.Create(rating);
+	    }
+
+        private void OnTap1(Xamarin.Forms.View obj)
+        {
+	        SendVote(1);
+	    }
+
+	    private void OnTap2(Xamarin.Forms.View obj)
+        {
+	        SendVote(2);
+        }
+	    private void OnTap3(Xamarin.Forms.View obj)
+        {
+	        SendVote(3);
+        }
+	    private void OnTap4(Xamarin.Forms.View obj)
+        {
+	        SendVote(4);
+        }
+	    private void OnTap5(Xamarin.Forms.View obj)
+        {
+	        SendVote(5);
+        }
+
+
+    }
 }

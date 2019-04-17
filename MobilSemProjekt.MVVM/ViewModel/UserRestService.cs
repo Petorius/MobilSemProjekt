@@ -41,16 +41,16 @@ namespace MobilSemProjekt.MVVM.ViewModel
                     if (httpResponse.IsSuccessStatusCode)
                     {
                         //var responseContent = await httpResponse.Content.ReadAsStringAsync();
-                        Debug.WriteLine("Success!");
+                        Debug.WriteLine("CreateUser - Success!");
                     }
                     else
                     {
-                        Debug.WriteLine("Failure");
+                        Debug.WriteLine("CreateUser - Failure");
                     }
                 }
                 catch (Exception e)
                 {
-                    Debug.WriteLine("Error: " + e.Message);
+                    Debug.WriteLine("CreateUser - Error: " + e.Message);
                 }
             }
         }
@@ -75,19 +75,19 @@ namespace MobilSemProjekt.MVVM.ViewModel
                     if (httpResponse.IsSuccessStatusCode)
                     {
                         //var responseContent = await httpResponse.Content.ReadAsStringAsync();
-                        Debug.WriteLine("Success!");
+                        Debug.WriteLine("CompareHashes - Success!");
                     
                         var content = await httpResponse.Content.ReadAsStringAsync();
                         result = JsonConvert.DeserializeObject<bool>(content);
                     }
                     else
                     {
-                        Debug.WriteLine("Failure");
+                        Debug.WriteLine("CompareHashes - Failure");
                     }
                 }
                 catch (Exception e)
                 {
-                    Debug.WriteLine("Error: " + e.Message);
+                    Debug.WriteLine("CompareHashes - Error: " + e.Message);
                 }
             }
 
@@ -109,11 +109,11 @@ namespace MobilSemProjekt.MVVM.ViewModel
                     result = JsonConvert.DeserializeObject<User>(content);
                 }
 
-                Debug.WriteLine("Error: you aren't catched - the result is: " + result);
+                Debug.WriteLine("FindByUserName - Error: you aren't catched - the result is: " + result);
             }
             catch (Exception e)
             {
-                Debug.WriteLine("Error: " + e.Message);
+                Debug.WriteLine("FindByUserName - Error: " + e.Message);
             }
 
             return result;
@@ -134,11 +134,11 @@ namespace MobilSemProjekt.MVVM.ViewModel
                     result = JsonConvert.DeserializeObject<string>(content);
                 }
 
-                Debug.WriteLine("Error: you aren't catched - the result is: " + result);
+                Debug.WriteLine("FindSaltByUserName - Error: you aren't catched - the result is: " + result);
             }
             catch (Exception e)
             {
-                Debug.WriteLine("Error: " + e.Message);
+                Debug.WriteLine("FindSaltByUserName - Error: " + e.Message);
             }
 
             return result;

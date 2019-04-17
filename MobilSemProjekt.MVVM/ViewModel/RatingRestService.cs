@@ -34,22 +34,23 @@ namespace MobilSemProjekt.MVVM.ViewModel
                 var httpResponse =
                     await httpClient.PostAsync(RestUrl + "RatingService.svc/CreateRating",
                         httpContent);
+                Debug.WriteLine(httpResponse);
                 try
                 {
                     // If the response contains content we want to read it!
                     if (httpResponse.IsSuccessStatusCode)
                     {
                         //var responseContent = await httpResponse.Content.ReadAsStringAsync();
-                        Debug.WriteLine("Success!");
+                        Debug.WriteLine("CreateRating - Success!");
                     }
                     else
                     {
-                        Debug.WriteLine("Failure");
+                        Debug.WriteLine("CreateRating - Failure");
                     }
                 }
                 catch (Exception e)
                 {
-                    Debug.WriteLine("Error: " + e.Message);
+                    Debug.WriteLine("CreateRating - Error: " + e.Message);
                 }
             }
         }
@@ -69,11 +70,11 @@ namespace MobilSemProjekt.MVVM.ViewModel
                     result = JsonConvert.DeserializeObject<double>(content);
                 }
 
-                Debug.WriteLine("Error: you aren't catched - the result is: " + result);
+                Debug.WriteLine("Ratings - Error: you aren't catched - the result is: " + result);
             }
             catch (Exception e)
             {
-                Debug.WriteLine("Error: " + e.Message);
+                Debug.WriteLine("Ratings - Error: " + e.Message);
             }
 
             return result;

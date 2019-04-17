@@ -38,10 +38,10 @@ namespace MobilSemProjekt.MVVM.ViewModel
                     location = JsonConvert.DeserializeObject<Location>(content);
                 }
 
-                Debug.WriteLine("Error: you aren't catched - " + response);
+                Debug.WriteLine("ReadLocationByName - Error: you aren't catched - " + response);
             }
             catch (Exception e) {
-                Debug.WriteLine("Error: " + e.Message + " hej " + response);
+                Debug.WriteLine("ReadLocationByName - Error: " + e.Message);
             }
 
             return location;
@@ -61,10 +61,10 @@ namespace MobilSemProjekt.MVVM.ViewModel
                     Debug.WriteLine(Items.Count);
                 }
 
-                Debug.WriteLine("Error: you aren't catched - " + response);
+                Debug.WriteLine("ReadLocationByTagName - Error: you aren't catched - " + response);
             }
             catch (Exception e) {
-                Debug.WriteLine("Error: " + e.Message + " hej " + response);
+                Debug.WriteLine("ReadLocationByTagName - Error: " + e.Message + " hej " + response);
             }
 
             return Items;
@@ -93,16 +93,16 @@ namespace MobilSemProjekt.MVVM.ViewModel
                     if (httpResponse.IsSuccessStatusCode)
                     {
                         //var responseContent = await httpResponse.Content.ReadAsStringAsync();
-                        Debug.WriteLine("Success!");
+                        Debug.WriteLine("CreateLocation - Success!");
                     }
                     else
                     {
-                        Debug.WriteLine("Failure");
+                        Debug.WriteLine("CreateLocation - Failure");
                     }
                 }
                 catch (Exception e)
                 {
-                    Debug.WriteLine("Error: " + e.Message);
+                    Debug.WriteLine("CreateLocation - Error: " + e.Message);
                 }
             }
         }
@@ -125,11 +125,11 @@ namespace MobilSemProjekt.MVVM.ViewModel
                     Debug.WriteLine(Items.Count);
                 }
 
-                Debug.WriteLine("Error: you aren't catched - " + response);
+                Debug.WriteLine("GetAllData - Error: you aren't catched - " + response);
             }
             catch (Exception e)
             {
-                Debug.WriteLine("Error: " + e.Message + " hej " + response);
+                Debug.WriteLine("GetAllData - Error: " + e.Message + " hej " + response);
             }
 
             return Items;
@@ -148,10 +148,10 @@ namespace MobilSemProjekt.MVVM.ViewModel
                     Debug.WriteLine(Items.Count);
                 }
 
-                Debug.WriteLine("Error: you aren't catched - " + response);
+                Debug.WriteLine("GetLocationsByUserName - Error: you aren't catched - " + response);
             }
             catch (Exception e) {
-                Debug.WriteLine("Error: " + e.Message + " hej " + response);
+                Debug.WriteLine("GetLocationsByUserName - Error: " + e.Message);
             }
 
             return Items;
