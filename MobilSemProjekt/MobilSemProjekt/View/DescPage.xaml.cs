@@ -74,25 +74,25 @@ namespace MobilSemProjekt.View
 	        ColorizeRatings(0, 5, votingStar5);
         }
 
-	    private void MakeStarYellow(int maxValue, Image image)
-	    {
-	        if (AvgStars >= maxValue)
+	    private void MakeStarYellow(int starNo, Image image)
+        {
+            if (AvgStars < starNo)
+            {
+                image.Source = ImageSource.FromUri(new Uri(startUrl + grayStar));
+            }
+            else
 	        {
 	            image.Source = ImageSource.FromUri(new Uri(startUrl + yellowStar));
 	        }
-	        else
-	        {
-	            image.Source = ImageSource.FromUri(new Uri(startUrl + grayStar));
-            }
 	    }
 
 	    private void ColorizeRatings(int rating, int starNo, Image image)
 	    {
-	        if (rating == 0)
+	        if (rating < starNo)
 	        {
                 image.Source = ImageSource.FromUri(new Uri(startUrl + grayStar));
             }
-	        else if (rating >= starNo)
+	        else
 	        {
 	            image.Source = ImageSource.FromUri(new Uri(startUrl + yellowStar));
 	        }
