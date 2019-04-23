@@ -13,6 +13,12 @@ namespace MobileService.Database
                         "Database=dmaa0917_1067347;User ID=dmaa0917_1067347;" +
                         "Password=Password1!;";
 
+        private DbUserType DbUserType;
+
+        public DbUser()
+        {
+            DbUserType = new DbUserType();
+        }
         public int Create(User user)
         {
             int id;
@@ -23,12 +29,13 @@ namespace MobileService.Database
 
                 using (SqlCommand cmd = _connection.CreateCommand())
                 {
-                    cmd.CommandText = "INSERT INTO [User](UserName, HashPassword, Salt) VALUES " +
-                                      "(@UserName, @HashPassword, @Salt); ";
+                    cmd.CommandText = "INSERT INTO [User](UserName, HashPassword, Salt, UserTypeId) VALUES " +
+                                      "(@UserName, @HashPassword, @Salt, @UserTypeId); ";
                     cmd.Parameters.AddWithValue("UserName", user.UserName);
                     cmd.Parameters.AddWithValue("HashPassword", user.HashPassword);
                     cmd.Parameters.AddWithValue("Salt", user.Salt);
-                    
+                    cmd.Parameters.AddWithValue("UserTypeId", user.UserType.UserTypeId);
+
                     id = Convert.ToInt32(cmd.ExecuteScalar());
                 }
                 _connection.Close();
@@ -39,7 +46,7 @@ namespace MobileService.Database
         public User FindById(int userId)
         {
             User user = null;
-
+            
             using (_connection = new SqlConnection(_connectionString))
             {
                 _connection.Open();
@@ -48,6 +55,7 @@ namespace MobileService.Database
                     cmd.CommandText = "SELECT * FROM [User] WHERE UserId = @UserId";
                     cmd.Parameters.AddWithValue("UserId", userId);
                     SqlDataReader reader = cmd.ExecuteReader();
+                    int userTypeId = reader.GetInt32(reader.GetOrdinal("UserTypeId"));
 
                     while (reader.Read())
                     {
@@ -56,7 +64,8 @@ namespace MobileService.Database
                             UserId = userId,
                             UserName = reader.GetString(reader.GetOrdinal("UserName")),
                             HashPassword = reader.GetString(reader.GetOrdinal("HashPassword")),
-                            Salt = reader.GetString(reader.GetOrdinal("Salt"))
+                            Salt = reader.GetString(reader.GetOrdinal("Salt")),
+                            UserType = DbUserType.FindById(userTypeId)
                         };
                     }
                 }
@@ -80,12 +89,15 @@ namespace MobileService.Database
 
                     while (reader.Read())
                     {
+                        int userTypeId = reader.GetInt32(reader.GetOrdinal("UserTypeId"));
+
                         user = new User
                         {
                             UserId = reader.GetInt32(reader.GetOrdinal("UserId")),
                             UserName = userName,
                             HashPassword = reader.GetString(reader.GetOrdinal("HashPassword")),
-                            Salt = reader.GetString(reader.GetOrdinal("Salt"))
+                            Salt = reader.GetString(reader.GetOrdinal("Salt")),
+                            UserType = DbUserType.FindById(userTypeId)
                         };
                     }
 
@@ -95,7 +107,7 @@ namespace MobileService.Database
                         {
                             throw new FaultException<UserOrPasswordException>(new UserOrPasswordException());
                         }
-                        throw new FaultException<UserNotFoundException>(new UserNotFoundException(userName));
+                        throw new FaultException<UserNotDeletedException>(new UserNotDeletedException(userName));
                     }
                 }
                 _connection.Close();
@@ -103,7 +115,7 @@ namespace MobileService.Database
             return user;
         }
 
-        public void Delete(int userId)
+        public void Delete(string userName)
         {
             int changes;
 
@@ -112,8 +124,8 @@ namespace MobileService.Database
                 _connection.Open();
                 using (SqlCommand cmd = _connection.CreateCommand())
                 {
-                    cmd.CommandText = "DELETE FROM [User] where UserId = @UserId";
-                    cmd.Parameters.AddWithValue("UserId", userId);
+                    cmd.CommandText = "DELETE FROM [User] WHERE UserName = @UserName";
+                    cmd.Parameters.AddWithValue("UserName", userName);
                     changes = cmd.ExecuteNonQuery();
                 }
                 _connection.Close();
@@ -122,8 +134,7 @@ namespace MobileService.Database
             bool status = changes > 0;
             if (status == false)
             {
-                throw new System.Exception();
-                //throw new FaultException<CustomerNotDeletedException>(new CustomerNotDeletedException(customer._phone));
+                throw new FaultException<UserNotDeletedException>(new UserNotDeletedException(userName));
             }
         }
     }

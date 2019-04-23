@@ -50,6 +50,7 @@
     <Compile Include="DbPicture.cs" />
     <Compile Include="DbRating.cs" />
     <Compile Include="DbTag.cs" />
+    <Compile Include="DbUserType.cs" />
     <Compile Include="DbUser.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

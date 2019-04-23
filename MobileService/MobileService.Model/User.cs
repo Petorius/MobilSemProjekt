@@ -13,5 +13,7 @@ namespace MobileService.Model
         public string HashPassword { get; set; }
         [DataMember]
         public string Salt { get; set; }
+        [DataMember]
+        public UserType UserType { get; set; }
     }
 }

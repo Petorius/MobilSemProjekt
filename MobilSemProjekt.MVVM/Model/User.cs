@@ -6,5 +6,6 @@
         public string UserName { get; set; }
         public string HashPassword { get; set; }
         public string Salt { get; set; }
+        public UserType UserType { get; set; }
     }
 }
