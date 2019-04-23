@@ -8,29 +8,31 @@
             ItemTapped="Handle_ItemTapped"
             CachingStrategy="RecycleElement"
             HasUnevenRows="True">
-            
-    <!--Built in Cells--><!--
+
+
+        <!--Built in Cells-->
+        <!--
     <ListView.ItemTemplate>
         <DataTemplate>
             <TextCell Text="{Binding .}" />
         </DataTemplate>
     </ListView.ItemTemplate>-->
-    
-    <!--Custom View Cells-->
-    <ListView.ItemTemplate>
-      <DataTemplate>
-        <ViewCell Height="100">
-          <StackLayout>
-            <Label Text="{Binding LocationName}" 
+
+        <!--Custom View Cells-->
+        <ListView.ItemTemplate>
+            <DataTemplate>
+                <ViewCell Height="100">
+                    <StackLayout>
+                        <Label x:Name="locationNameLabel" Text="{Binding LocationName}" 
                    Style="{DynamicResource ListItemTextStyle}" />
-                 <Label Text="{Binding LocationDescription}" 
+                        <Label Text="{Binding LocationDescription}" 
                    Style="{DynamicResource ListItemDetailTextStyle}"/>
-          </StackLayout>
-        </ViewCell>
-      </DataTemplate>
-    </ListView.ItemTemplate>
-    
-  </ListView>
+                    </StackLayout>
+                </ViewCell>
+            </DataTemplate>
+        </ListView.ItemTemplate>
+
+    </ListView>
     <!--<Entry x:Name="EntrySearchListView" Placeholder="Søg..." PlaceholderColor="LightSlateGray"/>-->
 
 </ContentPage>
