@@ -53,5 +53,10 @@ namespace MobileService.Controller
         {
             return _dbRating.GetAverageRating(locationId);
         }
+
+        public void UpdateHits(Location location) {
+            _dbLocation.UpdateHits(location);
+        }
+
     }
 }

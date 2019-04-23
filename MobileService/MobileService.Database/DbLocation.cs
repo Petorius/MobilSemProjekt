@@ -36,8 +36,10 @@ namespace MobileService.Database
 
                 using (SqlCommand cmd = _connection.CreateCommand())
                 {
-                    cmd.CommandText = "INSERT INTO Locations(LocationName, Latitude, Longitude, UserId, LocationDescription) VALUES " +
-                                      "(@LocationName, @Latitude, @Longitude, @UserId, @LocationDescription); ";
+                    cmd.CommandText = "INSERT INTO Locations(Hits, IsTopLocation, LocationName, Latitude, Longitude, UserId, LocationDescription) VALUES " +
+                                      "(@Hits, @IsTopLocation, @LocationName, @Latitude, @Longitude, @UserId, @LocationDescription); ";
+                    cmd.Parameters.AddWithValue("Hits", location.Hits);
+                    cmd.Parameters.AddWithValue("IsTopLocation", location.IsTopLocation);
                     cmd.Parameters.AddWithValue("LocationName", location.LocationName);
                     cmd.Parameters.AddWithValue("Latitude", location.Latitude);
                     cmd.Parameters.AddWithValue("Longitude", location.Longitude);
@@ -77,6 +79,8 @@ namespace MobileService.Database
                         location = new Location
                         {
                             LocationId = locationId,
+                            Hits = reader.GetInt32(reader.GetOrdinal("Hits")),
+                            IsTopLocation = reader.GetBoolean(reader.GetOrdinal("IsTopLocation")),
                             LocationName = reader.GetString(reader.GetOrdinal("LocationName")),
                             LocationDescription = reader.GetString(reader.GetOrdinal("LocationDescription")),
                             Latitude = reader.GetDouble(reader.GetOrdinal("Latitude")),
@@ -111,6 +115,8 @@ namespace MobileService.Database
                         {
                             LocationId = locationId,
                             LocationName = locationName,
+                            Hits = reader.GetInt32(reader.GetOrdinal("Hits")),
+                            IsTopLocation = reader.GetBoolean(reader.GetOrdinal("IsTopLocation")),
                             LocationDescription = reader.GetString(reader.GetOrdinal("LocationDescription")),
                             Latitude = reader.GetDouble(reader.GetOrdinal("Latitude")),
                             Longitude = reader.GetDouble(reader.GetOrdinal("Longitude")),
@@ -146,6 +152,8 @@ namespace MobileService.Database
                             Location location = new Location
                             {
                                 LocationId = locationId,
+                                Hits = reader.GetInt32(reader.GetOrdinal("Hits")),
+                                IsTopLocation = reader.GetBoolean(reader.GetOrdinal("IsTopLocation")),
                                 LocationName = reader.GetString(reader.GetOrdinal("LocationName")),
                                 LocationDescription = reader.GetString(reader.GetOrdinal("LocationDescription")),
                                 Latitude = reader.GetDouble(reader.GetOrdinal("Latitude")),
@@ -183,6 +191,8 @@ namespace MobileService.Database
                         Location location = new Location
                         {
                             LocationId = locationId,
+                            Hits = reader.GetInt32(reader.GetOrdinal("Hits")),
+                            IsTopLocation = reader.GetBoolean(reader.GetOrdinal("IsTopLocation")),
                             LocationName = reader.GetString(reader.GetOrdinal("LocationName")),
                             LocationDescription = reader.GetString(reader.GetOrdinal("LocationDescription")),
                             Latitude = reader.GetDouble(reader.GetOrdinal("Latitude")),
@@ -208,10 +218,12 @@ namespace MobileService.Database
                 _connection.Open();
                 using (SqlCommand cmd = _connection.CreateCommand())
                 {
-                    cmd.CommandText = "UPDATE Location set LocationName = @LocationName, Latitude = @Latitude, " +
+                    cmd.CommandText = "UPDATE Locations set Hits = @Hits, IsTopLocation = @IsTopLocation, LocationName = @LocationName, Latitude = @Latitude, " +
                                       "Longitude = @Longitude, UserId = @UserId, LocationDescription = @LocationDescription " +
                                       "where LocationId = @LocationId";
                     cmd.Parameters.AddWithValue("LocationId", locationId);
+                    cmd.Parameters.AddWithValue("Hits", location.Hits);
+                    cmd.Parameters.AddWithValue("IsTopLocation", location.IsTopLocation);
                     cmd.Parameters.AddWithValue("LocationName", location.LocationName);
                     cmd.Parameters.AddWithValue("Latitude", location.Latitude);
                     cmd.Parameters.AddWithValue("Longitude", location.Longitude);
@@ -220,6 +232,60 @@ namespace MobileService.Database
                     cmd.ExecuteNonQuery();
                 }
                 _connection.Close();
+            }
+        }
+
+        public void UpdateHits(Location location)
+        {
+            for (int i = 0; i < 5; i++)
+            {
+                using (SqlConnection connection = new SqlConnection(_connectionString))
+                {
+                    try
+                    {
+                        _connection.Open();
+                        using (SqlTransaction trans = connection.BeginTransaction())
+                        {
+                            byte[] rowId = null;
+                            int rowCount = 0;
+                            using (SqlCommand cmd = connection.CreateCommand())
+                            {
+                                cmd.Transaction = trans;
+                                cmd.CommandText = "SELECT rowID FROM Locations WHERE LocationId = @LocationId";
+                                cmd.Parameters.AddWithValue("LocationId", location.LocationId);
+                                SqlDataReader reader = cmd.ExecuteReader();
+
+                                while (reader.Read())
+                                {
+                                    rowId = (byte[]) reader["rowId"];
+                                }
+
+                                reader.Close();
+
+                                cmd.CommandText =
+                                    "UPDATE Locations set Hits = Hits + 1 where LocationId = @LocationId AND rowID = @rowId";
+                                cmd.Parameters.AddWithValue("rowID", rowId);
+                                rowCount = cmd.ExecuteNonQuery();
+
+                                if (rowCount == 0)
+                                {
+                                    cmd.Transaction.Rollback();
+                                }
+                                else
+                                {
+                                    cmd.Transaction.Commit();
+                                    break;
+                                }
+                            }
+                        }
+                        _connection.Close();
+                    }
+
+                    catch (SqlException e)
+                    {
+                        Console.Write(e.StackTrace);
+                    }
+                }
             }
         }
 

@@ -10,6 +10,10 @@ namespace MobileService.Model
         [DataMember]
         public int LocationId { get; set; }
         [DataMember]
+        public int Hits { get; set; }
+        [DataMember]
+        public bool IsTopLocation { get; set; }
+        [DataMember]
         public string LocationName { get; set; }
         [DataMember]
         public string LocationDescription { get; set; }

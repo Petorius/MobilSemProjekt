@@ -22,6 +22,9 @@ namespace MobileService.Service
 
         [OperationContract]
         List<Location> GetAllLocations();
+
+        [OperationContract]
+        void UpdateHits(Location location);
         
         [OperationContract]
         string TestMethod();

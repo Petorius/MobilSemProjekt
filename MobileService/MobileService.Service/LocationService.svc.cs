@@ -46,6 +46,12 @@ namespace MobileService.Service
             return _locationCtrl.GetLocationsByTagName(tagName);
         }
 
+        public void UpdateHits(Location location)
+        {
+            _locationCtrl = new LocationCtrl();
+            _locationCtrl.UpdateHits(location);
+        }
+
         public string TestMethod()
         {
             return "Oles nye autobil";

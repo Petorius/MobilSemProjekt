@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.ServiceModel;
 using System.ServiceModel.Web;
+using System.Web.Services.Description;
 using MobileService.Model;
 
 namespace MobileService.WcfService
@@ -51,5 +52,13 @@ namespace MobileService.WcfService
             RequestFormat = WebMessageFormat.Json,
             ResponseFormat = WebMessageFormat.Json)]
         List<Location> GetAllLocations();
+
+        [OperationContract]
+        [WebInvoke(Method = "POST",
+            UriTemplate = "UpdateHits",
+            RequestFormat = WebMessageFormat.Json,
+            ResponseFormat = WebMessageFormat.Json)]
+        void UpdateHits(Location location);
+
     }
 }

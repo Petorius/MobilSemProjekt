@@ -9,6 +9,7 @@ using System.Linq;
 using MobilSemProjekt.MVVM.ViewModel;
 using Acr.UserDialogs;
 using System.Collections.ObjectModel;
+using System.ComponentModel.Design;
 using MobilSemProjekt.MVVM.Model;
 using Location = MobilSemProjekt.MVVM.Model.Location;
 using Math = System.Math;
@@ -42,7 +43,7 @@ namespace MobilSemProjekt.View
         {
             RestService restservice = new RestService();
             Location location = await restservice.ReadLocationByNameAsync(e.Pin.Label);
-
+            restservice.UpdateHits(location);
             var Page = new DescPage();
             Page.Location = location;
             Page.User = User;
@@ -53,15 +54,26 @@ namespace MobilSemProjekt.View
         protected override async void OnAppearing()
         {
             base.OnAppearing();
+            string LabelText;
             List<Location> list = await GetLocations();
-            foreach (var location in list)
-            {
+            foreach (var location in list) { 
+                if (location.IsTopLocation)
+                {
+                    LabelText = "**Top Location** " + location.LocationName;
+                }
+            else
+                {
+                    LabelText = location.LocationName;
+                }
+
+           
                 GoogleMap.Pins.Add(new Pin
                 {
-                    Label = location.LocationName,
+                    Label = LabelText,
                     Position = new Position(location.Latitude, location.Longitude),
                     Address = location.LocationDescription
                     //Burde opdateres til at tage en location address
+                    
                 });
             }
         }

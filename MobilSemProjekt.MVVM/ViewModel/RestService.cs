@@ -157,5 +157,36 @@ namespace MobilSemProjekt.MVVM.ViewModel
             return Items;
 
         }
+
+        public async void UpdateHits(Location location)
+        {
+            // Serialize our concrete class into a JSON String
+            var stringThingy = await Task.Run(() => JsonConvert.SerializeObject(location));
+
+            // Wrap our JSON inside a StringContent which then can be used by the HttpClient class
+            var httpContent = new StringContent(stringThingy, Encoding.UTF8, "application/json");
+
+            using (var httpClient = new HttpClient()) {
+
+                // Do the actual request and await the response
+                var httpResponse =
+                    await httpClient.PostAsync(RestUrl + "LocationService.svc/UpdateHits",
+                        httpContent);
+
+                try {
+                    // If the response contains content we want to read it!
+                    if (httpResponse.IsSuccessStatusCode) {
+                        //var responseContent = await httpResponse.Content.ReadAsStringAsync();
+                        Debug.WriteLine("UpdateHits - Success!");
+                    }
+                    else {
+                        Debug.WriteLine("UpdateHits - Failure");
+                    }
+                }
+                catch (Exception e) {
+                    Debug.WriteLine("UpdateHits - Error: " + e.Message);
+                }
+            }
+        }
     }
 }
