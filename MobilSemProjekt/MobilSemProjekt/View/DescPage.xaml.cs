@@ -13,36 +13,35 @@ namespace MobilSemProjekt.View
 	{
 	    public User User { private get; set; }
         public Location Location { private get; set; }
-	    private double AvgStars;
-	    private string startUrl;
+	    private double AvgStars { get; set; }
+        private string startUrl;
 	    private string grayStar;
 	    private string yellowStar;
+	    private int CurrVote { get; set; }
 
         public DescPage ()
 		{
             InitializeComponent ();
 		    AvgStars = 0;
+		    CurrVote = 0;
 		    startUrl = "http://dmax0917.hegr.dk/";
             grayStar = "star-gray.png";
             yellowStar = "star.png";
 
             //StarURL = @"img\stjerne.png";
-		    star1.GestureRecognizers.Add(ReturnCall(1));
-            star2.GestureRecognizers.Add(ReturnCall(2));
-            star3.GestureRecognizers.Add(ReturnCall(3));
-            star4.GestureRecognizers.Add(ReturnCall(4));
-		    star5.GestureRecognizers.Add(ReturnCall(5));
+		    votingStar1.GestureRecognizers.Add(ReturnCall(1));
+		    votingStar2.GestureRecognizers.Add(ReturnCall(2));
+		    votingStar3.GestureRecognizers.Add(ReturnCall(3));
+		    votingStar4.GestureRecognizers.Add(ReturnCall(4));
+		    votingStar5.GestureRecognizers.Add(ReturnCall(5));
+		    
 
             Content = new StackLayout()
 		    {
 		        Spacing = 5,
 		        Children =
 		        {
-		            picture,
-                    locationName,
-                    locationDesc,
-		            starBar,
-                    ratingComment
+		            showItAll
                 }
 		    };
         }
@@ -51,7 +50,6 @@ namespace MobilSemProjekt.View
 	    {
             base.OnAppearing();
             picture.Source = ImageSource.FromUri(new Uri(startUrl + "img.png"));
-
 	        locationName.Text = Location.LocationName;
             locationDesc.Text = Location.LocationDescription;
             LoadStars();
@@ -61,13 +59,20 @@ namespace MobilSemProjekt.View
 	    {
             IRatingRestService ratingRestService = new RatingRestService();
 	        AvgStars = await ratingRestService.GetAverageRating(Location);
-	        
-	        MakeStarYellow(1, star1);
-	        MakeStarYellow(2, star2);
+	        votingList.ItemsSource = Location.Ratings;
+            
+            MakeStarYellow(1, star1);
+            MakeStarYellow(2, star2);
 	        MakeStarYellow(3, star3);
 	        MakeStarYellow(4, star4);
 	        MakeStarYellow(5, star5);
-	    }
+
+	        ColorizeRatings(0, 1, votingStar1);
+	        ColorizeRatings(0, 2, votingStar2);
+	        ColorizeRatings(0, 3, votingStar3);
+	        ColorizeRatings(0, 4, votingStar4);
+	        ColorizeRatings(0, 5, votingStar5);
+        }
 
 	    private void MakeStarYellow(int maxValue, Image image)
 	    {
@@ -81,30 +86,49 @@ namespace MobilSemProjekt.View
             }
 	    }
 
-	    private TapGestureRecognizer ReturnCall(int starNo)
+	    private void ColorizeRatings(int rating, int starNo, Image image)
+	    {
+	        if (rating == 0)
+	        {
+                image.Source = ImageSource.FromUri(new Uri(startUrl + grayStar));
+            }
+	        else if (rating >= starNo)
+	        {
+	            image.Source = ImageSource.FromUri(new Uri(startUrl + yellowStar));
+	        }
+        }
+
+	    private TapGestureRecognizer ReturnCall(int votingStarNo)
 	    {
 	        return new TapGestureRecognizer
 	        {
-	            Command = new Command(() => { SendVote(starNo); }),
+	            Command = new Command(() => { SetLocalVote(votingStarNo); }),
 	            NumberOfTapsRequired = 1
 	        };
 	    }
 
-	    private void SendVote(int starNo)
+	    private void SetLocalVote(int votingStarNo)
+	    {
+	        CurrVote = votingStarNo;
+	        ColorizeRatings(votingStarNo, 1, votingStar1);
+	        ColorizeRatings(votingStarNo, 2, votingStar2);
+	        ColorizeRatings(votingStarNo, 3, votingStar3);
+	        ColorizeRatings(votingStarNo, 4, votingStar4);
+	        ColorizeRatings(votingStarNo, 5, votingStar5);
+	    }
+
+        private void SendVote(object sender, EventArgs eventArgs)
 	    {
 	        IRatingRestService ratingRestService = new RatingRestService();
 	        Rating rating = new Rating
 	        {
 	            Comment = ratingComment.Text,
 	            User = User,
-	            Rate = starNo,
+	            Rate = CurrVote,
                 LocationId = Location.LocationId
 	        };
 	        ratingRestService.Create(rating);
 	        LoadStars();
-
 	    }
-        
-
     }
 }

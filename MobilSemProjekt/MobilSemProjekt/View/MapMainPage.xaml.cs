@@ -11,6 +11,8 @@ using Acr.UserDialogs;
 using System.Collections.ObjectModel;
 using MobilSemProjekt.MVVM.Model;
 using Location = MobilSemProjekt.MVVM.Model.Location;
+using Math = System.Math;
+using Exception = System.Exception;
 
 namespace MobilSemProjekt.View
 {

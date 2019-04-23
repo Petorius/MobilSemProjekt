@@ -5,7 +5,7 @@
 
     <ContentPage.Content>
 
-        <StackLayout Orientation="Vertical" >
+        <StackLayout Orientation="Vertical" x:Name="showItAll">
             <Image x:Name="picture" Aspect="AspectFit" />
             <Label x:Name="locationName" Text="{Binding LocationName}" />
             <Label x:Name="locationDesc" Text="{Binding LocationDescription}" />
@@ -16,9 +16,38 @@
                 <Image x:Name="star4" Aspect="AspectFit" />
                 <Image x:Name="star5" Aspect="AspectFit" />
             </StackLayout>
-            <Editor VerticalOptions="FillAndExpand"
+            <StackLayout x:Name="votingBar" Orientation="Horizontal">
+                <Label x:Name="yourVoteLabel" Text="Din vurdering: " />
+                <Image x:Name="votingStar1" Aspect="AspectFit" />
+                <Image x:Name="votingStar2" Aspect="AspectFit" />
+                <Image x:Name="votingStar3" Aspect="AspectFit" />
+                <Image x:Name="votingStar4" Aspect="AspectFit" />
+                <Image x:Name="votingStar5" Aspect="AspectFit" />
+            </StackLayout>
+            <StackLayout Orientation="Vertical">
+                <Editor VerticalOptions="FillAndExpand"
                     x:Name="ratingComment"
                     Margin="10" />
+                <Button x:Name="submitRatingButton" Text="Send stemme" Clicked="SendVote" />
+            </StackLayout>
+            <ListView x:Name="votingList" HasUnevenRows="True">
+                <ListView.ItemTemplate>
+                    <DataTemplate>
+                        <ViewCell>
+                            <StackLayout Orientation="Horizontal" Padding="5">
+                                <Label Text="{Binding User.Name}"/>
+                                <Label Text="{Binding Rate}"/>
+                                <Label Text="{Binding Comment}"/>
+                            </StackLayout>
+                        </ViewCell>
+                    </DataTemplate>
+                </ListView.ItemTemplate>
+
+
+            </ListView>
+            
+            
+            
         </StackLayout>
     </ContentPage.Content>
 </ContentPage>
