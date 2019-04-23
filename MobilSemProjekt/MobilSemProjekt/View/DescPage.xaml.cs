@@ -14,9 +14,9 @@ namespace MobilSemProjekt.View
 	    public User User { private get; set; }
         public Location Location { private get; set; }
 	    private double AvgStars { get; set; }
-        private string startUrl;
-	    private string grayStar;
-	    private string yellowStar;
+        private readonly string StartUrl;
+	    private readonly string GrayStar;
+	    private readonly string YellowStar;
 	    private int CurrVote { get; set; }
 
         public DescPage ()
@@ -24,16 +24,16 @@ namespace MobilSemProjekt.View
             InitializeComponent ();
 		    AvgStars = 0;
 		    CurrVote = 0;
-		    startUrl = "http://dmax0917.hegr.dk/";
-            grayStar = "star-gray.png";
-            yellowStar = "star.png";
+		    StartUrl = "http://dmax0917.hegr.dk/";
+            GrayStar = "star-gray.png";
+            YellowStar = "star.png";
 
             //StarURL = @"img\stjerne.png";
-		    votingStar1.GestureRecognizers.Add(ReturnCall(1));
-		    votingStar2.GestureRecognizers.Add(ReturnCall(2));
-		    votingStar3.GestureRecognizers.Add(ReturnCall(3));
-		    votingStar4.GestureRecognizers.Add(ReturnCall(4));
-		    votingStar5.GestureRecognizers.Add(ReturnCall(5));
+		    VotingStar1.GestureRecognizers.Add(ReturnCall(1));
+		    VotingStar2.GestureRecognizers.Add(ReturnCall(2));
+		    VotingStar3.GestureRecognizers.Add(ReturnCall(3));
+		    VotingStar4.GestureRecognizers.Add(ReturnCall(4));
+		    VotingStar5.GestureRecognizers.Add(ReturnCall(5));
 		    
 
             Content = new StackLayout()
@@ -49,9 +49,9 @@ namespace MobilSemProjekt.View
 	    protected override void OnAppearing()
 	    {
             base.OnAppearing();
-            picture.Source = ImageSource.FromUri(new Uri(startUrl + "img.png"));
-	        locationName.Text = Location.LocationName;
-            locationDesc.Text = Location.LocationDescription;
+            Picture.Source = ImageSource.FromUri(new Uri(StartUrl + "img.png"));
+	        LocationName.Text = Location.LocationName;
+            LocationDesc.Text = Location.LocationDescription;
             LoadStars();
 	    }
 
@@ -59,30 +59,30 @@ namespace MobilSemProjekt.View
 	    {
             IRatingRestService ratingRestService = new RatingRestService();
 	        AvgStars = await ratingRestService.GetAverageRating(Location);
-	        votingList.ItemsSource = Location.Ratings;
+	        VotingList.ItemsSource = Location.Ratings;
             
-            MakeStarYellow(1, star1);
-            MakeStarYellow(2, star2);
-	        MakeStarYellow(3, star3);
-	        MakeStarYellow(4, star4);
-	        MakeStarYellow(5, star5);
+            MakeStarYellow(1, Star1);
+            MakeStarYellow(2, Star2);
+	        MakeStarYellow(3, Star3);
+	        MakeStarYellow(4, Star4);
+	        MakeStarYellow(5, Star5);
 
-	        ColorizeRatings(0, 1, votingStar1);
-	        ColorizeRatings(0, 2, votingStar2);
-	        ColorizeRatings(0, 3, votingStar3);
-	        ColorizeRatings(0, 4, votingStar4);
-	        ColorizeRatings(0, 5, votingStar5);
+	        ColorizeRatings(0, 1, VotingStar1);
+	        ColorizeRatings(0, 2, VotingStar2);
+	        ColorizeRatings(0, 3, VotingStar3);
+	        ColorizeRatings(0, 4, VotingStar4);
+	        ColorizeRatings(0, 5, VotingStar5);
         }
 
 	    private void MakeStarYellow(int starNo, Image image)
         {
             if (AvgStars < starNo)
             {
-                image.Source = ImageSource.FromUri(new Uri(startUrl + grayStar));
+                image.Source = ImageSource.FromUri(new Uri(StartUrl + GrayStar));
             }
             else
 	        {
-	            image.Source = ImageSource.FromUri(new Uri(startUrl + yellowStar));
+	            image.Source = ImageSource.FromUri(new Uri(StartUrl + YellowStar));
 	        }
 	    }
 
@@ -90,11 +90,11 @@ namespace MobilSemProjekt.View
 	    {
 	        if (rating < starNo)
 	        {
-                image.Source = ImageSource.FromUri(new Uri(startUrl + grayStar));
+                image.Source = ImageSource.FromUri(new Uri(StartUrl + GrayStar));
             }
 	        else
 	        {
-	            image.Source = ImageSource.FromUri(new Uri(startUrl + yellowStar));
+	            image.Source = ImageSource.FromUri(new Uri(StartUrl + YellowStar));
 	        }
         }
 
@@ -106,15 +106,16 @@ namespace MobilSemProjekt.View
 	            NumberOfTapsRequired = 1
 	        };
 	    }
+        
 
 	    private void SetLocalVote(int votingStarNo)
 	    {
 	        CurrVote = votingStarNo;
-	        ColorizeRatings(votingStarNo, 1, votingStar1);
-	        ColorizeRatings(votingStarNo, 2, votingStar2);
-	        ColorizeRatings(votingStarNo, 3, votingStar3);
-	        ColorizeRatings(votingStarNo, 4, votingStar4);
-	        ColorizeRatings(votingStarNo, 5, votingStar5);
+	        ColorizeRatings(votingStarNo, 1, VotingStar1);
+	        ColorizeRatings(votingStarNo, 2, VotingStar2);
+	        ColorizeRatings(votingStarNo, 3, VotingStar3);
+	        ColorizeRatings(votingStarNo, 4, VotingStar4);
+	        ColorizeRatings(votingStarNo, 5, VotingStar5);
 	    }
 
         private void SendVote(object sender, EventArgs eventArgs)
@@ -122,7 +123,7 @@ namespace MobilSemProjekt.View
 	        IRatingRestService ratingRestService = new RatingRestService();
 	        Rating rating = new Rating
 	        {
-	            Comment = ratingComment.Text,
+	            Comment = RatingComment.Text,
 	            User = User,
 	            Rate = CurrVote,
                 LocationId = Location.LocationId

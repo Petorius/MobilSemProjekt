@@ -6,48 +6,43 @@
     <ContentPage.Content>
 
         <StackLayout Orientation="Vertical" x:Name="showItAll">
-            <Image x:Name="picture" Aspect="AspectFit" />
-            <Label x:Name="locationName" Text="{Binding LocationName}" />
-            <Label x:Name="locationDesc" Text="{Binding LocationDescription}" />
-            <StackLayout x:Name="starBar" Orientation="Horizontal">
-                <Image x:Name="star1" Aspect="AspectFit" />
-                <Image x:Name="star2" Aspect="AspectFit" />
-                <Image x:Name="star3" Aspect="AspectFit" />
-                <Image x:Name="star4" Aspect="AspectFit" />
-                <Image x:Name="star5" Aspect="AspectFit" />
+            <Image x:Name="Picture" Aspect="AspectFit" />
+            <Label x:Name="LocationName" Text="{Binding LocationName}" />
+            <Label x:Name="LocationDesc" Text="{Binding LocationDescription}" />
+            <StackLayout x:Name="StarBar" Orientation="Horizontal">
+                <Image x:Name="Star1" Aspect="AspectFit" />
+                <Image x:Name="Star2" Aspect="AspectFit" />
+                <Image x:Name="Star3" Aspect="AspectFit" />
+                <Image x:Name="Star4" Aspect="AspectFit" />
+                <Image x:Name="Star5" Aspect="AspectFit" />
             </StackLayout>
-            <StackLayout x:Name="votingBar" Orientation="Horizontal">
-                <Label x:Name="yourVoteLabel" Text="Din vurdering: " />
-                <Image x:Name="votingStar1" Aspect="AspectFit" />
-                <Image x:Name="votingStar2" Aspect="AspectFit" />
-                <Image x:Name="votingStar3" Aspect="AspectFit" />
-                <Image x:Name="votingStar4" Aspect="AspectFit" />
-                <Image x:Name="votingStar5" Aspect="AspectFit" />
+            <StackLayout x:Name="VotingBar" Orientation="Horizontal">
+                <Label x:Name="YourVoteLabel" Text="Din vurdering: " />
+                <Image x:Name="VotingStar1" Aspect="AspectFit" />
+                <Image x:Name="VotingStar2" Aspect="AspectFit" />
+                <Image x:Name="VotingStar3" Aspect="AspectFit" />
+                <Image x:Name="VotingStar4" Aspect="AspectFit" />
+                <Image x:Name="VotingStar5" Aspect="AspectFit" />
             </StackLayout>
             <StackLayout Orientation="Vertical">
                 <Editor VerticalOptions="FillAndExpand"
-                    x:Name="ratingComment"
+                    x:Name="RatingComment"
                     Margin="10" />
-                <Button x:Name="submitRatingButton" Text="Send stemme" Clicked="SendVote" />
+                <Button x:Name="SubmitRatingButton" Text="Send stemme" Clicked="SendVote" />
             </StackLayout>
-            <ListView x:Name="votingList" HasUnevenRows="True">
+            <ListView x:Name="VotingList" HasUnevenRows="True">
                 <ListView.ItemTemplate>
                     <DataTemplate>
                         <ViewCell>
                             <StackLayout Orientation="Horizontal" Padding="5">
-                                <Label Text="{Binding User.Name}"/>
+                                <Label BindingContext="{Binding User}" Text="{Binding Name}"/>
                                 <Label Text="{Binding Rate}"/>
                                 <Label Text="{Binding Comment}"/>
                             </StackLayout>
                         </ViewCell>
                     </DataTemplate>
                 </ListView.ItemTemplate>
-
-
             </ListView>
-            
-            
-            
         </StackLayout>
     </ContentPage.Content>
 </ContentPage>
