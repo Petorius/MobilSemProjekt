@@ -114,6 +114,29 @@ namespace MobileService.Database
             }
             return user;
         }
+        public bool Update(User user)
+        {
+            int changes;
+
+            using (_connection = new SqlConnection(_connectionString))
+            {
+                _connection.Open();
+                using (SqlCommand cmd = _connection.CreateCommand())
+                {
+                    cmd.CommandText = "UPDATE [User] SET UserName = @UserName, HashPassword = @HashPassword, " +
+                                      "Salt = @Salt,  UserTypeId = @UserTypeId WHERE UserId = @UserId";
+                    cmd.Parameters.AddWithValue("UserName", user.UserName);
+                    cmd.Parameters.AddWithValue("HashPassword", user.HashPassword);
+                    cmd.Parameters.AddWithValue("Salt", user.Salt);
+                    cmd.Parameters.AddWithValue("UserTypeId", user.UserType.UserTypeId);
+                    cmd.Parameters.AddWithValue("UserId", user.UserId);
+                    changes = cmd.ExecuteNonQuery();
+                }
+                _connection.Close();
+            }
+            
+            return changes > 0;
+        }
 
         public void Delete(string userName)
         {

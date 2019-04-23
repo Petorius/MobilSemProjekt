@@ -9,6 +9,7 @@ namespace MobileService.WcfService
     public class UserService : IUserService
     {
         private UserCtrl _userCtrl;
+        private RatingCtrl _ratingCtrl;
 
         public int CreateUser(User user)
         {
@@ -26,6 +27,13 @@ namespace MobileService.WcfService
         {
             _userCtrl = new UserCtrl();
             return _userCtrl.FindSaltByUserName(userName);
+        }
+
+        public bool UpdateUser(List<User> users)
+        {
+            User loggedInUser = users[0];
+            User userToUpdate = users[1];
+            return _userCtrl.UpdateUser(loggedInUser, userToUpdate);
         }
 
         public User FindByUserName(string userName)

@@ -189,8 +189,9 @@ namespace MobileService.Database
             return avgValue;
         }
 
-        public void Update(Rating rating, int ratingId)
+        public bool Update(Rating rating)
         {
+            int changes = 0;
             using (_connection = new SqlConnection(_connectionString))
             {
                 _connection.Open();
@@ -201,11 +202,13 @@ namespace MobileService.Database
                     cmd.Parameters.AddWithValue("Rate", rating.Rate);
                     cmd.Parameters.AddWithValue("Comment", rating.Comment);
                     cmd.Parameters.AddWithValue("UserId", rating.User.UserId);
-                    cmd.Parameters.AddWithValue("RatingId", ratingId);
-                    cmd.ExecuteNonQuery();
+                    cmd.Parameters.AddWithValue("RatingId", rating.RatingId);
+                    changes = cmd.ExecuteNonQuery();
                 }
                 _connection.Close();
             }
+
+            return changes > 0;
         }
 
         public void Delete(int ratingId)

@@ -64,6 +64,16 @@ namespace MobileService.Controller
             }
             return val;
         }
+
+        public bool UpdateUser(User loggedInUser, User userToUpdate)
+        {
+            bool status = false;
+            if (loggedInUser.UserType.TypeName == "admin")
+            {
+                status = _dbUser.Update(userToUpdate);
+            }
+            return status;
+        }
     }
 }
 

@@ -25,9 +25,9 @@ namespace MobileService.WcfService
 
         [OperationContract]
         [WebInvoke(Method = "POST",
-            UriTemplate = "UpdateLocation/{ratingId}",
+            UriTemplate = "Update",
             RequestFormat = WebMessageFormat.Json,
             ResponseFormat = WebMessageFormat.Json)]
-        void Update(Rating rating, string ratingId);
+        bool UpdateRating(UpdateRating updateRating);
     }
 }

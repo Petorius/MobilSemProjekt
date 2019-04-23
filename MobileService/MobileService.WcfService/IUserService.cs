@@ -39,5 +39,12 @@ namespace MobileService.WcfService
             ResponseFormat = WebMessageFormat.Json)]
         [FaultContract(typeof(UserNotDeletedException))]
         string FindSaltByUserName(string userName);
+
+        [OperationContract]
+        [WebInvoke(Method = "POST",
+            UriTemplate = "Update",
+            RequestFormat = WebMessageFormat.Json,
+            ResponseFormat = WebMessageFormat.Json)]
+        bool UpdateUser(List<User> users);
     }
 }
