@@ -1,17 +1,11 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Android.OS;
 using MobilSemProjekt.MVVM.Model;
 using MobilSemProjekt.MVVM.ViewModel;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
 
-namespace MobilSemProjekt.View
-{
-	[XamlCompilation(XamlCompilationOptions.Compile)]
+namespace MobilSemProjekt.View {
+    [XamlCompilation(XamlCompilationOptions.Compile)]
 	public partial class StartUpPage : ContentPage
 	{
 	    private MainPage MapMainPage;
