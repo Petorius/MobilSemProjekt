@@ -2,6 +2,7 @@
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.Net;
 using System.Net.Http;
 using System.Text;
 using System.Threading.Tasks;
@@ -80,9 +81,49 @@ namespace MobilSemProjekt.MVVM.ViewModel
             return result;
         }
 
-        public Task Update(Rating rating, int ratingId) //TOBE async
+        public async Task<bool> Update(User user, Rating rating)
         {
-            throw new NotImplementedException();
+            UpdateRating updateRating = new UpdateRating
+            {
+                User = user,
+                Rating = rating
+            };
+
+            // Serialize our concrete class into a JSON String
+            var stringThingy = await Task.Run(() => JsonConvert.SerializeObject(updateRating));
+
+            // Wrap our JSON inside a StringContent which then can be used by the HttpClient class
+            var httpContent = new StringContent(stringThingy, Encoding.UTF8, "application/json");
+            var result = false;
+
+            using (var httpClient = new HttpClient())
+            {
+                // Do the actual request and await the response
+                var httpResponse =
+                    await httpClient.PostAsync(RestUrl + "RatingService.svc/UpdateRating",
+                        httpContent);
+                Debug.WriteLine(httpResponse);
+                try
+                {
+                    // If the response contains content we want to read it!
+                    if (httpResponse.IsSuccessStatusCode)
+                    {
+                        //var responseContent = await httpResponse.Content.ReadAsStringAsync();
+                        Debug.WriteLine("UpdateRating - Success!");
+                        var content = await httpResponse.Content.ReadAsStringAsync();
+                        result = JsonConvert.DeserializeObject<bool>(content);
+                    }
+                    else
+                    {
+                        Debug.WriteLine("UpdateRating - Failure");
+                    }
+                }
+                catch (Exception e)
+                {
+                    Debug.WriteLine("UpdateRating - Error: " + e.Message);
+                }
+            }
+            return result;
         }
     }
 }

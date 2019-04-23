@@ -23,11 +23,12 @@ namespace MobileService.WcfService
             return _ratingCtrl.GetAverageRating(locId);
         }
 
-        public void Update(Rating rating, string ratingId)
+        public bool UpdateRating(UpdateRating updateRating)
         {
             _ratingCtrl = new RatingCtrl();
-            int.TryParse(ratingId, out int rateId);
-            _ratingCtrl.Update(rating, rateId);
+            User loggedInUser = updateRating.User;
+            Rating ratingToUpdate = updateRating.Rating;
+            return _ratingCtrl.Update(loggedInUser, ratingToUpdate);
         }
     }
 }
