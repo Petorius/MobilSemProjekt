@@ -45,19 +45,24 @@ namespace MobilSemProjekt.View
                 }
 		    };
         }
-        
+
+	    private void SetImage(Image image, string url)
+	    {
+	        image.Source = ImageSource.FromUri(new Uri(url));
+	    }
+
 	    protected override void OnAppearing()
 	    {
             base.OnAppearing();
-	        if (Location.Pictures.Count != 0)
-	        {
-	            Picture.Source = ImageSource.FromUri(new Uri(Location.Pictures[0].Url));
-            }
-	        else
-	        {
-	            Picture.Source = ImageSource.FromUri(new Uri(StartUrl + "img.png"));
-            }
 
+	        SetImage(Picture, StartUrl + "img.png");
+            if (Location.Pictures != null)
+	        {
+	            if (Location.Pictures.Count != 0)
+	            {
+                    SetImage(Picture, Location.Pictures[0].Url);
+	            }
+            }
             
 	        LocationName.Text = Location.LocationName;
             LocationDesc.Text = Location.LocationDescription;
