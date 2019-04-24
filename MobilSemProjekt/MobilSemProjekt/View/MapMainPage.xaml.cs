@@ -24,15 +24,14 @@ namespace MobilSemProjekt.View
         {
             InitializeComponent();
 
-            Content = new StackLayout()
-            {
-                Spacing = 5,
-                Children =
-                {
-                    GoogleMap,
-                    OurEntry
-                }
-            };
+            //Content = new StackLayout()
+            //{
+            //    Children =
+            //    {
+            //        GoogleMap,
+            //        OurEntry
+            //    }
+            //};
 
             GoogleMap.MapClicked += (sender, e) => PlaceMarker(e);
             Task.Run(async () => await GoToCurrentLocation());

@@ -8,19 +8,20 @@ namespace MobilSemProjekt.View {
     [XamlCompilation(XamlCompilationOptions.Compile)]
 	public partial class StartUpPage : ContentPage
 	{
-	    private MainPage MapMainPage;
+        private TabbedMapMainPage TabbedMapMainPage;
 
         public StartUpPage ()
 		{
 			InitializeComponent ();
-		    MapMainPage = new MainPage();
-		    MapMainPage.User = null;
+            TabbedMapMainPage = new TabbedMapMainPage();
+            TopLocationController topLocationController = new TopLocationController();
+            topLocationController.SetTopLocations();
         }
 
         private async void ContinueWithoutAccountButton_OnClicked(object sender, EventArgs e)
         {
-            MainPage mainPage = new MainPage();
-            await Navigation.PushAsync(mainPage);
+            TabbedMapMainPage = new TabbedMapMainPage();
+            await Navigation.PushAsync(TabbedMapMainPage);
             Navigation.RemovePage(this);
         }
 
@@ -43,8 +44,8 @@ namespace MobilSemProjekt.View {
 
                 if (user != null)
                 {
-                    MapMainPage.User = user;
-                    await Navigation.PushAsync(MapMainPage);
+                    //MapMainPage.User = user;
+                    //await Navigation.PushAsync(MapMainPage);
                 }
             }
             

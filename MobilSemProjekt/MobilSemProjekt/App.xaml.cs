@@ -10,6 +10,7 @@ namespace MobilSemProjekt {
             InitializeComponent();
 
             MainPage = new NavigationPage( new StartUpPage());
+            Resources = new Xamarin.Forms.Themes.DarkThemeResources();
         }
 
         protected override void OnStart() {
