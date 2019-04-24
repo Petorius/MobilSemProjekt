@@ -1,6 +1,7 @@
 ﻿using System;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using MobileService.Database;
+using MobileService.Model;
 
 namespace UnitTest
 {
@@ -10,9 +11,11 @@ namespace UnitTest
         [TestMethod]
         public void TestMethod1()
         {
-            
-                DbLocation dbLocation = new DbLocation();
-                dbLocation.FindAll();
+            Location l = new Location();
+            l.LocationId = 1;
+            DbLocation dbLocation = new DbLocation();
+            dbLocation.UpdateHits(l);
+            //dbLocation.FindAll();
         }
     }
 }

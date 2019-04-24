@@ -49,7 +49,16 @@ namespace MobilSemProjekt.View
 	    protected override void OnAppearing()
 	    {
             base.OnAppearing();
-            Picture.Source = ImageSource.FromUri(new Uri(StartUrl + "img.png"));
+	        if (Location.Pictures.Count != 0)
+	        {
+	            Picture.Source = ImageSource.FromUri(new Uri(Location.Pictures[0].Url));
+            }
+	        else
+	        {
+	            Picture.Source = ImageSource.FromUri(new Uri(StartUrl + "img.png"));
+            }
+
+            
 	        LocationName.Text = Location.LocationName;
             LocationDesc.Text = Location.LocationDescription;
             LoadStars();

@@ -245,16 +245,16 @@ namespace MobileService.Database
         {
             for (int i = 0; i < 5; i++)
             {
-                using (SqlConnection connection = new SqlConnection(_connectionString))
+                using (_connection = new SqlConnection(_connectionString))
                 {
                     try
                     {
                         _connection.Open();
-                        using (SqlTransaction trans = connection.BeginTransaction())
+                        using (SqlTransaction trans = _connection.BeginTransaction())
                         {
                             byte[] rowVersion = null;
                             int rowCount = 0;
-                            using (SqlCommand cmd = connection.CreateCommand())
+                            using (SqlCommand cmd = _connection.CreateCommand())
                             {
                                 cmd.Transaction = trans;
                                 cmd.CommandText = "SELECT [rowVersion] FROM Locations WHERE LocationId = @LocationId";
