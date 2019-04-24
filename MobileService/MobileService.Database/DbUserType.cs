@@ -21,7 +21,7 @@ namespace MobileService.Database
 
                 using (SqlCommand cmd = _connection.CreateCommand())
                 {
-                    cmd.CommandText = "INSERT INTO [UserType](TypeName) VALUES (@TypeName); ";
+                    cmd.CommandText = "INSERT INTO UserType(TypeName) VALUES (@TypeName); ";
                     cmd.Parameters.AddWithValue("TypeName", userType.TypeName);
                     
                     id = Convert.ToInt32(cmd.ExecuteScalar());
@@ -40,7 +40,7 @@ namespace MobileService.Database
                 _connection.Open();
                 using (SqlCommand cmd = _connection.CreateCommand())
                 {
-                    cmd.CommandText = "SELECT * FROM [UserType] WHERE UserTypeId = @UserTypeId";
+                    cmd.CommandText = "SELECT * FROM UserType WHERE UserTypeId = @UserTypeId";
                     cmd.Parameters.AddWithValue("UserTypeId", userTypeId);
                     SqlDataReader reader = cmd.ExecuteReader();
 
@@ -49,7 +49,7 @@ namespace MobileService.Database
                         userType = new UserType
                         {
                             UserTypeId = userTypeId,
-                            TypeName = reader.GetString(reader.GetOrdinal("UserTypeName"))
+                            TypeName = reader.GetString(reader.GetOrdinal("TypeName"))
                         };
                     }
                 }

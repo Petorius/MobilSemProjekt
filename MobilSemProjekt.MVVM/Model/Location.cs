@@ -14,5 +14,6 @@ namespace MobilSemProjekt.MVVM.Model
         public User User { get; set; }
         public List<Rating> Ratings { get; set; }
         public List<Picture> Pictures { get; set; }
+        public byte[] RowVersion { get; set; }
     }
 }

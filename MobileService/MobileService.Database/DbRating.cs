@@ -118,7 +118,8 @@ namespace MobileService.Database
                             RatingId = reader.GetInt32(reader.GetOrdinal("RatingId")),
                             User = user,
                             Rate = reader.GetDouble(reader.GetOrdinal("Rate")),
-                            Comment = reader.GetString(reader.GetOrdinal("Comment"))
+                            Comment = reader.GetString(reader.GetOrdinal("Comment")),
+                            LocationId = locationId
                         };
                         ratings.Add(rating);
                     }

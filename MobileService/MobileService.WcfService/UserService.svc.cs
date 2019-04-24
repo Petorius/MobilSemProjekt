@@ -9,7 +9,7 @@ namespace MobileService.WcfService
     public class UserService : IUserService
     {
         private UserCtrl _userCtrl;
-        private RatingCtrl _ratingCtrl;
+        //private RatingCtrl _ratingCtrl;
 
         public int CreateUser(User user)
         {

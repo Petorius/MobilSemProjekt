@@ -56,6 +56,7 @@ namespace MobileService.WcfService
 
         public void UpdateHits(Location location)
         {
+            _locationCtrl = new LocationCtrl();
             _locationCtrl.UpdateHits(location);
         }
     }
