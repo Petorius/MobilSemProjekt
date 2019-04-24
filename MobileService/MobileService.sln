@@ -15,6 +15,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MobileService.WcfService", 
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MobileService.Exception", "MobileService.Exception\MobileService.Exception.csproj", "{A30EF766-1A70-45E6-9BA0-69DCEEC28112}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "UnitTest", "UnitTest\UnitTest.csproj", "{DE539B00-29BD-4FA9-9C0B-08EF71D7B6D5}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -45,6 +47,10 @@ Global
 		{A30EF766-1A70-45E6-9BA0-69DCEEC28112}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{A30EF766-1A70-45E6-9BA0-69DCEEC28112}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{A30EF766-1A70-45E6-9BA0-69DCEEC28112}.Release|Any CPU.Build.0 = Release|Any CPU
+		{DE539B00-29BD-4FA9-9C0B-08EF71D7B6D5}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{DE539B00-29BD-4FA9-9C0B-08EF71D7B6D5}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{DE539B00-29BD-4FA9-9C0B-08EF71D7B6D5}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{DE539B00-29BD-4FA9-9C0B-08EF71D7B6D5}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

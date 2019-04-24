@@ -86,7 +86,9 @@ namespace MobileService.Database
                             Latitude = reader.GetDouble(reader.GetOrdinal("Latitude")),
                             Longitude = reader.GetDouble(reader.GetOrdinal("Longitude")),
                             Pictures = _dbPicture.FindByLocationId(locationId),
-                            Ratings = _dbRating.FindByLocationId(locationId)
+                            Ratings = _dbRating.FindByLocationId(locationId),
+                            User = _dbUser.FindById(reader.GetOrdinal("UserId")),
+                            RowVersion = (byte[])reader.GetValue(reader.GetOrdinal("rowVersion"))
                         };
                     }
                 }
@@ -121,7 +123,9 @@ namespace MobileService.Database
                             Latitude = reader.GetDouble(reader.GetOrdinal("Latitude")),
                             Longitude = reader.GetDouble(reader.GetOrdinal("Longitude")),
                             Pictures = _dbPicture.FindByLocationId(locationId),
-                            Ratings = _dbRating.FindByLocationId(locationId)
+                            Ratings = _dbRating.FindByLocationId(locationId),
+                            User = _dbUser.FindById(reader.GetOrdinal("UserId")),
+                            RowVersion = (byte[]) reader.GetValue(reader.GetOrdinal("rowVersion"))
                         };
                     }
                 }
@@ -160,7 +164,8 @@ namespace MobileService.Database
                                 Longitude = reader.GetDouble(reader.GetOrdinal("Longitude")),
                                 Pictures = _dbPicture.FindByLocationId(locationId),
                                 Ratings = _dbRating.FindByLocationId(locationId),
-                                User = user
+                                User = user,
+                                RowVersion = (byte[])reader.GetValue(reader.GetOrdinal("rowVersion"))
                             };
                             locations.Add(location);
                         }
@@ -199,7 +204,8 @@ namespace MobileService.Database
                             Longitude = reader.GetDouble(reader.GetOrdinal("Longitude")),
                             Pictures = _dbPicture.FindByLocationId(locationId),
                             Ratings = _dbRating.FindByLocationId(locationId),
-                            User = _dbUser.FindById(userId)
+                            User = _dbUser.FindById(userId),
+                            RowVersion = (byte[])reader.GetValue(reader.GetOrdinal("rowVersion"))
                         };
 
                         locations.Add(location);
@@ -239,32 +245,32 @@ namespace MobileService.Database
         {
             for (int i = 0; i < 5; i++)
             {
-                using (SqlConnection connection = new SqlConnection(_connectionString))
+                using (_connection = new SqlConnection(_connectionString))
                 {
                     try
                     {
                         _connection.Open();
-                        using (SqlTransaction trans = connection.BeginTransaction())
+                        using (SqlTransaction trans = _connection.BeginTransaction())
                         {
-                            byte[] rowId = null;
+                            byte[] rowVersion = null;
                             int rowCount = 0;
-                            using (SqlCommand cmd = connection.CreateCommand())
+                            using (SqlCommand cmd = _connection.CreateCommand())
                             {
                                 cmd.Transaction = trans;
-                                cmd.CommandText = "SELECT rowID FROM Locations WHERE LocationId = @LocationId";
+                                cmd.CommandText = "SELECT [rowVersion] FROM Locations WHERE LocationId = @LocationId";
                                 cmd.Parameters.AddWithValue("LocationId", location.LocationId);
                                 SqlDataReader reader = cmd.ExecuteReader();
 
                                 while (reader.Read())
                                 {
-                                    rowId = (byte[]) reader["rowId"];
+                                    rowVersion = (byte[]) reader.GetValue(reader.GetOrdinal("rowVersion"));
                                 }
 
                                 reader.Close();
 
                                 cmd.CommandText =
-                                    "UPDATE Locations set Hits = Hits + 1 where LocationId = @LocationId AND rowID = @rowId";
-                                cmd.Parameters.AddWithValue("rowID", rowId);
+                                    "UPDATE Locations set Hits = Hits + 1 where LocationId = @LocationId AND rowVersion = @RowVersion";
+                                cmd.Parameters.AddWithValue("RowVersion", rowVersion);
                                 rowCount = cmd.ExecuteNonQuery();
 
                                 if (rowCount == 0)

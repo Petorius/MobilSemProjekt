@@ -27,5 +27,7 @@ namespace MobileService.Model
         public List<Rating> Ratings { get; set; }
         [DataMember]
         public List<Picture> Pictures { get; set; }
+        [DataMember]
+        public byte[] RowVersion { get; set; }
     }
 }

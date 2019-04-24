@@ -55,10 +55,10 @@ namespace MobileService.Database
                     cmd.CommandText = "SELECT * FROM [User] WHERE UserId = @UserId";
                     cmd.Parameters.AddWithValue("UserId", userId);
                     SqlDataReader reader = cmd.ExecuteReader();
-                    int userTypeId = reader.GetInt32(reader.GetOrdinal("UserTypeId"));
-
+                    
                     while (reader.Read())
                     {
+                        int userTypeId = reader.GetInt32(reader.GetOrdinal("UserTypeId"));
                         user = new User
                         {
                             UserId = userId,
@@ -67,6 +67,7 @@ namespace MobileService.Database
                             Salt = reader.GetString(reader.GetOrdinal("Salt")),
                             UserType = DbUserType.FindById(userTypeId)
                         };
+
                     }
                 }
                 _connection.Close();
