@@ -10,6 +10,7 @@ using MobilSemProjekt.MVVM.ViewModel;
 using Acr.UserDialogs;
 using System.Collections.ObjectModel;
 using System.ComponentModel.Design;
+using System.Diagnostics;
 using MobilSemProjekt.MVVM.Model;
 using Location = MobilSemProjekt.MVVM.Model.Location;
 using Math = System.Math;
@@ -43,39 +44,52 @@ namespace MobilSemProjekt.View
         {
             RestService restservice = new RestService();
             Location location = await restservice.ReadLocationByNameAsync(e.Pin.Label);
-            restservice.UpdateHits(location);
-            var Page = new DescPage();
-            Page.Location = location;
-            Page.User = User;
+            if (location != null)
+            {
+                restservice.UpdateHits(location);
+                var Page = new DescPage
+                {
+                    Location = location,
+                    User = User
+                };
 
-            await Navigation.PushAsync(Page);
+                await Navigation.PushAsync(Page);
+            }
+            else
+            {
+                UpdateLocationsOnMap();
+            }
+        }
+
+        private async void UpdateLocationsOnMap()
+        {
+            string labelText;
+            List<Location> list = await GetLocations();
+            foreach (var location in list)
+            {
+                if (location.IsTopLocation)
+                {
+                    labelText = "**Top Location** " + location.LocationName;
+                }
+                else
+                {
+                    labelText = location.LocationName;
+                }
+                
+                GoogleMap.Pins.Add(new Pin
+                {
+                    Label = labelText,
+                    Position = new Position(location.Latitude, location.Longitude),
+                    Address = location.LocationDescription
+                    //Burde opdateres til at tage en location address
+                });
+            }
         }
 
         protected override async void OnAppearing()
         {
             base.OnAppearing();
-            string LabelText;
-            List<Location> list = await GetLocations();
-            foreach (var location in list) { 
-                if (location.IsTopLocation)
-                {
-                    LabelText = "**Top Location** " + location.LocationName;
-                }
-            else
-                {
-                    LabelText = location.LocationName;
-                }
-
-           
-                GoogleMap.Pins.Add(new Pin
-                {
-                    Label = LabelText,
-                    Position = new Position(location.Latitude, location.Longitude),
-                    Address = location.LocationDescription
-                    //Burde opdateres til at tage en location address
-                    
-                });
-            }
+            UpdateLocationsOnMap();
         }
 
         private async Task<List<Location>> GetLocations()
