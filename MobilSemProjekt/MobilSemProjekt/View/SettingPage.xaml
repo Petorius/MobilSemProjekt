@@ -1,0 +1,14 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="MobilSemProjekt.View.SettingPage">
+    <ContentPage.Content>
+        <StackLayout Orientation="Vertical" x:Name="ShowItAll">
+        <!--    <Button x:Name="BtnSettings" Text="Settings" Clicked="BtnSettings_OnClicked" />
+            <Button x:Name="BtnProfile" Text="Profile" Clicked="BtnProfile_OnClicked" />
+            <Button x:Name="BtnLocations" Text="Locations" Clicked="BtnLocations_OnClicked" />
+            <Button x:Name="BtnRatings" Text="Ratings" Clicked="BtnRatings_OnClicked" />
+            <Button x:Name="BtnAdmin" Text="Admin" Clicked="BtnAdmin_OnClicked" />-->
+        </StackLayout>
+    </ContentPage.Content>
+</ContentPage>

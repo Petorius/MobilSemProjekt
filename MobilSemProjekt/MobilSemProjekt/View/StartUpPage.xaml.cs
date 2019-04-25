@@ -13,9 +13,8 @@ namespace MobilSemProjekt.View {
         public StartUpPage ()
 		{
 			InitializeComponent ();
-		    MapMainPage = new MainPage();
-		    MapMainPage.User = null;
-        }
+		    MapMainPage = new MainPage { User = null };
+		}
 
         private async void ContinueWithoutAccountButton_OnClicked(object sender, EventArgs e)
         {

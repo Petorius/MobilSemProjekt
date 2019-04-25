@@ -5,7 +5,25 @@
              x:Class="MobilSemProjekt.View.MainPage"
              xmlns:maps="clr-namespace:Xamarin.Forms.GoogleMaps;assembly=Xamarin.Forms.GoogleMaps">
 
-    <StackLayout>
+    <StackLayout VerticalOptions="FillAndExpand" HorizontalOptions="FillAndExpand">
+
+        <StackLayout
+            Orientation="Horizontal"
+            x:Name="FancyButtonLine">
+
+            <Image
+                x:Name="BtnFindMyLocation"
+                HorizontalOptions="Start"
+                HeightRequest="50"
+                Margin="0,0,150,0"
+            />
+            <Image
+                x:Name="BtnSettings"
+                HorizontalOptions="End"
+                HeightRequest="50"
+                Margin="150,0,0,0"
+            />
+        </StackLayout>
         <maps:Map 
             x:Name="GoogleMap"
             MyLocationEnabled="True"

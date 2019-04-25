@@ -11,6 +11,7 @@ using Acr.UserDialogs;
 using System.Collections.ObjectModel;
 using System.ComponentModel.Design;
 using System.Diagnostics;
+using System.Windows.Input;
 using MobilSemProjekt.MVVM.Model;
 using Location = MobilSemProjekt.MVVM.Model.Location;
 using Math = System.Math;
@@ -21,6 +22,7 @@ namespace MobilSemProjekt.View
     public partial class MainPage : ContentPage
     {
         public User User { private get; set; }
+        private string StartUrl { get; set; }
         public MainPage()
         {
             InitializeComponent();
@@ -30,15 +32,50 @@ namespace MobilSemProjekt.View
                 Spacing = 5,
                 Children =
                 {
+                    FancyButtonLine,
                     GoogleMap,
                     OurEntry
                 }
             };
 
+            StartUrl = "http://dmax0917.hegr.dk/";
+            BtnSettings.Source = ImageSource.FromUri(new Uri(StartUrl + "settings.png"));
+            BtnSettings.GestureRecognizers.Add(ReturnCall(0));
+
+            BtnFindMyLocation.Source = ImageSource.FromUri(new Uri(StartUrl + "navArrow.png"));
+            BtnFindMyLocation.GestureRecognizers.Add(ReturnCall(1));
+
             GoogleMap.MapClicked += (sender, e) => PlaceMarker(e);
             Task.Run(async () => await GoToCurrentLocation());
             GoogleMap.PinClicked += (sender, e) => OnTouchAsync(e);
+
         }
+        protected override async void OnAppearing()
+        {
+            base.OnAppearing();
+            await UpdateLocationsOnMap();
+        }
+
+        private TapGestureRecognizer ReturnCall(int commandId)
+        {
+            return new TapGestureRecognizer
+            {
+                Command = new Command(async () =>
+                {
+                    if (commandId == 0)
+                    {
+                        SettingPage settingPage = new SettingPage();
+                        await Navigation.PushAsync(settingPage);
+                    }
+                    else if (commandId == 1)
+                    {
+                        await GoToCurrentLocation();
+                    }
+                }),
+                NumberOfTapsRequired = 1
+            };
+        }
+
 
         private async void OnTouchAsync(PinClickedEventArgs e)
         {
@@ -57,11 +94,11 @@ namespace MobilSemProjekt.View
             }
             else
             {
-                UpdateLocationsOnMap();
+                await UpdateLocationsOnMap();
             }
         }
 
-        private async void UpdateLocationsOnMap()
+        private async Task UpdateLocationsOnMap()
         {
             string labelText;
             List<Location> list = await GetLocations();
@@ -86,11 +123,6 @@ namespace MobilSemProjekt.View
             }
         }
 
-        protected override async void OnAppearing()
-        {
-            base.OnAppearing();
-            UpdateLocationsOnMap();
-        }
 
         private async Task<List<Location>> GetLocations()
         {
@@ -261,8 +293,10 @@ namespace MobilSemProjekt.View
 
             if (combinedList.Count > 0)
             {
-                SearchListView searchListView = new SearchListView();
-                searchListView.Locations = new ObservableCollection<Location>(combinedList);
+                SearchListView searchListView = new SearchListView
+                {
+                    Locations = new ObservableCollection<Location>(combinedList)
+                };
                 await Navigation.PushAsync(searchListView);
                 //Location location = combinedList.First();
                 //Debug.Write("GPS punkter " + location.Latitude + " " + location.Longitude);
@@ -281,7 +315,6 @@ namespace MobilSemProjekt.View
             var position = await locator.GetPositionAsync(TimeSpan.FromSeconds(1));
             GoToLocation(position.Latitude, position.Longitude);
         }
-
     }
 
 

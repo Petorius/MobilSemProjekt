@@ -144,6 +144,7 @@ namespace MobilSemProjekt.View
 	        };
 	        ratingRestService.Create(rating);
 	        LoadStars();
+	        CurrVote = 0;
 	    }
     }
 }
