@@ -30,15 +30,15 @@ namespace MobilSemProjekt.View
             {
                 Children =
                 {
-                    FancyButtonLine,
+                    BtnFindMyLocation,
                     GoogleMap,
                     OurEntry
                 }
             };
 
             StartUrl = "http://dmax0917.hegr.dk/";
-            BtnSettings.Source = ImageSource.FromUri(new Uri(StartUrl + "settings.png"));
-            BtnSettings.GestureRecognizers.Add(ReturnCall(0));
+            BtnFindMyLocation.Source = ImageSource.FromUri(new Uri(StartUrl + "navArrow.png"));
+            BtnFindMyLocation.GestureRecognizers.Add(ReturnCall());
 
             GoogleMap.MapClicked += (sender, e) => PlaceMarker(e);
             Task.Run(async () => await GoToCurrentLocation());
@@ -51,21 +51,13 @@ namespace MobilSemProjekt.View
             await UpdateLocationsOnMap();
         }
 
-        private TapGestureRecognizer ReturnCall(int commandId)
+        private TapGestureRecognizer ReturnCall()
         {
             return new TapGestureRecognizer
             {
                 Command = new Command(async () =>
                 {
-                    if (commandId == 0)
-                    {
-                        //SettingsPage settingsPage = new SettingsPage();
-                        //await Navigation.PushAsync(settingsPage);
-                    }
-                    else if (commandId == 1)
-                    {
-                        await GoToCurrentLocation();
-                    }
+                    await GoToCurrentLocation();
                 }),
                 NumberOfTapsRequired = 1
             };
@@ -307,8 +299,5 @@ namespace MobilSemProjekt.View
             var position = await locator.GetPositionAsync(TimeSpan.FromSeconds(1));
             GoToLocation(position.Latitude, position.Longitude);
         }
-
     }
-
-
 }
