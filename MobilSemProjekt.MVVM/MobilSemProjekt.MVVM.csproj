@@ -49,6 +49,7 @@
     <Compile Include="ViewModel\IUserRestService.cs" />
     <Compile Include="ViewModel\IRestService.cs" />
     <Compile Include="ViewModel\RatingRestService.cs" />
+    <Compile Include="ViewModel\TopLocationController.cs" />
     <Compile Include="ViewModel\UserRestService.cs" />
     <Compile Include="ViewModel\PasswordController.cs" />
     <Compile Include="ViewModel\RestService.cs" />

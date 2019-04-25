@@ -10,7 +10,6 @@
                 HorizontalOptions="Start"
                 x:Name="UserNameLabel"/>
                 <Entry Placeholder="Enter username..." 
-                       PlaceholderColor="DarkSlateGray" 
                        x:Name="UserNameEntry"
                        HorizontalOptions="FillAndExpand"/>
             </StackLayout>
@@ -20,7 +19,6 @@
                       HorizontalOptions="Start"
                        x:Name="PasswordLabel"/>
                 <Entry Placeholder="Enter password..." 
-                       PlaceholderColor="DarkSlateGray" 
                        x:Name="PasswordEntry"
                        HorizontalOptions="FillAndExpand"
                        IsPassword="True"/>

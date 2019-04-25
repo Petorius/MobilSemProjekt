@@ -1,34 +1,17 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-             xmlns:local="clr-namespace:MobilSemProjekt"
+             xmlns:local="clr-namespace:MobilSemProjekt.View;"
              x:Class="MobilSemProjekt.View.MainPage"
-             xmlns:maps="clr-namespace:Xamarin.Forms.GoogleMaps;assembly=Xamarin.Forms.GoogleMaps">
+             xmlns:maps="clr-namespace:Xamarin.Forms.GoogleMaps;assembly=Xamarin.Forms.GoogleMaps"
+             Title="Map">
 
-    <StackLayout VerticalOptions="FillAndExpand" HorizontalOptions="FillAndExpand">
-
-        <StackLayout
-            Orientation="Horizontal"
-            x:Name="FancyButtonLine">
-
-            <Image
-                x:Name="BtnFindMyLocation"
-                HorizontalOptions="Start"
-                HeightRequest="50"
-                Margin="0,0,150,0"
-            />
-            <Image
-                x:Name="BtnSettings"
-                HorizontalOptions="End"
-                HeightRequest="50"
-                Margin="150,0,0,0"
-            />
-        </StackLayout>
+    <StackLayout >
         <maps:Map 
             x:Name="GoogleMap"
             MyLocationEnabled="True"
             Margin="0,0,0,0"/>
-        <Entry x:Name="OurEntry" Placeholder="Søg..." PlaceholderColor="LightSlateGray" Completed="OurEntry_OnCompleted"/>
+        <Entry x:Name="OurEntry" Placeholder="Søg..." Completed="OurEntry_OnCompleted"/>
     </StackLayout>
 
 </ContentPage>
