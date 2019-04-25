@@ -21,22 +21,54 @@ namespace MobilSemProjekt.View
     public partial class MainPage : ContentPage
     {
         public User User { private get; set; }
+        private string StartUrl { get; set; }
         public MainPage()
         {
             InitializeComponent();
 
-            //Content = new StackLayout()
-            //{
-            //    Children =
-            //    {
-            //        GoogleMap,
-            //        OurEntry
-            //    }
-            //};
+            Content = new StackLayout()
+            {
+                Children =
+                {
+                    FancyButtonLine,
+                    GoogleMap,
+                    OurEntry
+                }
+            };
+
+            StartUrl = "http://dmax0917.hegr.dk/";
+            BtnSettings.Source = ImageSource.FromUri(new Uri(StartUrl + "settings.png"));
+            BtnSettings.GestureRecognizers.Add(ReturnCall(0));
 
             GoogleMap.MapClicked += (sender, e) => PlaceMarker(e);
             Task.Run(async () => await GoToCurrentLocation());
             GoogleMap.PinClicked += (sender, e) => OnTouchAsync(e);
+        }
+
+        protected override async void OnAppearing()
+        {
+            base.OnAppearing();
+            await UpdateLocationsOnMap();
+        }
+
+        private TapGestureRecognizer ReturnCall(int commandId)
+        {
+            return new TapGestureRecognizer
+            {
+                Command = new Command(async () =>
+                {
+                    if (commandId == 0)
+                    {
+                        //SettingsPage settingsPage = new SettingsPage();
+                        //await Navigation.PushAsync(settingsPage);
+                    }
+                    else if (commandId == 1)
+                    {
+                        await GoToCurrentLocation();
+                    }
+                }),
+                NumberOfTapsRequired = 1
+            };
         }
 
         private async void OnTouchAsync(PinClickedEventArgs e)
@@ -56,11 +88,11 @@ namespace MobilSemProjekt.View
             }
             else
             {
-                UpdateLocationsOnMap();
+                await UpdateLocationsOnMap();
             }
         }
 
-        private async void UpdateLocationsOnMap()
+        private async Task UpdateLocationsOnMap()
         {
             string labelText;
             List<Location> list = await GetLocations();
@@ -85,11 +117,6 @@ namespace MobilSemProjekt.View
             }
         }
 
-        protected override async void OnAppearing()
-        {
-            base.OnAppearing();
-            UpdateLocationsOnMap();
-        }
 
         private async Task<List<Location>> GetLocations()
         {
