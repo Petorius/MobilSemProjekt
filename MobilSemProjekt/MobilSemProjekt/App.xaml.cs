@@ -2,6 +2,7 @@
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
 using MobilSemProjekt.View;
+using Xamarin.Forms.Themes;
 
 [assembly: XamlCompilation(XamlCompilationOptions.Compile)]
 namespace MobilSemProjekt {
@@ -10,7 +11,23 @@ namespace MobilSemProjekt {
             InitializeComponent();
 
             MainPage = new NavigationPage( new StartUpPage());
-            Resources = new Xamarin.Forms.Themes.DarkThemeResources();
+            if (Application.Current.Properties.ContainsKey("ThemePreference"))
+            {
+                if (Application.Current.Properties["ThemePreference"].Equals("Dark"))
+                {
+                    Resources = new DarkThemeResources();
+                }
+
+                else
+                {
+                    Resources = new LightThemeResources();
+
+                }
+            }
+            else
+            {
+             Resources = new DarkThemeResources();
+            }
         }
 
         protected override void OnStart() {

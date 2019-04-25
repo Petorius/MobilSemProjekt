@@ -5,9 +5,10 @@
              Title="Settings">
     <ContentPage.Content>
         <StackLayout>
-            <Label Text="Welcome to Xamarin.Forms!"
-                VerticalOptions="CenterAndExpand" 
-                HorizontalOptions="CenterAndExpand" />
+            <StackLayout Orientation="Horizontal">
+                <Label x:Name="SettingsPageColorThemeoSwitchLabel" Text="Mørkt tema"/>
+                <Switch x:Name="SettingsPageColorThemeSwitch"  Toggled="SettingsPageColorThemeSwitch_OnToggled"/>
+            </StackLayout>
         </StackLayout>
     </ContentPage.Content>
 </ContentPage>
