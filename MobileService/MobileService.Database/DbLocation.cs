@@ -28,7 +28,7 @@ namespace MobileService.Database
 
         public int Create(Location location)
         {
-            int id;
+            int locationId;
             
             using (_connection = new SqlConnection(_connectionString))
             {
@@ -54,11 +54,16 @@ namespace MobileService.Database
                         cmd.Parameters.AddWithValue("UserId", DBNull.Value);
                     }
                     
-                    id = Convert.ToInt32(cmd.ExecuteScalar());
+                    locationId = Convert.ToInt32(cmd.ExecuteScalar());
+
+                    foreach (Picture picture in location.Pictures)
+                    {
+                        _dbPicture.Create(picture, locationId);
+                    }
                 }
                 _connection.Close();
             }
-            return id;
+            return locationId;
         }
         
         public Location FindById(int locationId)

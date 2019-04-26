@@ -120,7 +120,9 @@ namespace MobilSemProjekt.View
         {
             var answer = await DisplayAlert("Marker", "Would you like to place a marker", "Yes", "No");
             string geocodeAddress = "";
-            string nameMarker = "";
+            string nameMarker = "Unnamed location";
+            string urlMarker = "http://dmax0917.hegr.dk/img.png";
+
             if (answer)
             {
                 try
@@ -161,6 +163,28 @@ namespace MobilSemProjekt.View
                                 Console.WriteLine(exception.StackTrace);
                             }
                         }
+
+                        var imageAnswer = await DisplayAlert("Marker", "Would you like to give the marker a name?", "Yes", "No");
+                        if (imageAnswer)
+                        {
+                            try
+                            {
+                                PromptResult pResult = await UserDialogs.Instance.PromptAsync(new PromptConfig
+                                {
+                                    InputType = InputType.Name,
+                                    OkText = "Add",
+                                    Title = "Enter imageurl",
+                                });
+                                if (pResult.Ok && !string.IsNullOrWhiteSpace(pResult.Text))
+                                {
+                                    urlMarker = pResult.Text;
+                                }
+                            }
+                            catch (Exception exception)
+                            {
+                                Console.WriteLine(exception.StackTrace);
+                            }
+                        }
                     }
                 }
                 catch (Exception ex)
@@ -180,8 +204,17 @@ namespace MobilSemProjekt.View
                     Latitude = e.Point.Latitude,
                     Longitude = e.Point.Longitude,
                     LocationDescription = geocodeAddress,
-                    User = User
+                    User = User,
+                    Pictures = new List<Picture>()
                 };
+
+                Picture picture = new Picture()
+                {
+                    Url = urlMarker
+                };
+
+                location.Pictures.Add(picture);
+                
                 IRestService restService = new RestService();
                 await restService.Create(location);
 
