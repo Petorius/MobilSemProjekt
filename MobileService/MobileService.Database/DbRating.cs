@@ -212,9 +212,10 @@ namespace MobileService.Database
             return changes > 0;
         }
 
-        public void Delete(int ratingId)
+        public bool Delete(Rating rating)
         {
             int changes;
+            int ratingId = rating.RatingId;
 
             using (_connection = new SqlConnection(_connectionString))
             {
@@ -228,12 +229,7 @@ namespace MobileService.Database
                 _connection.Close();
             }
 
-            bool status = changes > 0;
-            if (status == false)
-            {
-                throw new System.Exception();
-                //throw new FaultException<CustomerNotDeletedException>(new CustomerNotDeletedException(customer._phone));
-            }
+            return changes > 0;
         }
     }
 }

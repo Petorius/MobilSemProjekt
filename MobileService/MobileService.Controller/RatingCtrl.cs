@@ -26,14 +26,14 @@ namespace MobileService.Controller
             return _dbRating.GetAverageRating(locationId);
         }
 
-        public bool Update(User loggedInUser, Rating ratingToUpdate)
+        public bool Update(Rating rating)
         {
-            bool status = false;
-            if (loggedInUser.UserType.TypeName == "admin")
-            {
-                status = _dbRating.Update(ratingToUpdate);
-            }
-            return status;
+            return _dbRating.Update(rating);
+        }
+
+        public bool Delete(Rating rating)
+        {
+            return _dbRating.Delete(rating);
         }
     }
 }

@@ -2,7 +2,9 @@
 <TabbedPage xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="MobilSemProjekt.View.TabbedMapMainPage"
-             xmlns:local="clr-namespace:MobilSemProjekt.View;assembly=MobilSemProjekt">
+             xmlns:local="clr-namespace:MobilSemProjekt.View;assembly=MobilSemProjekt"
+            Title="MapSystem">
     <local:MainPage />
     <local:SettingsPage />
+    <!--<local:ProfilePage/>-->
 </TabbedPage>

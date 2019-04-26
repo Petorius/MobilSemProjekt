@@ -146,5 +146,19 @@ namespace MobilSemProjekt.View
 	        LoadStars();
 	        CurrVote = 0;
 	    }
+
+	    private void BtnEdit_OnClicked(object sender, EventArgs e)
+	    {
+	        IRatingRestService ratingRestService = new RatingRestService();
+	        Rating rating = (Rating)sender;
+            ratingRestService.Update(rating);
+	    }
+
+	    private void BtnDelete_OnClicked(object sender, EventArgs e)
+	    {
+	        IRatingRestService ratingRestService = new RatingRestService();
+	        Rating rating = (Rating) sender;
+	        ratingRestService.Delete(rating);
+	    }
     }
 }

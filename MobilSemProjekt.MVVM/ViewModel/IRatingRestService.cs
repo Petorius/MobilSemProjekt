@@ -9,6 +9,7 @@ namespace MobilSemProjekt.MVVM.ViewModel
         Task Create(Rating rating);
         Task<double> GetAverageRating(Location location);
         
-        Task<bool> Update(User user, Rating rating);
+        Task<bool> Update(Rating rating);
+        Task<bool> Delete(Rating rating);
     }
 }

@@ -39,6 +39,8 @@
                                 <Label BindingContext="{Binding User}" Text="{Binding Name}"/>
                                 <Label Text="{Binding Rate}"/>
                                 <Label Text="{Binding Comment}"/>
+                                <Button Text="Edit" x:Name="BtnEdit" Clicked="BtnEdit_OnClicked" />
+                                <Button Text="Delete" x:Name="BtnDelete" Clicked="BtnDelete_OnClicked" />
                             </StackLayout>
                         </ViewCell>
                     </DataTemplate>

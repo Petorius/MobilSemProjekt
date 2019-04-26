@@ -28,6 +28,13 @@ namespace MobileService.WcfService
             UriTemplate = "Update",
             RequestFormat = WebMessageFormat.Json,
             ResponseFormat = WebMessageFormat.Json)]
-        bool UpdateRating(UpdateRating updateRating);
+        bool UpdateRating(Rating rating);
+
+        [OperationContract]
+        [WebInvoke(Method = "POST",
+            UriTemplate = "Delete",
+            RequestFormat = WebMessageFormat.Json,
+            ResponseFormat = WebMessageFormat.Json)]
+        bool DeleteRating(Rating rating);
     }
 }

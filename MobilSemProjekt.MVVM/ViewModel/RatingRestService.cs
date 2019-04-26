@@ -22,7 +22,7 @@ namespace MobilSemProjekt.MVVM.ViewModel
         }
 
         public async Task Create(Rating rating)
-        {   
+        {
             // Serialize our concrete class into a JSON String
             var stringThingy = await Task.Run(() => JsonConvert.SerializeObject(rating));
 
@@ -81,16 +81,10 @@ namespace MobilSemProjekt.MVVM.ViewModel
             return result;
         }
 
-        public async Task<bool> Update(User user, Rating rating)
+        public async Task<bool> Update(Rating rating)
         {
-            UpdateRating updateRating = new UpdateRating
-            {
-                User = user,
-                Rating = rating
-            };
-
             // Serialize our concrete class into a JSON String
-            var stringThingy = await Task.Run(() => JsonConvert.SerializeObject(updateRating));
+            var stringThingy = await Task.Run(() => JsonConvert.SerializeObject(rating));
 
             // Wrap our JSON inside a StringContent which then can be used by the HttpClient class
             var httpContent = new StringContent(stringThingy, Encoding.UTF8, "application/json");
@@ -123,6 +117,47 @@ namespace MobilSemProjekt.MVVM.ViewModel
                     Debug.WriteLine("UpdateRating - Error: " + e.Message);
                 }
             }
+
+            return result;
+        }
+
+        public async Task<bool> Delete(Rating rating)
+        {
+            // Serialize our concrete class into a JSON String
+            var stringThingy = await Task.Run(() => JsonConvert.SerializeObject(rating));
+
+            // Wrap our JSON inside a StringContent which then can be used by the HttpClient class
+            var httpContent = new StringContent(stringThingy, Encoding.UTF8, "application/json");
+            var result = false;
+
+            using (var httpClient = new HttpClient())
+            {
+                // Do the actual request and await the response
+                var httpResponse =
+                    await httpClient.PostAsync(RestUrl + "RatingService.svc/DeleteRating",
+                        httpContent);
+                Debug.WriteLine(httpResponse);
+                try
+                {
+                    // If the response contains content we want to read it!
+                    if (httpResponse.IsSuccessStatusCode)
+                    {
+                        //var responseContent = await httpResponse.Content.ReadAsStringAsync();
+                        Debug.WriteLine("DeleteRating - Success!");
+                        var content = await httpResponse.Content.ReadAsStringAsync();
+                        result = JsonConvert.DeserializeObject<bool>(content);
+                    }
+                    else
+                    {
+                        Debug.WriteLine("DeleteRating - Failure");
+                    }
+                }
+                catch (Exception e)
+                {
+                    Debug.WriteLine("DeleteRating - Error: " + e.Message);
+                }
+            }
+
             return result;
         }
     }
