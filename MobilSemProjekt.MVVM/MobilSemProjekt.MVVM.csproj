@@ -41,7 +41,6 @@
     <Compile Include="Model\Picture.cs" />
     <Compile Include="Model\Rating.cs" />
     <Compile Include="Model\Tag.cs" />
-    <Compile Include="Model\UpdateRating.cs" />
     <Compile Include="Model\User.cs" />
     <Compile Include="Model\UserType.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

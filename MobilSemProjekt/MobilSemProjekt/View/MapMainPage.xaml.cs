@@ -312,8 +312,10 @@ namespace MobilSemProjekt.View
 
             if (combinedList.Count > 0)
             {
-                SearchListView searchListView = new SearchListView();
-                searchListView.Locations = new ObservableCollection<Location>(combinedList);
+                SearchListView searchListView = new SearchListView
+                {
+                    Locations = new ObservableCollection<Location>(combinedList)
+                };
                 await Navigation.PushAsync(searchListView);
                 //Location location = combinedList.First();
                 //Debug.Write("GPS punkter " + location.Latitude + " " + location.Longitude);

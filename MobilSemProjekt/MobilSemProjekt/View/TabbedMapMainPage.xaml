@@ -4,7 +4,4 @@
              x:Class="MobilSemProjekt.View.TabbedMapMainPage"
              xmlns:local="clr-namespace:MobilSemProjekt.View;assembly=MobilSemProjekt"
             Title="MapSystem">
-    <local:MainPage />
-    <local:SettingsPage />
-    <!--<local:ProfilePage/>-->
 </TabbedPage>

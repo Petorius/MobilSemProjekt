@@ -46,6 +46,11 @@ namespace MobilSemProjekt.View {
                 {
                     //MapMainPage.User = user;
                     //await Navigation.PushAsync(MapMainPage);
+
+                    TabbedMapMainPage = new TabbedMapMainPage();
+                    TabbedMapMainPage.User = user;
+                    await Navigation.PushAsync(TabbedMapMainPage);
+                    Navigation.RemovePage(this);
                 }
             }
             
