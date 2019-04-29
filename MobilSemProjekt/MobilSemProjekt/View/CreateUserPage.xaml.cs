@@ -31,7 +31,12 @@ namespace MobilSemProjekt.View
                 user.UserName = CreateUserNameEntry.Text;
                 user.Salt = passwordController.GenerateSalt();
                 user.HashPassword = passwordController.GenerateHashedPassword(CreatePasswordEntry.Text, Encoding.ASCII.GetBytes(user.Salt));
-                
+                user.UserType = new UserType
+                {
+                    TypeName = "personal"
+                };
+
+
                 await userRestService.Create(user);
                 Debug.WriteLine("Hashes and salt be here: " + user.HashPassword + " " + user.Salt);
             }
