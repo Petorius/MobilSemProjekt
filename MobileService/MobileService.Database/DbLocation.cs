@@ -246,6 +246,24 @@ namespace MobileService.Database
             }
         }
 
+        public void UserUpdateLocation(Location location)
+        {
+            using (_connection = new SqlConnection(_connectionString))
+            {
+                _connection.Open();
+                using (SqlCommand cmd = _connection.CreateCommand())
+                {
+                    cmd.CommandText = "UPDATE Locations set LocationName = @LocationName, LocationDescription = @LocationDescription " +
+                                      "where LocationId = @LocationId";
+                    cmd.Parameters.AddWithValue("LocationId", location.LocationId);
+                    cmd.Parameters.AddWithValue("LocationName", location.LocationName);
+                    cmd.Parameters.AddWithValue("LocationDescription", location.LocationDescription);
+                    cmd.ExecuteNonQuery();
+                }
+                _connection.Close();
+            }
+        }
+
         public void UpdateHits(Location location)
         {
             for (int i = 0; i < 5; i++)

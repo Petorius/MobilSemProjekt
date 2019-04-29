@@ -62,5 +62,9 @@ namespace MobileService.Controller
             _dbLocation.UpdateLocation(location);
         }
 
+        public void UserUpdateLocation(Location location)
+        {
+            _dbLocation.UserUpdateLocation(location);
+        }
     }
 }

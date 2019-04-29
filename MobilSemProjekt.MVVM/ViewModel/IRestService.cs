@@ -14,5 +14,6 @@ namespace MobilSemProjekt.MVVM.ViewModel
         Task<List<Location>> GetLocationsByUserNameAsync(string name);
         void UpdateHits(Location location);
         void UpdateLocation(Location location);
+        void UserUpdateLocation(Location location);
     }
 }

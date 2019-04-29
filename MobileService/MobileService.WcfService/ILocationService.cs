@@ -66,5 +66,12 @@ namespace MobileService.WcfService
             RequestFormat = WebMessageFormat.Json,
             ResponseFormat = WebMessageFormat.Json)]
         void UpdateLocation(Location location);
+
+        [OperationContract]
+        [WebInvoke(Method = "PUT",
+            UriTemplate = "UserUpdateLocation",
+            RequestFormat = WebMessageFormat.Json,
+            ResponseFormat = WebMessageFormat.Json)]
+        void UserUpdateLocation(Location location);
     }
 }
