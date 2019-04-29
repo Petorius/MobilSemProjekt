@@ -57,5 +57,28 @@ namespace MobileService.Database
             }
             return userType;
         }
+
+        public int FindIdByName(string typeName)
+        {
+            int userTypeId = 0;
+
+            using (_connection = new SqlConnection(_connectionString))
+            {
+                _connection.Open();
+                using (SqlCommand cmd = _connection.CreateCommand())
+                {
+                    cmd.CommandText = "SELECT userTypeId FROM UserType WHERE TypeName = @TypeName";
+                    cmd.Parameters.AddWithValue("TypeName", typeName);
+                    SqlDataReader reader = cmd.ExecuteReader();
+
+                    while (reader.Read())
+                    {
+                        userTypeId = reader.GetInt32(reader.GetOrdinal("UserTypeId"));
+                    }
+                }
+                _connection.Close();
+            }
+            return userTypeId;
+        }
     }
 }

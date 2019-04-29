@@ -19,10 +19,27 @@ namespace MobileService.Database
         {
             DbUserType = new DbUserType();
         }
+
+        private int FindUserTypeBasedOnKnowledge(UserType userType)
+        {
+            int userTypeId = 0;
+            if (userType.UserTypeId != 0)
+            {
+                userTypeId = userType.UserTypeId;
+            }
+            else
+            {
+                userTypeId = DbUserType.FindIdByName(userType.TypeName);
+            }
+
+            return userTypeId;
+        }
+
         public int Create(User user)
         {
             int id;
-
+            int userTypeId = FindUserTypeBasedOnKnowledge(user.UserType);
+            
             using (_connection = new SqlConnection(_connectionString))
             {
                 _connection.Open();
@@ -34,7 +51,7 @@ namespace MobileService.Database
                     cmd.Parameters.AddWithValue("UserName", user.UserName);
                     cmd.Parameters.AddWithValue("HashPassword", user.HashPassword);
                     cmd.Parameters.AddWithValue("Salt", user.Salt);
-                    cmd.Parameters.AddWithValue("UserTypeId", user.UserType.UserTypeId);
+                    cmd.Parameters.AddWithValue("UserTypeId", userTypeId);
 
                     id = Convert.ToInt32(cmd.ExecuteScalar());
                 }
@@ -46,7 +63,8 @@ namespace MobileService.Database
         public User FindById(int userId)
         {
             User user = null;
-            
+            int userTypeId = FindUserTypeBasedOnKnowledge(user.UserType);
+
             using (_connection = new SqlConnection(_connectionString))
             {
                 _connection.Open();
@@ -58,7 +76,6 @@ namespace MobileService.Database
                     
                     while (reader.Read())
                     {
-                        int userTypeId = reader.GetInt32(reader.GetOrdinal("UserTypeId"));
                         user = new User
                         {
                             UserId = userId,
@@ -78,6 +95,7 @@ namespace MobileService.Database
         public User FindUserByUserName(string userName, bool login)
         {
             User user = null;
+            int userTypeId = FindUserTypeBasedOnKnowledge(user.UserType);
 
             using (_connection = new SqlConnection(_connectionString))
             {
@@ -90,8 +108,6 @@ namespace MobileService.Database
 
                     while (reader.Read())
                     {
-                        int userTypeId = reader.GetInt32(reader.GetOrdinal("UserTypeId"));
-
                         user = new User
                         {
                             UserId = reader.GetInt32(reader.GetOrdinal("UserId")),
