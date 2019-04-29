@@ -200,7 +200,7 @@ namespace MobilSemProjekt.MVVM.ViewModel
 
                 // Do the actual request and await the response
                 var httpResponse =
-                    await httpClient.PostAsync(RestUrl + "LocationService.svc/UpdateHits",
+                    await httpClient.PostAsync(RestUrl + "LocationService.svc/UpdateLocation",
                         httpContent);
 
                 try {
