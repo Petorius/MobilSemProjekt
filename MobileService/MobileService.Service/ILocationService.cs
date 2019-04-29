@@ -25,7 +25,11 @@ namespace MobileService.Service
 
         [OperationContract]
         void UpdateHits(Location location);
-        
+
+        [OperationContract]
+        void UpdateLocation(Location location);
+
+
         [OperationContract]
         string TestMethod();
     }

@@ -222,7 +222,7 @@ namespace MobileService.Database
             return locations;
         }
 
-        public void Update(Location location, int locationId)
+        public void UpdateLocation(Location location)
         {
             using (_connection = new SqlConnection(_connectionString))
             {
@@ -232,7 +232,7 @@ namespace MobileService.Database
                     cmd.CommandText = "UPDATE Locations set Hits = @Hits, IsTopLocation = @IsTopLocation, LocationName = @LocationName, Latitude = @Latitude, " +
                                       "Longitude = @Longitude, UserId = @UserId, LocationDescription = @LocationDescription " +
                                       "where LocationId = @LocationId";
-                    cmd.Parameters.AddWithValue("LocationId", locationId);
+                    cmd.Parameters.AddWithValue("LocationId", location.LocationId);
                     cmd.Parameters.AddWithValue("Hits", location.Hits);
                     cmd.Parameters.AddWithValue("IsTopLocation", location.IsTopLocation);
                     cmd.Parameters.AddWithValue("LocationName", location.LocationName);

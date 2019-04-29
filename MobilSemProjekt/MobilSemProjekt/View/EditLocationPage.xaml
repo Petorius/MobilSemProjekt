@@ -1,0 +1,19 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="MobilSemProjekt.View.EditLocationPage"
+             Title="Edit location">
+    <ContentPage.Content>
+        <StackLayout>
+            <StackLayout>
+                <Label x:Name="LocationNameLabel" Text="Location name"/>
+                <Entry x:Name="LocationNameEntry"/>
+            </StackLayout>
+            <StackLayout>
+                <Label x:Name="LocationDescriptionLabel" Text="Location description"/>
+                <Editor x:Name="LocationDescriptionEditor" HeightRequest="256"/>
+            </StackLayout>
+            <Button x:Name="SaveLocationEditsButton" Text="Save edits" Clicked="SaveLocationEditsButton_OnClicked"/>
+        </StackLayout>
+    </ContentPage.Content>
+</ContentPage>

@@ -6,7 +6,7 @@
     <ContentPage.Content>
         <StackLayout>
             <StackLayout Orientation="Horizontal">
-                
+                <Button x:Name="SeeMyLocationsButton" Text="See my locations" Clicked="SeeMyLocationsButton_OnClicked" HorizontalOptions="CenterAndExpand"/>
             </StackLayout>
         </StackLayout>
     </ContentPage.Content>

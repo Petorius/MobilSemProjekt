@@ -19,6 +19,7 @@ namespace MobilSemProjekt.View
     public partial class SearchListView : ContentPage
     {
         public ObservableCollection<Location> Locations { get; set; }
+        public bool IsUserLocationSearch { get; set; }
 
         public SearchListView()
         {
@@ -45,65 +46,79 @@ namespace MobilSemProjekt.View
 
         async void Handle_ItemTapped(object sender, ItemTappedEventArgs e)
         {
-            var itemTappedAnswer = await DisplayAlert("Lokation", "What do you want to do?", "Go to location", "Add location");
-            Location location = (Location)e.Item;
-
-
-            if (itemTappedAnswer)
+            if (IsUserLocationSearch)
             {
-                MainPage mainPage = new MainPage();
-                await Navigation.PushAsync(mainPage);
-                mainPage.GoToLocation(location.Latitude, location.Longitude);
-                Debug.WriteLine("Gå til " + location.Latitude + " " + location.Longitude);
+                Location location = (Location)e.Item;
+                EditLocationPage editLocationPage = new EditLocationPage();
+                editLocationPage.Location = location;
+                editLocationPage.SetPlaceholders();
+                await Navigation.PushAsync(editLocationPage);
             }
 
-            if (!itemTappedAnswer)
+            else
             {
-                try
+
+                var itemTappedAnswer = await DisplayAlert("Lokation", "What do you want to do?", "Go to location",
+                    "Add location");
+                Location location = (Location) e.Item;
+
+
+                if (itemTappedAnswer)
                 {
-                    string geocodeAddress;
+                    MainPage mainPage = new MainPage();
+                    await Navigation.PushAsync(mainPage);
+                    mainPage.GoToLocation(location.Latitude, location.Longitude);
+                    Debug.WriteLine("Gå til " + location.Latitude + " " + location.Longitude);
+                }
 
-                    var placemarks = await Geocoding.GetPlacemarksAsync(location.Latitude, location.Longitude);
-
-                    var placemark = placemarks?.FirstOrDefault();
-                    if (placemark != null)
+                if (!itemTappedAnswer)
+                {
+                    try
                     {
-                        geocodeAddress =
-                            $"{placemark.CountryName}, " +
-                            $"{placemark.Locality}, " +
-                            $"{placemark.PostalCode}, " +
-                            $"{placemark.Thoroughfare} ";
+                        string geocodeAddress;
 
+                        var placemarks = await Geocoding.GetPlacemarksAsync(location.Latitude, location.Longitude);
 
-                        try
+                        var placemark = placemarks?.FirstOrDefault();
+                        if (placemark != null)
                         {
-                            PromptResult pResult = await UserDialogs.Instance.PromptAsync(new PromptConfig
+                            geocodeAddress =
+                                $"{placemark.CountryName}, " +
+                                $"{placemark.Locality}, " +
+                                $"{placemark.PostalCode}, " +
+                                $"{placemark.Thoroughfare} ";
+
+
+                            try
                             {
-                                InputType = InputType.Name,
-                                OkText = "Add",
-                                Title = "Enter name for the location",
-                            });
-                            if (pResult.Ok && !string.IsNullOrWhiteSpace(pResult.Text))
+                                PromptResult pResult = await UserDialogs.Instance.PromptAsync(new PromptConfig
+                                {
+                                    InputType = InputType.Name,
+                                    OkText = "Add",
+                                    Title = "Enter name for the location",
+                                });
+                                if (pResult.Ok && !string.IsNullOrWhiteSpace(pResult.Text))
+                                {
+                                    location.LocationName = pResult.Text;
+                                }
+                            }
+                            catch (Exception exception)
                             {
-                                location.LocationName = pResult.Text;
+                                Console.WriteLine(exception.StackTrace);
                             }
                         }
-                        catch (Exception exception)
-                        {
-                            Console.WriteLine(exception.StackTrace);
-                        }
                     }
+
+
+                    catch (Exception ex)
+                    {
+                        Console.WriteLine(ex.StackTrace);
+                        // Handle exception that may have occurred in geocoding
+                    }
+
+                    IRestService restService = new RestService();
+                    await restService.Create(location);
                 }
-
-
-                catch (Exception ex)
-                {
-                    Console.WriteLine(ex.StackTrace);
-                    // Handle exception that may have occurred in geocoding
-                }
-
-                IRestService restService = new RestService();
-                await restService.Create(location);
             }
 
             //Deselect Item

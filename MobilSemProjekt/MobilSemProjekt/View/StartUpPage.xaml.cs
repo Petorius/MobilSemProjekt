@@ -21,6 +21,7 @@ namespace MobilSemProjekt.View {
         private async void ContinueWithoutAccountButton_OnClicked(object sender, EventArgs e)
         {
             TabbedMapMainPage = new TabbedMapMainPage();
+            TabbedMapMainPage.StartUpWithoutUser();
             await Navigation.PushAsync(TabbedMapMainPage);
             Navigation.RemovePage(this);
         }
@@ -49,11 +50,11 @@ namespace MobilSemProjekt.View {
 
                     TabbedMapMainPage = new TabbedMapMainPage();
                     TabbedMapMainPage.User = user;
+                    TabbedMapMainPage.StartUpWithUser();
                     await Navigation.PushAsync(TabbedMapMainPage);
                     Navigation.RemovePage(this);
                 }
-            }
-            
+            }           
         }
     }
 }

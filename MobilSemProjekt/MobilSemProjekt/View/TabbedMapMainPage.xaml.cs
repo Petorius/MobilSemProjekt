@@ -7,24 +7,36 @@ using MobilSemProjekt.MVVM.Model;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
 
-namespace MobilSemProjekt.View
-{
+namespace MobilSemProjekt.View {
     [XamlCompilation(XamlCompilationOptions.Compile)]
-    public partial class TabbedMapMainPage : TabbedPage
-    {
+    public partial class TabbedMapMainPage : TabbedPage {
         public User User { private get; set; }
-        public TabbedMapMainPage ()
-        {
+        public TabbedMapMainPage() {
             InitializeComponent();
 
+        }
+
+        public void StartUpWithUser() {
             var tab1 = new MainPage();
             var tab2 = new SettingsPage();
             var tab3 = new ProfilePage();
 
             tab1.User = User;
+            tab3.User = User;
             this.Children.Add(tab1);
             this.Children.Add(tab2);
             this.Children.Add(tab3);
+
         }
+
+        public void StartUpWithoutUser() {
+            var tab1 = new MainPage();
+            var tab2 = new SettingsPage();
+
+            this.Children.Add(tab1);
+            this.Children.Add(tab2);
+
+        }
+
     }
 }

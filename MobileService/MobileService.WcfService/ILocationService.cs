@@ -60,5 +60,11 @@ namespace MobileService.WcfService
             ResponseFormat = WebMessageFormat.Json)]
         void UpdateHits(Location location);
 
+        [OperationContract]
+        [WebInvoke(Method = "POST",
+            UriTemplate = "UpdateLocation",
+            RequestFormat = WebMessageFormat.Json,
+            ResponseFormat = WebMessageFormat.Json)]
+        void UpdateLocation(Location location);
     }
 }
