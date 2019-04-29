@@ -1,7 +1,5 @@
 ﻿using MobilSemProjekt.MVVM.Model;
 using System;
-using System.Collections.Generic;
-using System.Diagnostics;
 using MobilSemProjekt.MVVM.ViewModel;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
@@ -18,7 +16,6 @@ namespace MobilSemProjekt.View
 	    private readonly string GrayStar;
 	    private readonly string YellowStar;
 	    private int CurrVote { get; set; }
-
         public DescPage ()
 		{
             InitializeComponent ();
@@ -146,7 +143,7 @@ namespace MobilSemProjekt.View
 	        LoadStars();
 	        CurrVote = 0;
 	    }
-
+        /*
 	    private void BtnEdit_OnClicked(object sender, EventArgs e)
 	    {
 	        IRatingRestService ratingRestService = new RatingRestService();
@@ -159,6 +156,6 @@ namespace MobilSemProjekt.View
 	        IRatingRestService ratingRestService = new RatingRestService();
 	        Rating rating = (Rating) sender;
 	        ratingRestService.Delete(rating);
-	    }
-    }
+	    }*/
+	}
 }

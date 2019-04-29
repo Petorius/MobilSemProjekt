@@ -1,6 +1,7 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:model="clr-namespace:MobilSemProjekt.MVVM.Model;assembly=MobilSemProjekt.MVVM"
              x:Class="MobilSemProjekt.View.DescPage"
              Title="Om lokationen">
 
@@ -36,11 +37,40 @@
                     <DataTemplate>
                         <ViewCell>
                             <StackLayout Orientation="Horizontal" Padding="5">
-                                <Label BindingContext="{Binding User}" Text="{Binding Name}"/>
+                                <Label Text="{Binding User.UserName}"/>
                                 <Label Text="{Binding Rate}"/>
                                 <Label Text="{Binding Comment}"/>
-                                <Button Text="Edit" x:Name="BtnEdit" Clicked="BtnEdit_OnClicked" />
-                                <Button Text="Delete" x:Name="BtnDelete" Clicked="BtnDelete_OnClicked" />
+                                <!--
+                                <Button Text="Edit" x:Name="BtnEdit" IsEnabled="False" IsVisible="False"/>
+                                <Button Text="Delete" x:Name="BtnDelete" IsEnabled="False" IsVisible="False" />
+                                -->
+                                
+                                <Button Text="Edit" x:Name="BtnEdit" IsEnabled="False" IsVisible="False">
+                                    <Button.Triggers>
+                                        
+                                        <DataTrigger TargetType="Button"
+                                                 Binding ="{Binding User.UserType.TypeName}"
+                                                 Value="Edit">
+                                            <Setter Property="IsEnabled" Value="True" />
+                                            <Setter Property="IsVisible" Value="True" />
+                                        </DataTrigger>
+                                    </Button.Triggers>
+                                </Button>
+                                <!--
+                                <Button Text="Delete" x:Name="BtnDelete" IsEnabled="False" IsVisible="False">
+                                    <Button.Triggers>
+                                        <Trigger TargetType="Button"
+                                                 Property="IsFocused" Value="True">
+                                            <Setter Property="BackgroundColor" Value="Yellow" />
+                                        </Trigger>
+                                    </Button.Triggers>
+                                </Button>
+                                -->
+
+                                <!--
+                                Clicked="BtnEdit_OnClicked"
+                                 Clicked="BtnDelete_OnClicked"
+                                -->
                             </StackLayout>
                         </ViewCell>
                     </DataTemplate>
