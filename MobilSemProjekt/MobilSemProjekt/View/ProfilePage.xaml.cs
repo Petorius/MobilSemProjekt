@@ -33,5 +33,17 @@ namespace MobilSemProjekt.View
             searchListView.IsUserLocationSearch = true;
             await Navigation.PushAsync(searchListView);
         }
+	    private async void SeeMyRatingsButton_OnClicked(object sender, EventArgs e)
+	    {
+	        RatingRestService restService = new RatingRestService();
+	        List<Rating> userRatingList = new List<Rating>();
+	        userRatingList = await restService.GetRatingsByUserName(User.UserName);
+	        SearchListView searchListView = new SearchListView
+	        {
+	            Ratings = new ObservableCollection<Rating>(userRatingList)
+	        };
+	        searchListView.IsUserRatingSearch = true;
+	        await Navigation.PushAsync(searchListView);
+	    }
     }
 }
