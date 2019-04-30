@@ -207,23 +207,30 @@ namespace MobilSemProjekt.MVVM.ViewModel
                     // If the response contains content we want to read it!
                     if (httpResponse.IsSuccessStatusCode) {
                         //var responseContent = await httpResponse.Content.ReadAsStringAsync();
-                        Debug.WriteLine("UpdateHits - Success!");
+                        Debug.WriteLine("UpdateLocation - Success!");
                     }
                     else {
-                        Debug.WriteLine("UpdateHits - Failure");
+                        Debug.WriteLine("UpdateLocation - Failure");
                     }
                 }
                 catch (Exception e) {
-                    Debug.WriteLine("UpdateHits - Error: " + e.Message);
+                    Debug.WriteLine("UpdateLocation - Error: " + e.Message);
                 }
             }
         }
 
 
 
-        public async void UserUpdateLocation(Location location)
+        public async void UserUpdateLocation(Location location2)
         {
             // Serialize our concrete class into a JSON String
+            Location location = new Location
+            {
+                LocationName = location2.LocationName,
+                LocationId = location2.LocationId,
+                LocationDescription = location2.LocationDescription
+
+            };
             var stringThingy = await Task.Run(() => JsonConvert.SerializeObject(location));
 
             // Wrap our JSON inside a StringContent which then can be used by the HttpClient class
@@ -234,7 +241,7 @@ namespace MobilSemProjekt.MVVM.ViewModel
 
                 // Do the actual request and await the response
                 var httpResponse =
-                    await httpClient.PostAsync(RestUrl + "LocationService.svc/UpdateLocation",
+                    await httpClient.PostAsync(RestUrl + "LocationService.svc/UserUpdateLocation",
                         httpContent);
 
                 try
@@ -243,16 +250,16 @@ namespace MobilSemProjekt.MVVM.ViewModel
                     if (httpResponse.IsSuccessStatusCode)
                     {
                         //var responseContent = await httpResponse.Content.ReadAsStringAsync();
-                        Debug.WriteLine("UpdateHits - Success!");
+                        Debug.WriteLine("UserUpdateLocation - Success!");
                     }
                     else
                     {
-                        Debug.WriteLine("UpdateHits - Failure");
+                        Debug.WriteLine("UserUpdateLocation - Failure");
                     }
                 }
                 catch (Exception e)
                 {
-                    Debug.WriteLine("UpdateHits - Error: " + e.Message);
+                    Debug.WriteLine("UserUpdateLocation - Error: " + e.Message);
                 }
             }
         }
