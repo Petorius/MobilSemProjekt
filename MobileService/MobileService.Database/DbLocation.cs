@@ -181,6 +181,49 @@ namespace MobileService.Database
 
             return locations;
         }
+
+        public List<Location> LocationsByCommentUserName(string userName)
+        {
+            List<int> listOfLocationId = _dbRating.FindLocationIdsByUserName(userName);
+            
+            List<Location> locations = new List<Location>();
+            foreach (int locationId in listOfLocationId)
+            {
+                using (_connection = new SqlConnection(_connectionString))
+                {
+                    _connection.Open();
+                    using (SqlCommand cmd = _connection.CreateCommand())
+                    {
+                        cmd.CommandText = "SELECT * FROM Locations WHERE LocationId = @LocationId";
+                        cmd.Parameters.AddWithValue("LocationId", locationId);
+                        SqlDataReader reader = cmd.ExecuteReader();
+
+                        while (reader.Read())
+                        {
+                            Location location = new Location
+                            {
+                                LocationId = locationId,
+                                Hits = reader.GetInt32(reader.GetOrdinal("Hits")),
+                                IsTopLocation = reader.GetBoolean(reader.GetOrdinal("IsTopLocation")),
+                                LocationName = reader.GetString(reader.GetOrdinal("LocationName")),
+                                LocationDescription = reader.GetString(reader.GetOrdinal("LocationDescription")),
+                                Latitude = reader.GetDouble(reader.GetOrdinal("Latitude")),
+                                Longitude = reader.GetDouble(reader.GetOrdinal("Longitude")),
+                                Pictures = _dbPicture.FindByLocationId(locationId),
+                                Ratings = _dbRating.FindByLocationId(locationId),
+                                User = _dbUser.FindUserByUserName(userName, false),
+                                RowVersion = (byte[])reader.GetValue(reader.GetOrdinal("rowVersion"))
+                            };
+                            locations.Add(location);
+                        }
+                    }
+                }
+                _connection.Close();
+            }
+
+            return locations;
+        }
+
         public List<Location> FindAll()
         {
             List<Location> locations = new List<Location>();

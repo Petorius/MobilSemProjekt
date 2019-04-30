@@ -47,6 +47,12 @@ namespace MobileService.WcfService
             return _locationCtrl.GetLocationsByUserName(userName);
         }
 
+        public List<Location> GetLocationsByCommentUserName(string userName)
+        {
+            _locationCtrl = new LocationCtrl();
+            return _locationCtrl.GetLocationsByCommentUserName(userName);
+        }
+
         public double GetAverageRating(string locationId)
         {
             _locationCtrl = new LocationCtrl();

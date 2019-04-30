@@ -16,12 +16,6 @@ namespace MobileService.WcfService
             return _ratingCtrl.CreateRating(rating);
         }
         
-        public List<Rating> GetRatingsByUserName(string username)
-        {
-            _ratingCtrl = new RatingCtrl();
-            return _ratingCtrl.GetRatingsByUsername(username);
-        }
-
         public double GetAverageRating(string locationId)
         {
             _ratingCtrl = new RatingCtrl();

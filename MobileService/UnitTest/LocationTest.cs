@@ -1,4 +1,6 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.Diagnostics;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using MobileService.Database;
 using MobileService.Model;
@@ -9,13 +11,46 @@ namespace UnitTest
     public class LocationTest
     {
         [TestMethod]
-        public void UpdateHitsTest()
+        public void dUpdateHitsTest()
         {
             Location location = new Location();
             location.LocationId = 1;
             DbLocation dbLocation = new DbLocation();
-            dbLocation.UpdateHits(location);
-            //dbLocation.FindAll();
+            List<Location> list = null;
+            try
+            {
+                dbLocation.UpdateHits(location);
+                //dbLocation.FindAll();
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine("Error: " + e.Message);
+            }
+            Assert.IsNotNull(list);
+            
+        }
+
+        [TestMethod]
+        public void GetListOfLocationsCommentedByUser()// UpdateHitsTest()
+        {
+            DbLocation dbLocation = new DbLocation();
+            List<Location> list = null;
+            try
+            {
+                //dbLocation.UpdateHits(location);
+                list = dbLocation.LocationsByCommentUserName("Aksel");
+                foreach (var element in list)
+                {
+                    Console.WriteLine(element.LocationName);
+                }
+                //dbLocation.FindAll();
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine("Error: " + e.Message);
+            }
+            Assert.IsNotNull(list);
+
         }
     }
 }

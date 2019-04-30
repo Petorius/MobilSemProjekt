@@ -48,6 +48,12 @@ namespace MobileService.WcfService
         List<Location> GetLocationsByUserName(string userName);
 
         [OperationContract]
+        [WebGet(UriTemplate = "GetLocationsByCommentUserName/{userName}",
+            RequestFormat = WebMessageFormat.Json,
+            ResponseFormat = WebMessageFormat.Json)]
+        List<Location> GetLocationsByCommentUserName(string userName);
+        
+        [OperationContract]
         [WebGet(UriTemplate = "GetAllLocations",
             RequestFormat = WebMessageFormat.Json,
             ResponseFormat = WebMessageFormat.Json)]

@@ -19,9 +19,9 @@ namespace MobilSemProjekt.View
     public partial class SearchListView : ContentPage
     {
         public ObservableCollection<Location> Locations { get; set; }
-        public ObservableCollection<Rating> Ratings { get; set; }
         public bool IsUserLocationSearch { get; set; }
-        public bool IsUserRatingSearch { get; set; }
+        public bool IsUserCommentSearch { get; set; }
+        public User User { get; set; }
 
         public SearchListView()
         {
@@ -42,7 +42,8 @@ namespace MobilSemProjekt.View
 
         }
 
-        protected override void OnAppearing() {
+        protected override void OnAppearing()
+        {
             SearchListViewDisplay.ItemsSource = Locations;
         }
 
@@ -56,22 +57,21 @@ namespace MobilSemProjekt.View
                 editLocationPage.SetPlaceholders();
                 await Navigation.PushAsync(editLocationPage);
             }
-            else if (IsUserRatingSearch)
+            else if (IsUserCommentSearch && User != null)
             {
-                Rating rating = (Rating)e.Item;
+                Location location = (Location)e.Item;
                 EditRatingPage editRatingPage = new EditRatingPage();
-                editRatingPage.Rating = rating;
+                editRatingPage.Rating = location.Ratings.Find(x => x.User.UserId == User.UserId);
                 editRatingPage.SetPlaceholders();
                 await Navigation.PushAsync(editRatingPage);
             }
-
 
             else
             {
 
                 var itemTappedAnswer = await DisplayAlert("Lokation", "What do you want to do?", "Go to location",
                     "Add location");
-                Location location = (Location) e.Item;
+                Location location = (Location)e.Item;
 
 
                 if (itemTappedAnswer)

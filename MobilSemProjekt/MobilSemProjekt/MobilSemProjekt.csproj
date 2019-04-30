@@ -53,9 +53,6 @@
     <Compile Update="View\ProfilePage.xaml.cs">
       <DependentUpon>ProfilePage.xaml</DependentUpon>
     </Compile>
-    <Compile Update="View\RatingSearchListView.xaml.cs">
-      <DependentUpon>RatingSearchListView.xaml</DependentUpon>
-    </Compile>
   </ItemGroup>
 
   <ItemGroup>

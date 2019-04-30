@@ -29,15 +29,12 @@ namespace MobilSemProjekt.View
 
         private void SaveRatingEditsButton_OnClicked(object sender, EventArgs e)
         {
-
             bool status = double.TryParse(RatingEntry.Text, out double result);
             if (status)
             {
                 Rating.Rate = result;
                 Rating.Comment = CommentEditor.Text;
-
                 IRatingRestService restService = new RatingRestService();
-
                 restService.Update(Rating);
             }
         }

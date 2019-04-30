@@ -25,8 +25,7 @@ namespace MobilSemProjekt.View
         private async void SeeMyLocationsButton_OnClicked(object sender, EventArgs e)
         {
             RestService restService = new RestService();
-            List<Location> userLocationList = new List<Location>();
-            userLocationList = await restService.GetLocationsByUserNameAsync(User.UserName);
+            List<Location> userLocationList = await restService.GetLocationsByUserNameAsync(User.UserName);
             SearchListView searchListView = new SearchListView {
             Locations = new ObservableCollection<Location>(userLocationList)
             };
@@ -35,15 +34,16 @@ namespace MobilSemProjekt.View
         }
 	    private async void SeeMyRatingsButton_OnClicked(object sender, EventArgs e)
 	    {
-	        RatingRestService restService = new RatingRestService();
-	        List<Rating> userRatingList = new List<Rating>();
-	        userRatingList = await restService.GetRatingsByUserName(User.UserName);
+	        RestService restService = new RestService();
+	        List<Location> locationWithCommentsList = await restService.GetLocationsByCommentUserName(User.UserName);
 	        SearchListView searchListView = new SearchListView
 	        {
-	            Ratings = new ObservableCollection<Rating>(userRatingList)
-	        };
-	        searchListView.IsUserRatingSearch = true;
-	        await Navigation.PushAsync(searchListView);
+	            Locations = new ObservableCollection<Location>(locationWithCommentsList),
+	            IsUserCommentSearch = true
+            };
+	        searchListView.User = User;
+
+            await Navigation.PushAsync(searchListView);
 	    }
     }
 }

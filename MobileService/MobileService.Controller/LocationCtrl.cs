@@ -48,6 +48,10 @@ namespace MobileService.Controller
         {
             return _dbLocation.FindLocationsByUserName(userName);
         }
+        public List<Location> GetLocationsByCommentUserName(string userName)
+        {
+            return _dbLocation.LocationsByCommentUserName(userName);
+        }
 
         public double GetAverageRating(int locationId)
         {

@@ -158,6 +158,32 @@ namespace MobilSemProjekt.MVVM.ViewModel
 
         }
 
+        public async Task<List<Location>> GetLocationsByCommentUserName(string username)
+        {
+            Items = new List<Location>();
+            string locService = "LocationService.svc/GetLocationsByCommentUserName/" + username;
+            var uri = new Uri(string.Format(RestUrl + locService));
+            var response = new HttpResponseMessage();
+            try
+            {
+                response = await _client.GetAsync(uri);
+                if (response.IsSuccessStatusCode)
+                {
+                    var content = await response.Content.ReadAsStringAsync();
+                    Items = JsonConvert.DeserializeObject<List<Location>>(content);
+                    Debug.WriteLine(Items.Count);
+                }
+
+                Debug.WriteLine("GetLocationsByCommentUserName - Error: you aren't catched - " + response);
+            }
+            catch (Exception e)
+            {
+                Debug.WriteLine("GetLocationsByCommentUserName - Error: " + e.Message);
+            }
+
+            return Items;
+        }
+
         public async void UpdateHits(Location location)
         {
             // Serialize our concrete class into a JSON String
