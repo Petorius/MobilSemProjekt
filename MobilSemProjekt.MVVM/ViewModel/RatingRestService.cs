@@ -14,8 +14,7 @@ namespace MobilSemProjekt.MVVM.ViewModel
     {
         private HttpClient _client;
         private const string RestUrl = "http://dmax0917.hegr.dk/";
-        public List<User> Items { get; private set; }
-
+        public List<Rating> RatingItems { get; private set; }
         public RatingRestService()
         {
             _client = new HttpClient();
@@ -81,6 +80,8 @@ namespace MobilSemProjekt.MVVM.ViewModel
             return result;
         }
 
+        
+
         public async Task<bool> Update(Rating rating)
         {
             // Serialize our concrete class into a JSON String
@@ -119,6 +120,32 @@ namespace MobilSemProjekt.MVVM.ViewModel
             }
 
             return result;
+        }
+        public async Task<List<Rating>> GetRatingsByUserName(string name)
+        {
+            RatingItems = new List<Rating>();
+            string RateService = "RatingService.svc/GetRatingsByUserName/" + name;
+            var uri = new Uri(string.Format(RestUrl + RateService));
+            var response = new HttpResponseMessage();
+            try
+            {
+                response = await _client.GetAsync(uri);
+                if (response.IsSuccessStatusCode)
+                {
+                    var content = await response.Content.ReadAsStringAsync();
+                    RatingItems = JsonConvert.DeserializeObject<List<Rating>>(content);
+                    Debug.WriteLine(RatingItems.Count);
+                }
+
+                Debug.WriteLine("GetRatingsByUserName - Error: you aren't catched - " + response);
+            }
+            catch (Exception e)
+            {
+                Debug.WriteLine("GetRatingsByUserName - Error: " + e.Message);
+            }
+
+            return RatingItems;
+
         }
 
         public async Task<bool> Delete(Rating rating)

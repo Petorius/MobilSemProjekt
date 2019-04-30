@@ -19,9 +19,9 @@ namespace MobilSemProjekt.View
     public partial class SearchListView : ContentPage
     {
         public ObservableCollection<Location> Locations { get; set; }
+        public ObservableCollection<Rating> Ratings { get; set; }
         public bool IsUserLocationSearch { get; set; }
-        public bool IsUserCommentSearch { get; set; }
-        public User User { get; set; }
+        public bool IsUserRatingSearch { get; set; }
 
         public SearchListView()
         {
@@ -56,14 +56,15 @@ namespace MobilSemProjekt.View
                 editLocationPage.SetPlaceholders();
                 await Navigation.PushAsync(editLocationPage);
             }
-            else if (IsUserCommentSearch && User != null)
+            else if (IsUserRatingSearch)
             {
-                Location location = (Location)e.Item;
-                EditLocationPage editLocationPage = new EditLocationPage();
-                editLocationPage.Location = location;
-                editLocationPage.SetPlaceholders();
-                await Navigation.PushAsync(editLocationPage);
+                Rating rating = (Rating)e.Item;
+                EditRatingPage editRatingPage = new EditRatingPage();
+                editRatingPage.Rating = rating;
+                editRatingPage.SetPlaceholders();
+                await Navigation.PushAsync(editRatingPage);
             }
+
 
             else
             {

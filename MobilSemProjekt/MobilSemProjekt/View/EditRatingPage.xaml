@@ -1,0 +1,19 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="MobilSemProjekt.View.EditRatingPage"
+             Title="Edit Rating">
+    <ContentPage.Content>
+        <StackLayout>
+            <StackLayout>
+                <Label x:Name="RatingLabel" Text="Rating"/>
+                <Entry x:Name="RatingEntry"/>
+            </StackLayout>
+            <StackLayout>
+                <Label x:Name="CommentLabel" Text="Comment"/>
+                <Editor x:Name="CommentEditor" HeightRequest="256"/>
+            </StackLayout>
+            <Button x:Name="SaveRatingEditsButton" Text="Save edits" Clicked="SaveRatingEditsButton_OnClicked"/>
+        </StackLayout>
+    </ContentPage.Content>
+</ContentPage>

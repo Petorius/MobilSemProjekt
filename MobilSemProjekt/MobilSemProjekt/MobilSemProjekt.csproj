@@ -47,8 +47,14 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Compile Update="View\EditRatingPage.xaml.cs">
+      <DependentUpon>EditRatingPage.xaml</DependentUpon>
+    </Compile>
     <Compile Update="View\ProfilePage.xaml.cs">
       <DependentUpon>ProfilePage.xaml</DependentUpon>
+    </Compile>
+    <Compile Update="View\RatingSearchListView.xaml.cs">
+      <DependentUpon>RatingSearchListView.xaml</DependentUpon>
     </Compile>
   </ItemGroup>
 

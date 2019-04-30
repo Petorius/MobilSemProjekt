@@ -5,8 +5,9 @@
              Title="Profil">
     <ContentPage.Content>
         <StackLayout>
-            <StackLayout Orientation="Horizontal">
+            <StackLayout Orientation="Vertical">
                 <Button x:Name="SeeMyLocationsButton" Text="See my locations" Clicked="SeeMyLocationsButton_OnClicked" HorizontalOptions="CenterAndExpand"/>
+                <Button x:Name="SeeMyRatingsButton" Text="See my ratings" Clicked="SeeMyRatingsButton_OnClicked" HorizontalOptions="CenterAndExpand"/>
             </StackLayout>
         </StackLayout>
     </ContentPage.Content>
