@@ -66,7 +66,16 @@ namespace MobilSemProjekt.View
         private async void OnTouchAsync(PinClickedEventArgs e)
         {
             RestService restservice = new RestService();
-            Location location = await restservice.ReadLocationByNameAsync(e.Pin.Label);
+            string topLocation = "**Top Location** ";
+            string label = e.Pin.Label;
+
+            int pos = label.IndexOf(topLocation, StringComparison.Ordinal);
+            if (label.Contains(topLocation) && pos >= 0)
+            {
+                label = label.Remove(0, 17);
+            }
+
+            Location location = await restservice.ReadLocationByNameAsync(label);
             if (location != null)
             {
                 restservice.UpdateHits(location);

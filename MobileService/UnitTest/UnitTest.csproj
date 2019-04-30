@@ -50,6 +50,8 @@
     <Reference Include="System.ServiceModel" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="PictureTest.cs" />
+    <Compile Include="TagTest.cs" />
     <Compile Include="UserTest.cs" />
     <Compile Include="DatabaseTest.cs" />
     <Compile Include="LocationTest.cs" />

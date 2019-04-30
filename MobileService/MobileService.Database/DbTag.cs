@@ -32,8 +32,7 @@ namespace MobileService.Database
 
                 using (SqlCommand cmd = _connection.CreateCommand())
                 {
-                    cmd.CommandText = "INSERT INTO Tag(TagName) VALUES " +
-                                      "(@TagName); ";
+                    cmd.CommandText = "INSERT INTO Tag(TagName) VALUES (@TagName); ";
                     cmd.Parameters.AddWithValue("TagName", tag.TagName);
                     
                     id = Convert.ToInt32(cmd.ExecuteScalar());
@@ -125,6 +124,26 @@ namespace MobileService.Database
                 _connection.Close();
             }
             return locations;
+        }
+
+        public bool Update(Tag tag)
+        {
+            int changes;
+
+            using (_connection = new SqlConnection(_connectionString))
+            {
+                _connection.Open();
+                using (SqlCommand cmd = _connection.CreateCommand())
+                {
+                    cmd.CommandText = "UPDATE Tag SET TagName = @TagName WHERE TagId = @TagId";
+                    cmd.Parameters.AddWithValue("TagId", tag.TagId);
+                    cmd.Parameters.AddWithValue("TagName", tag.TagName);
+                    changes = cmd.ExecuteNonQuery();
+                }
+                _connection.Close();
+            }
+
+            return changes > 0;
         }
 
         public void Delete(int tagId)

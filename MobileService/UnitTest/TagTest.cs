@@ -8,27 +8,21 @@ using MobileService.Model;
 namespace UnitTest
 {
     [TestClass]
-    public class UserTest
+    public class TagTest
     {
         [TestMethod]
-        public void CreateUserTest()
+        public void CreateTagTest()
         {
-            DbUser dbUser = new DbUser();
+            DbTag dbTag = new DbTag();
 
             try
             {
-                User user = new User
+                Tag tag = new Tag
                 {
-                    HashPassword = "",
-                    Salt = "",
-                    UserName = "User1",
-                    UserType = new UserType
-                    {
-                        UserTypeId = 1
-                    }
+                    TagName = "Tag"
                 };
 
-                dbUser.Create(user);
+                dbTag.Create(tag);
             }
             catch (FaultException<DbConnectionException> e)
             {
@@ -43,15 +37,15 @@ namespace UnitTest
         }
 
         [TestMethod]
-        public void ReadUserTest()
+        public void ReadTagTest()
         {
-            DbUser dbUser = new DbUser();
-            User user = null;
+            DbTag dbTag = new DbTag();
+            Tag tag = null;
 
             try
             {
-                user = dbUser.FindById(1);
-                Assert.IsNotNull(user);
+                tag = dbTag.FindById(1);
+                Assert.IsNotNull(tag);
             }
             catch (FaultException<DbConnectionException> e)
             {
@@ -66,15 +60,15 @@ namespace UnitTest
         }
 
         [TestMethod]
-        public void UpdateUserTest()
+        public void UpdateTagTest()
         {
-            DbUser dbUser = new DbUser();
-            User user = null;
+            DbTag dbTag = new DbTag();
+            Tag tag = null;
 
             try
             {
-                user = dbUser.FindById(1);
-                bool status = dbUser.Update(user);
+                tag = dbTag.FindById(1);
+                bool status = dbTag.Update(tag);
                 Assert.IsTrue(status);
             }
             catch (FaultException<DbConnectionException> e)

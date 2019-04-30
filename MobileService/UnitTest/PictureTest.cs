@@ -8,27 +8,23 @@ using MobileService.Model;
 namespace UnitTest
 {
     [TestClass]
-    public class UserTest
+    public class PictureTest
     {
         [TestMethod]
-        public void CreateUserTest()
+        public void CreatePictureTest()
         {
-            DbUser dbUser = new DbUser();
+            DbPicture dbPicture = new DbPicture();
 
             try
             {
-                User user = new User
+                Picture picture = new Picture
                 {
-                    HashPassword = "",
-                    Salt = "",
-                    UserName = "User1",
-                    UserType = new UserType
-                    {
-                        UserTypeId = 1
-                    }
+                    Description = "Some text",
+                    PictureName = "MyPicture",
+                    Url = "http://AStrangeUrl.dk/picture.jpg"
                 };
 
-                dbUser.Create(user);
+                dbPicture.Create(picture, 1);
             }
             catch (FaultException<DbConnectionException> e)
             {
@@ -43,15 +39,15 @@ namespace UnitTest
         }
 
         [TestMethod]
-        public void ReadUserTest()
+        public void ReadPictureTest()
         {
-            DbUser dbUser = new DbUser();
-            User user = null;
+            DbPicture dbPicture = new DbPicture();
+            Picture picture = null;
 
             try
             {
-                user = dbUser.FindById(1);
-                Assert.IsNotNull(user);
+                picture = dbPicture.FindById(1);
+                Assert.IsNotNull(picture);
             }
             catch (FaultException<DbConnectionException> e)
             {
@@ -66,16 +62,15 @@ namespace UnitTest
         }
 
         [TestMethod]
-        public void UpdateUserTest()
+        public void UpdatePictureTest()
         {
-            DbUser dbUser = new DbUser();
-            User user = null;
+            DbPicture dbPicture = new DbPicture();
+            Picture picture = null;
 
             try
             {
-                user = dbUser.FindById(1);
-                bool status = dbUser.Update(user);
-                Assert.IsTrue(status);
+                picture = dbPicture.FindById(1);
+                dbPicture.Update(picture, 1, picture.PictureId);
             }
             catch (FaultException<DbConnectionException> e)
             {

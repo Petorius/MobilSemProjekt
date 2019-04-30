@@ -11,12 +11,11 @@ namespace UnitTest
     public class LocationTest
     {
         [TestMethod]
-        public void dUpdateHitsTest()
+        public void UpdateHitsTest()
         {
             Location location = new Location();
             location.LocationId = 1;
             DbLocation dbLocation = new DbLocation();
-            List<Location> list = null;
             try
             {
                 dbLocation.UpdateHits(location);
@@ -26,8 +25,6 @@ namespace UnitTest
             {
                 Console.WriteLine("Error: " + e.Message);
             }
-            Assert.IsNotNull(list);
-            
         }
 
         [TestMethod]
