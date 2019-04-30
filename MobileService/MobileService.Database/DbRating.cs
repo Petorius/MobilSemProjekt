@@ -231,5 +231,38 @@ namespace MobileService.Database
 
             return changes > 0;
         }
+
+        public List<Rating> GetLocationByUsername(string username)
+        {
+            List<Rating> ratings = new List<Rating>();
+            int userId = _dbUser.FindIdByUserName(username);
+
+            using (_connection = new SqlConnection(_connectionString))
+            {
+                _connection.Open();
+                using (SqlCommand cmd = _connection.CreateCommand())
+                {
+                    cmd.CommandText = "SELECT * FROM Rating WHERE userId = @userId";
+                    cmd.Parameters.AddWithValue("userId", userId);
+                    SqlDataReader reader = cmd.ExecuteReader();
+
+                    while (reader.Read())
+                    {
+                        User user = _dbUser.FindById(userId);
+
+                        Rating rating = new Rating
+                        {
+                            RatingId = reader.GetInt32(reader.GetOrdinal("id")),
+                            User = user,
+                            Rate = reader.GetDouble(reader.GetOrdinal("rate")),
+                            Comment = reader.GetString(reader.GetOrdinal("comment"))
+                        };
+                        ratings.Add(rating);
+                    }
+                }
+                _connection.Close();
+            }
+            return ratings;
+        }
     }
 }

@@ -16,6 +16,11 @@ namespace MobileService.WcfService
             ResponseFormat = WebMessageFormat.Json)]
         int CreateRating(Rating rating);
 
+        [OperationContract]
+        [WebGet(UriTemplate = "GetRatingsByUserName/{username}",
+            RequestFormat = WebMessageFormat.Json,
+            ResponseFormat = WebMessageFormat.Json)]
+        List<Rating> GetRatingsByUserName(string username);
 
         [OperationContract]
         [WebGet(UriTemplate = "GetAverageRating/{locationId}",

@@ -26,6 +26,11 @@ namespace MobileService.Controller
             return _dbRating.GetAverageRating(locationId);
         }
 
+        public List<Rating> GetRatingsByUsername(string username)
+        {
+            return _dbRating.GetLocationByUsername(username);
+        }
+
         public bool Update(Rating rating)
         {
             return _dbRating.Update(rating);

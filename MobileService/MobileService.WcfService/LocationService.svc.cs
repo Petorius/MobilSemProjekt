@@ -54,6 +54,7 @@ namespace MobileService.WcfService
             return _locationCtrl.GetAverageRating(locId);
         }
 
+
         public void UpdateHits(Location location)
         {
             _locationCtrl = new LocationCtrl();

@@ -20,6 +20,8 @@ namespace MobilSemProjekt.View
     {
         public ObservableCollection<Location> Locations { get; set; }
         public bool IsUserLocationSearch { get; set; }
+        public bool IsUserCommentSearch { get; set; }
+        public User User { get; set; }
 
         public SearchListView()
         {
@@ -47,6 +49,14 @@ namespace MobilSemProjekt.View
         async void Handle_ItemTapped(object sender, ItemTappedEventArgs e)
         {
             if (IsUserLocationSearch)
+            {
+                Location location = (Location)e.Item;
+                EditLocationPage editLocationPage = new EditLocationPage();
+                editLocationPage.Location = location;
+                editLocationPage.SetPlaceholders();
+                await Navigation.PushAsync(editLocationPage);
+            }
+            else if (IsUserCommentSearch && User != null)
             {
                 Location location = (Location)e.Item;
                 EditLocationPage editLocationPage = new EditLocationPage();

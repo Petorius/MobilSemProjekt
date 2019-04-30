@@ -116,6 +116,29 @@ namespace MobileService.Database
             }
             return user;
         }
+
+        public int FindIdByUserName(string userName)
+        {
+            int userId = 0;
+
+            using (_connection = new SqlConnection(_connectionString))
+            {
+                _connection.Open();
+                using (SqlCommand cmd = _connection.CreateCommand())
+                {
+                    cmd.CommandText = "SELECT * FROM [User] WHERE UserName = @UserName";
+                    cmd.Parameters.AddWithValue("UserName", userName);
+                    SqlDataReader reader = cmd.ExecuteReader();
+
+                    while (reader.Read())
+                    {
+                        userId = reader.GetInt32(reader.GetOrdinal("UserId"));
+                    }
+                }
+                _connection.Close();
+            }
+            return userId;
+        }
         public bool Update(User user)
         {
             int changes;
