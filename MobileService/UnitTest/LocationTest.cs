@@ -6,15 +6,15 @@ using MobileService.Model;
 namespace UnitTest
 {
     [TestClass]
-    public class UnitTest1
+    public class LocationTest
     {
         [TestMethod]
-        public void TestMethod1()
+        public void UpdateHitsTest()
         {
-            Location l = new Location();
-            l.LocationId = 1;
+            Location location = new Location();
+            location.LocationId = 1;
             DbLocation dbLocation = new DbLocation();
-            dbLocation.UpdateHits(l);
+            dbLocation.UpdateHits(location);
             //dbLocation.FindAll();
         }
     }

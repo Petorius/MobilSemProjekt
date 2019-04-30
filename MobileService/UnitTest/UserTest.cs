@@ -1,0 +1,92 @@
+﻿using System;
+using System.ServiceModel;
+using Microsoft.VisualStudio.TestTools.UnitTesting;
+using MobileService.Database;
+using MobileService.Exception;
+using MobileService.Model;
+
+namespace UnitTest
+{
+    [TestClass]
+    public class UserTest
+    {
+        [TestMethod]
+        public void CreateUserTest()
+        {
+            DbUser dbUser = new DbUser();
+
+            try
+            {
+                User user = new User
+                {
+                    HashPassword = "",
+                    Salt = "",
+                    UserName = "User1",
+                    UserType = new UserType
+                    {
+                        UserTypeId = 1
+                    }
+                };
+
+                int uId = dbUser.Create(user);
+                Assert.IsTrue(uId > 1);
+            }
+            catch (FaultException<DbConnectionException> e)
+            {
+                Console.WriteLine(e);
+                Assert.Fail();
+            }
+            catch(FaultException<Exception> e)
+            {
+                Console.WriteLine(e);
+                Assert.Fail();
+            }
+        }
+
+        [TestMethod]
+        public void ReadUserTest()
+        {
+            DbUser dbUser = new DbUser();
+            User user = null;
+
+            try
+            {
+                user = dbUser.FindById(1);
+                Assert.IsNotNull(user);
+            }
+            catch (FaultException<DbConnectionException> e)
+            {
+                Console.WriteLine(e);
+                Assert.Fail();
+            }
+            catch (FaultException<Exception> e)
+            {
+                Console.WriteLine(e);
+                Assert.Fail();
+            }
+        }
+
+        [TestMethod]
+        public void UpdateUserTest()
+        {
+            DbUser dbUser = new DbUser();
+            User user = null;
+
+            try
+            {
+                user = dbUser.FindById(1);
+                Assert.IsNotNull(user);
+            }
+            catch (FaultException<DbConnectionException> e)
+            {
+                Console.WriteLine(e);
+                Assert.Fail();
+            }
+            catch (FaultException<Exception> e)
+            {
+                Console.WriteLine(e);
+                Assert.Fail();
+            }
+        }
+    }
+}

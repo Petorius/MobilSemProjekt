@@ -6,6 +6,7 @@ using System.Linq;
 using System.ServiceModel;
 using System.Text;
 using System.Threading.Tasks;
+using MobileService.Exception;
 
 namespace MobileService.Database
 {
@@ -16,9 +17,8 @@ namespace MobileService.Database
                                                     "Database=dmaa0917_1067347;User ID=dmaa0917_1067347;" +
                                                     "Password=Password1!;";
         
-        public bool ConnectionTest()
+        public void ConnectionTest()
         {
-            bool status = true;
             try
             {
                 using (_connection = new SqlConnection(_connectionString))
@@ -31,9 +31,7 @@ namespace MobileService.Database
                         int idStatus = Convert.ToInt32(cmd.ExecuteScalar());
                         if (idStatus != 1)
                         {
-                            Debug.WriteLine("Db error " + idStatus);
-                            status = false; 
-                            //throw new FaultException<DbConnectionError>(new DbConnectionError());
+                            throw new FaultException<DbConnectionException>(new DbConnectionException());
                         }
                     }
                    _connection.Close();
@@ -41,13 +39,8 @@ namespace MobileService.Database
             }
             catch (SqlException e)
             {
-                status = false;
-                Debug.WriteLine("SQLError " + e.Message);
-
-                //throw new FaultException<DbConnectionError>(new DbConnectionError());
+                throw new FaultException<DbConnectionException>(new DbConnectionException());
             }
-
-            return status;
         }
     }
 

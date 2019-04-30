@@ -47,9 +47,12 @@
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
+    <Reference Include="System.ServiceModel" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="UnitTest1.cs" />
+    <Compile Include="UserTest.cs" />
+    <Compile Include="DatabaseTest.cs" />
+    <Compile Include="LocationTest.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -59,6 +62,10 @@
     <ProjectReference Include="..\MobileService.Database\MobileService.Database.csproj">
       <Project>{51B0E1D7-FA89-4C34-BBC7-BB36F44A55D6}</Project>
       <Name>MobileService.Database</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\MobileService.Exception\MobileService.Exception.csproj">
+      <Project>{A30EF766-1A70-45E6-9BA0-69DCEEC28112}</Project>
+      <Name>MobileService.Exception</Name>
     </ProjectReference>
     <ProjectReference Include="..\MobileService.Model\MobileService.Model.csproj">
       <Project>{2B24AA55-3FB2-4B29-88C1-9274DE39E949}</Project>

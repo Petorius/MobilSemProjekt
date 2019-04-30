@@ -66,10 +66,11 @@ namespace MobileService.WcfService
             _locationCtrl.UpdateLocation(location);
         }
 
-        public void UserUpdateLocation(Location location)
+        public int UserUpdateLocation(Location location)
         {
             _locationCtrl = new LocationCtrl();
             _locationCtrl.UserUpdateLocation(location);
+            return 1;
         }
 
     }

@@ -54,24 +54,24 @@ namespace MobileService.WcfService
         List<Location> GetAllLocations();
 
         [OperationContract]
-        [WebInvoke(Method = "PUT",
+        [WebInvoke(Method = "POST",
             UriTemplate = "UpdateHits",
             RequestFormat = WebMessageFormat.Json,
             ResponseFormat = WebMessageFormat.Json)]
         void UpdateHits(Location location);
 
         [OperationContract]
-        [WebInvoke(Method = "PUT",
+        [WebInvoke(Method = "POST",
             UriTemplate = "UpdateLocation",
             RequestFormat = WebMessageFormat.Json,
             ResponseFormat = WebMessageFormat.Json)]
         void UpdateLocation(Location location);
 
         [OperationContract]
-        [WebInvoke(Method = "PUT",
+        [WebInvoke(Method = "POST",
             UriTemplate = "UserUpdateLocation",
             RequestFormat = WebMessageFormat.Json,
             ResponseFormat = WebMessageFormat.Json)]
-        void UserUpdateLocation(Location location);
+        int UserUpdateLocation(Location location);
     }
 }
