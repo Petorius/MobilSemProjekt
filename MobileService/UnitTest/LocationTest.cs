@@ -27,7 +27,8 @@ namespace MobileService.UnitTest
                     LocationName = "MySpot"
                 };
 
-                dbLocation.Create(location);
+                int id = dbLocation.Create(location);
+                dbLocation.Delete(id);
             }
             catch (FaultException<DbConnectionException> e)
             {
@@ -86,13 +87,14 @@ namespace MobileService.UnitTest
         [TestMethod]
         public void UpdateHitsTest()
         {
-            Location location = new Location();
-            location.LocationId = 1;
+            Location location = new Location
+            {
+                LocationId = 1
+            };
             DbLocation dbLocation = new DbLocation();
             try
             {
                 dbLocation.UpdateHits(location);
-                //dbLocation.FindAll();
             }
             catch (System.Exception e)
             {
@@ -101,29 +103,23 @@ namespace MobileService.UnitTest
         }
 
         [TestMethod]
-        public void GetListOfLocationsCommentedByUser()
+        public void GetListOfLocationsRatedByUser()
         {
             DbLocation dbLocation = new DbLocation();
-            List<Location> list = null;
+            List<Location> list = new List<Location>();
             try
             {
-                //dbLocation.UpdateHits(location);
                 list = dbLocation.LocationsByCommentUserName("Aksel");
                 foreach (var element in list)
                 {
                     Console.WriteLine(element.LocationName);
                 }
-                //dbLocation.FindAll();
             }
             catch (System.Exception e)
             {
                 Console.WriteLine("Error: " + e.Message);
             }
-            Assert.IsNotNull(list);
-
+            Assert.IsTrue(list.Count > 0);
         }
-
-
-
     }
 }

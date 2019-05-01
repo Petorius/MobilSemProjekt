@@ -31,11 +31,6 @@ namespace MobileService.UnitTest
                 Console.WriteLine(e);
                 Assert.Fail();
             }
-            catch(FaultException<Exception> e)
-            {
-                Console.WriteLine(e);
-                Assert.Fail();
-            }
         }
 
         [TestMethod]
@@ -54,11 +49,6 @@ namespace MobileService.UnitTest
                 Console.WriteLine(e);
                 Assert.Fail();
             }
-            catch (FaultException<Exception> e)
-            {
-                Console.WriteLine(e);
-                Assert.Fail();
-            }
         }
 
         [TestMethod]
@@ -73,11 +63,6 @@ namespace MobileService.UnitTest
                 dbPicture.Update(picture, 1, picture.PictureId);
             }
             catch (FaultException<DbConnectionException> e)
-            {
-                Console.WriteLine(e);
-                Assert.Fail();
-            }
-            catch (FaultException<Exception> e)
             {
                 Console.WriteLine(e);
                 Assert.Fail();

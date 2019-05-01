@@ -56,9 +56,12 @@ namespace MobileService.Database
                     
                     locationId = Convert.ToInt32(cmd.ExecuteScalar());
 
-                    foreach (Picture picture in location.Pictures)
+                    if (location.Pictures != null)
                     {
-                        _dbPicture.Create(picture, locationId);
+                        foreach (Picture picture in location.Pictures)
+                        {
+                            _dbPicture.Create(picture, locationId);
+                        }
                     }
                 }
                 _connection.Close();

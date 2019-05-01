@@ -29,11 +29,6 @@ namespace MobileService.UnitTest
                 Console.WriteLine(e);
                 Assert.Fail();
             }
-            catch(FaultException<Exception> e)
-            {
-                Console.WriteLine(e);
-                Assert.Fail();
-            }
         }
 
         [TestMethod]
@@ -48,11 +43,6 @@ namespace MobileService.UnitTest
                 Assert.IsNotNull(tag);
             }
             catch (FaultException<DbConnectionException> e)
-            {
-                Console.WriteLine(e);
-                Assert.Fail();
-            }
-            catch (FaultException<Exception> e)
             {
                 Console.WriteLine(e);
                 Assert.Fail();
@@ -72,11 +62,6 @@ namespace MobileService.UnitTest
                 Assert.IsTrue(status);
             }
             catch (FaultException<DbConnectionException> e)
-            {
-                Console.WriteLine(e);
-                Assert.Fail();
-            }
-            catch (FaultException<Exception> e)
             {
                 Console.WriteLine(e);
                 Assert.Fail();
