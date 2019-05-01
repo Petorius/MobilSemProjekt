@@ -51,6 +51,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="PictureTest.cs" />
+    <Compile Include="RatingTest.cs" />
     <Compile Include="TagTest.cs" />
     <Compile Include="UserTest.cs" />
     <Compile Include="DatabaseTest.cs" />

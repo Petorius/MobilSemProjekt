@@ -270,6 +270,26 @@ namespace MobileService.Database
             return changes > 0;
         }
 
+        public bool UserUpdateRating(Rating rating)
+        {
+            int changes = 0;
+            using (_connection = new SqlConnection(_connectionString))
+            {
+                _connection.Open();
+                using (SqlCommand cmd = _connection.CreateCommand())
+                {
+                    cmd.CommandText = "UPDATE Rating set Rate = @Rate, Comment = @Comment where RatingId = @RatingId";
+                    cmd.Parameters.AddWithValue("Rate", rating.Rate);
+                    cmd.Parameters.AddWithValue("Comment", rating.Comment);
+                    cmd.Parameters.AddWithValue("RatingId", rating.RatingId);
+                    changes = cmd.ExecuteNonQuery();
+                }
+                _connection.Close();
+            }
+
+            return changes > 0;
+        }
+
         public bool Delete(Rating rating)
         {
             int changes;

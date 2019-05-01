@@ -31,6 +31,11 @@ namespace MobileService.Controller
             return _dbRating.Update(rating);
         }
 
+        public bool UserUpdateRating(Rating rating)
+        {
+            return _dbRating.UserUpdateRating(rating);
+        }
+        
         public bool Delete(Rating rating)
         {
             return _dbRating.Delete(rating);

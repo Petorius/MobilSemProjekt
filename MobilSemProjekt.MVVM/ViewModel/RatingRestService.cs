@@ -95,7 +95,7 @@ namespace MobilSemProjekt.MVVM.ViewModel
             {
                 // Do the actual request and await the response
                 var httpResponse =
-                    await httpClient.PostAsync(RestUrl + "RatingService.svc/UpdateRating",
+                    await httpClient.PostAsync(RestUrl + "RatingService.svc/UserUpdateRating",
                         httpContent);
                 Debug.WriteLine(httpResponse);
                 try
