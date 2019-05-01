@@ -94,7 +94,7 @@ namespace MobileService.UnitTest
                 dbLocation.UpdateHits(location);
                 //dbLocation.FindAll();
             }
-            catch (Exception e)
+            catch (System.Exception e)
             {
                 Console.WriteLine("Error: " + e.Message);
             }
@@ -115,7 +115,7 @@ namespace MobileService.UnitTest
                 }
                 //dbLocation.FindAll();
             }
-            catch (Exception e)
+            catch (System.Exception e)
             {
                 Console.WriteLine("Error: " + e.Message);
             }
