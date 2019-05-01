@@ -5,7 +5,7 @@ using MobileService.Database;
 using MobileService.Exception;
 using MobileService.Model;
 
-namespace UnitTest
+namespace MobileService.UnitTest
 {
     [TestClass]
     public class RatingTest
