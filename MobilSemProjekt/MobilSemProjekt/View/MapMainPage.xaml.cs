@@ -22,6 +22,7 @@ namespace MobilSemProjekt.View
     {
         public User User { private get; set; }
         private string StartUrl { get; set; }
+        private string TopLocation;
         public MainPage()
         {
             InitializeComponent();
@@ -36,6 +37,7 @@ namespace MobilSemProjekt.View
                 }
             };
 
+            TopLocation = "**Top Location** ";
             StartUrl = "http://dmax0917.hegr.dk/";
             BtnFindMyLocation.Source = ImageSource.FromUri(new Uri(StartUrl + "navArrow.png"));
             BtnFindMyLocation.GestureRecognizers.Add(ReturnCall());
@@ -66,13 +68,12 @@ namespace MobilSemProjekt.View
         private async void OnTouchAsync(PinClickedEventArgs e)
         {
             RestService restservice = new RestService();
-            string topLocation = "**Top Location** ";
             string label = e.Pin.Label;
 
-            int pos = label.IndexOf(topLocation, StringComparison.Ordinal);
-            if (label.Contains(topLocation) && pos >= 0)
+            int pos = label.IndexOf(TopLocation, StringComparison.Ordinal);
+            if (label.Contains(TopLocation) && pos >= 0)
             {
-                label = label.Remove(0, 17);
+                label = label.Remove(0, TopLocation.Length);
             }
 
             Location location = await restservice.ReadLocationByNameAsync(label);
@@ -101,7 +102,7 @@ namespace MobilSemProjekt.View
             {
                 if (location.IsTopLocation)
                 {
-                    labelText = "**Top Location** " + location.LocationName;
+                    labelText = TopLocation + location.LocationName;
                 }
                 else
                 {

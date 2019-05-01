@@ -31,6 +31,13 @@ namespace MobileService.WcfService
 
         [OperationContract]
         [WebInvoke(Method = "POST",
+            UriTemplate = "UserUpdateRating",
+            RequestFormat = WebMessageFormat.Json,
+            ResponseFormat = WebMessageFormat.Json)]
+        bool UserUpdateRating(Rating rating);
+
+        [OperationContract]
+        [WebInvoke(Method = "POST",
             UriTemplate = "Delete",
             RequestFormat = WebMessageFormat.Json,
             ResponseFormat = WebMessageFormat.Json)]

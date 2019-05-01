@@ -29,6 +29,12 @@ namespace MobileService.WcfService
             return _ratingCtrl.Update(rating);
         }
 
+        public bool UserUpdateRating(Rating rating)
+        {
+            _ratingCtrl = new RatingCtrl();
+            return _ratingCtrl.UserUpdateRating(rating);
+        }
+
         public bool DeleteRating(Rating rating)
         {
             _ratingCtrl = new RatingCtrl();
