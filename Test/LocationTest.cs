@@ -5,6 +5,7 @@ using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using Plugin.Geolocator;
+using System.Threading;
 
 namespace Test
 {
@@ -31,12 +32,28 @@ namespace Test
             Assert.IsTrue(topSpotList.Count > 0);
         }
 
-        [TestMethod]
-        public async Task FindCurrentLocation()
+        // this method is not implemented due to the
+        // fact that it can not work without a gps 
+        //
+        //[TestMethod]
+        //public async Task FindCurrentLocation()
+        //{
+        //    string en = await GetCurrentLocation();
+        //    Thread.Sleep(500);
+        //    string to = await GetCurrentLocation();
+        //    Assert.IsTrue(en.Equals(to));
+        //}
+        
+        private async Task<string> GetCurrentLocation()
         {
             var locator = CrossGeolocator.Current;
             var position = await locator.GetPositionAsync(TimeSpan.FromSeconds(1));
-            //Assert.IsTrue(position.Speed==0);
+            string latitude = position.Latitude.ToString();
+            string longitude = position.Longitude.ToString();
+
+
+            return latitude + ", " + longitude;
+
         }
     }
 }
