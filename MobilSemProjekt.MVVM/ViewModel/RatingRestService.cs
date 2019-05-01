@@ -82,31 +82,39 @@ namespace MobilSemProjekt.MVVM.ViewModel
 
         
 
-        public async Task<bool> Update(Rating rating)
+        public async void Update(Rating rating2)
         {
+            Rating rating = new Rating
+            {
+                LocationId = rating2.LocationId,
+                RatingId = rating2.RatingId,
+                User = rating2.User,
+                Rate = rating2.Rate,
+                Comment = rating2.Comment
+            };
             // Serialize our concrete class into a JSON String
             var stringThingy = await Task.Run(() => JsonConvert.SerializeObject(rating));
 
             // Wrap our JSON inside a StringContent which then can be used by the HttpClient class
             var httpContent = new StringContent(stringThingy, Encoding.UTF8, "application/json");
-            var result = false;
+
 
             using (var httpClient = new HttpClient())
             {
                 // Do the actual request and await the response
                 var httpResponse =
-                    await httpClient.PostAsync(RestUrl + "RatingService.svc/UpdateRating",
+                    await httpClient.PostAsync(RestUrl + "RatingService.svc/UserUpdateRating",
                         httpContent);
                 Debug.WriteLine(httpResponse);
                 try
                 {
-                    // If the response contains content we want to read it!
+                   // If the response contains content we want to read it!
                     if (httpResponse.IsSuccessStatusCode)
                     {
                         //var responseContent = await httpResponse.Content.ReadAsStringAsync();
-                        Debug.WriteLine("UpdateRating - Success!");
-                        var content = await httpResponse.Content.ReadAsStringAsync();
-                        result = JsonConvert.DeserializeObject<bool>(content);
+                        Debug.WriteLine("UserUpdateRating - Success!");
+                        //var content = await httpResponse.Content.ReadAsStringAsync();
+                        // result = JsonConvert.DeserializeObject<bool>(content);
                     }
                     else
                     {
@@ -118,8 +126,6 @@ namespace MobilSemProjekt.MVVM.ViewModel
                     Debug.WriteLine("UpdateRating - Error: " + e.Message);
                 }
             }
-
-            return result;
         }
         public async Task<List<Rating>> GetRatingsByUserName(string name)
         {
