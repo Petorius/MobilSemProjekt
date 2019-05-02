@@ -11,6 +11,12 @@ namespace MobileService.Database
                         "Database=dmaa0917_1067347;User ID=dmaa0917_1067347;" +
                         "Password=Password1!;";
 
+
+        /// <summary>
+        /// Create a type of users in the database
+        /// </summary>
+        /// <param name="userType">UserType</param>
+        /// <returns>int</returns>
         public int Create(UserType userType)
         {
             int id;
@@ -31,6 +37,11 @@ namespace MobileService.Database
             return id;
         }
 
+        /// <summary>
+        /// Find a type of users based on its id in the database
+        /// </summary>
+        /// <param name="userTypeId"></param>
+        /// <returns></returns>
         public UserType FindById(int userTypeId)
         {
             UserType userType = null;
@@ -58,6 +69,11 @@ namespace MobileService.Database
             return userType;
         }
 
+        /// <summary>
+        /// Find a type of users based on its name in database
+        /// </summary>
+        /// <param name="typeName"></param>
+        /// <returns></returns>
         public int FindIdByName(string typeName)
         {
             int userTypeId = 0;

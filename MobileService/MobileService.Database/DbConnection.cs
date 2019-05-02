@@ -17,6 +17,9 @@ namespace MobileService.Database
                                                     "Database=dmaa0917_1067347;User ID=dmaa0917_1067347;" +
                                                     "Password=Password1!;";
         
+        /// <summary>
+        /// Tests the connection to the database
+        /// </summary>
         public void ConnectionTest()
         {
             try

@@ -18,6 +18,11 @@ namespace MobileService.Database
             _dbUser = new DbUser();
         }
 
+        /// <summary>
+        /// Create a rating in database
+        /// </summary>
+        /// <param name="rating">Rating</param>
+        /// <returns>int</returns>
         public int Create(Rating rating)
         {
             int id;
@@ -58,6 +63,11 @@ namespace MobileService.Database
             return id;
         }
 
+        /// <summary>
+        /// Find a rating based on its id in database
+        /// </summary>
+        /// <param name="ratingId">int</param>
+        /// <returns>Rating</returns>
         public Rating FindById(int ratingId)
         {
             Rating rating = null;
@@ -89,6 +99,11 @@ namespace MobileService.Database
             return rating;
         }
 
+        /// <summary>
+        /// Find ratings based on location id in database
+        /// </summary>
+        /// <param name="locationId">int</param>
+        /// <returns>List<Rating/></returns>
         public List<Rating> FindByLocationId(int locationId)
         {
             List<Rating> ratings = new List<Rating>();
@@ -128,6 +143,11 @@ namespace MobileService.Database
             return ratings;
         }
 
+        /// <summary>
+        /// Find a list of ratings based on user id in database
+        /// </summary>
+        /// <param name="userId">int</param>
+        /// <returns>List<Rating/></returns>
         public List<Rating> FindByUserId(int userId)
         {
             List<Rating> ratings = new List<Rating>();
@@ -160,6 +180,11 @@ namespace MobileService.Database
             return ratings;
         }
 
+        /// <summary>
+        /// Find a list of location ids based on user ratings in database
+        /// </summary>
+        /// <param name="username">string</param>
+        /// <returns>List<int/></returns>
         public List<int> FindLocationIdsByUserName(string username)
         {
             List<int> locationIds = new List<int>();
@@ -188,6 +213,11 @@ namespace MobileService.Database
             return locationIds;
         }
 
+        /// <summary>
+        /// Find a list of ratings based on username in database
+        /// </summary>
+        /// <param name="username">string</param>
+        /// <returns>List<Rating/></returns>
         public List<Rating> FindRatingsByUsername(string username)
         {
             List<Rating> ratings = new List<Rating>();
@@ -219,6 +249,11 @@ namespace MobileService.Database
             return ratings;
         }
 
+        /// <summary>
+        /// Get an average rating of a specific location in database
+        /// </summary>
+        /// <param name="locationId">int</param>
+        /// <returns>double</returns>
         public double GetAverageRating(int locationId)
         {
             double avgValue = 0;
@@ -248,6 +283,11 @@ namespace MobileService.Database
             return avgValue;
         }
 
+        /// <summary>
+        /// Update a rating in database
+        /// </summary>
+        /// <param name="rating">Rating</param>
+        /// <returns>bool</returns>
         public bool Update(Rating rating)
         {
             int changes = 0;
@@ -270,6 +310,11 @@ namespace MobileService.Database
             return changes > 0;
         }
 
+        /// <summary>
+        /// Updates a rating based on specific parameters in database
+        /// </summary>
+        /// <param name="rating">Rating</param>
+        /// <returns>bool</returns>
         public bool UserUpdateRating(Rating rating)
         {
             int changes = 0;
@@ -290,6 +335,11 @@ namespace MobileService.Database
             return changes > 0;
         }
 
+        /// <summary>
+        /// Delete a rating in database
+        /// </summary>
+        /// <param name="rating">Rating</param>
+        /// <returns>bool</returns>
         public bool Delete(Rating rating)
         {
             int changes;

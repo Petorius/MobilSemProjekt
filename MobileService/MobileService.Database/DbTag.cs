@@ -22,6 +22,11 @@ namespace MobileService.Database
             _dbLocation = new DbLocation();
         }
 
+        /// <summary>
+        /// Create a tag in database
+        /// </summary>
+        /// <param name="tag">Tag</param>
+        /// <returns>int</returns>
         public int Create(Tag tag)
         {
             int id;
@@ -42,6 +47,11 @@ namespace MobileService.Database
             return id;
         }
 
+        /// <summary>
+        /// Find a tag based on its id in the database
+        /// </summary>
+        /// <param name="tagId">int</param>
+        /// <returns>Tag</returns>
         public Tag FindById(int tagId)
         {
             Tag tag = null;
@@ -70,6 +80,11 @@ namespace MobileService.Database
             return tag;
         }
 
+        /// <summary>
+        /// Find a tag based on its name in database
+        /// </summary>
+        /// <param name="tagName">string</param>
+        /// <returns>Tag</returns>
         public Tag FindByName(string tagName)
         {
             Tag tag = null;
@@ -100,7 +115,11 @@ namespace MobileService.Database
             return tag;
         }
 
-
+        /// <summary>
+        /// Find locations based on its tag in database
+        /// </summary>
+        /// <param name="tagId">int</param>
+        /// <returns>List<Location/></returns>
         public List<Location> GetLocationsByTagId(int tagId)
         {
             List<Location> locations = new List<Location>();
@@ -126,6 +145,11 @@ namespace MobileService.Database
             return locations;
         }
 
+        /// <summary>
+        /// Update a tag in database
+        /// </summary>
+        /// <param name="tag">Tag</param>
+        /// <returns>bool</returns>
         public bool Update(Tag tag)
         {
             int changes;
@@ -146,6 +170,10 @@ namespace MobileService.Database
             return changes > 0;
         }
 
+        /// <summary>
+        /// Deletes a tag in database
+        /// </summary>
+        /// <param name="tagId">int</param>
         public void Delete(int tagId)
         {
             int changes;

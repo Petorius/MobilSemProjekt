@@ -20,6 +20,11 @@ namespace MobileService.Database
             DbUserType = new DbUserType();
         }
         
+        /// <summary>
+        /// Create a user in database
+        /// </summary>
+        /// <param name="user">User</param>
+        /// <returns>int</returns>
         public int Create(User user)
         {
             int id;
@@ -44,6 +49,11 @@ namespace MobileService.Database
             return id;
         }
 
+        /// <summary>
+        /// Find a user based on its id in database
+        /// </summary>
+        /// <param name="userId"></param>
+        /// <returns></returns>
         public User FindById(int userId)
         {
             User user = null;
@@ -76,6 +86,13 @@ namespace MobileService.Database
             return user;
         }
 
+        /// <summary>
+        /// Find a user based on its username in database
+        /// If user tries to login it throws a login error
+        /// </summary>
+        /// <param name="userName">string</param>
+        /// <param name="login">bool</param>
+        /// <returns>User</returns>
         public User FindUserByUserName(string userName, bool login)
         {
             User user = null;
@@ -117,6 +134,11 @@ namespace MobileService.Database
             return user;
         }
 
+        /// <summary>
+        /// Find a user based on its username in database
+        /// </summary>
+        /// <param name="userName">string</param>
+        /// <returns>int</returns>
         public int FindIdByUserName(string userName)
         {
             int userId = 0;
@@ -139,6 +161,12 @@ namespace MobileService.Database
             }
             return userId;
         }
+
+        /// <summary>
+        /// Update a user in database
+        /// </summary>
+        /// <param name="user">User</param>
+        /// <returns>bool</returns>
         public bool Update(User user)
         {
             int changes;
@@ -163,6 +191,10 @@ namespace MobileService.Database
             return changes > 0;
         }
 
+        /// <summary>
+        /// Delete a user in database
+        /// </summary>
+        /// <param name="userName">string</param>
         public void Delete(string userName)
         {
             int changes;

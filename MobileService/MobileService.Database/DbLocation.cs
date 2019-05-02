@@ -26,10 +26,14 @@ namespace MobileService.Database
             _dbUser = new DbUser();
         }
 
+        /// <summary>
+        /// Create a location in the database
+        /// </summary>
+        /// <param name="location">Location</param>
+        /// <returns>int</returns>
         public int Create(Location location)
         {
             int locationId;
-            
             using (_connection = new SqlConnection(_connectionString))
             {
                 _connection.Open();
@@ -69,6 +73,11 @@ namespace MobileService.Database
             return locationId;
         }
         
+        /// <summary>
+        /// Find a location based on id in the database
+        /// </summary>
+        /// <param name="locationId">int</param>
+        /// <returns>Location</returns>
         public Location FindById(int locationId)
         {
             Location location = null;
@@ -105,6 +114,11 @@ namespace MobileService.Database
             return location;
         }
 
+        /// <summary>
+        /// Find a location based on location name in the database
+        /// </summary>
+        /// <param name="locationName">string</param>
+        /// <returns>Location</returns>
         public Location FindByName(string locationName)
         {
             Location location = null;
@@ -142,6 +156,11 @@ namespace MobileService.Database
             return location;
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="userName">string</param>
+        /// <returns>List<Location/></returns>
         public List<Location> FindLocationsByUserName(string userName)
         {
             List<Location> locations = new List<Location>();
@@ -185,6 +204,11 @@ namespace MobileService.Database
             return locations;
         }
 
+        /// <summary>
+        /// Find all locations with a rating by the given user
+        /// </summary>
+        /// <param name="userName">string</param>
+        /// <returns>List<Location/></returns>
         public List<Location> LocationsByCommentUserName(string userName)
         {
             List<int> listOfLocationId = _dbRating.FindLocationIdsByUserName(userName);
@@ -227,6 +251,10 @@ namespace MobileService.Database
             return locations;
         }
 
+        /// <summary>
+        /// Find all location in the database
+        /// </summary>
+        /// <returns>List<Location/></returns>
         public List<Location> FindAll()
         {
             List<Location> locations = new List<Location>();
@@ -268,6 +296,10 @@ namespace MobileService.Database
             return locations;
         }
 
+        /// <summary>
+        /// Update a location based on user input in the database
+        /// </summary>
+        /// <param name="location">Location</param>
         public void UpdateLocation(Location location)
         {
             using (_connection = new SqlConnection(_connectionString))
@@ -292,6 +324,10 @@ namespace MobileService.Database
             }
         }
 
+        /// <summary>
+        /// Update the user input in the database
+        /// </summary>
+        /// <param name="location">Location</param>
         public void UserUpdateLocation(Location location)
         {
             using (_connection = new SqlConnection(_connectionString))
@@ -310,6 +346,10 @@ namespace MobileService.Database
             }
         }
 
+        /// <summary>
+        /// Update the amount of hits on a location in the database
+        /// </summary>
+        /// <param name="location">Location</param>
         public void UpdateHits(Location location)
         {
             for (int i = 0; i < 5; i++)
@@ -364,6 +404,10 @@ namespace MobileService.Database
             }
         }
 
+        /// <summary>
+        /// Delete a location in the database
+        /// </summary>
+        /// <param name="locationId">int</param>
         public void Delete(int locationId)
         {
             int changes;

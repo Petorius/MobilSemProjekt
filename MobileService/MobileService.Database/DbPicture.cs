@@ -15,7 +15,13 @@ namespace MobileService.Database
         private readonly string _connectionString = "Server=kraka.ucn.dk;" +
                                                     "Database=dmaa0917_1067347;User ID=dmaa0917_1067347;" +
                                                     "Password=Password1!;";
-
+        
+        /// <summary>
+        /// Create a picture in database
+        /// </summary>
+        /// <param name="picture">Picture</param>
+        /// <param name="locationId">int</param>
+        /// <returns>int</returns>
         public int Create(Picture picture, int locationId)
         {
             int id;
@@ -47,6 +53,12 @@ namespace MobileService.Database
             }
             return id;
         }
+
+        /// <summary>
+        /// Find a picture based on its id in database
+        /// </summary>
+        /// <param name="pictureId">int</param>
+        /// <returns>Picture</returns>
         public Picture FindById(int pictureId)
         {
             Picture picture = null;
@@ -76,6 +88,12 @@ namespace MobileService.Database
             }
             return picture;
         }
+
+        /// <summary>
+        /// Find pictures based on its location id in database
+        /// </summary>
+        /// <param name="locationId">int</param>
+        /// <returns>List<Picture/></returns>
         public List<Picture> FindByLocationId(int locationId)
         {
             List<Picture> pictures = new List<Picture>();
@@ -105,31 +123,40 @@ namespace MobileService.Database
             }
             return pictures;
         }
-
-        /*
-         * TOBE Updated
-         */
+        
+        /// <summary>
+        /// Not finally implemented
+        /// TBD later 
+        /// </summary>
+        /// <param name="picture">Picture</param>
+        /// <param name="locationId">int</param>
+        /// <param name="pictureId">int</param>
         public void Update(Picture picture, int locationId, int pictureId)
         {
-            using (_connection = new SqlConnection(_connectionString))
-            {
-                _connection.Open();
-                using (SqlCommand cmd = _connection.CreateCommand())
-                {
-                    cmd.CommandText = "UPDATE Picture set URL = @URL, " +
-                                      "PictureName = @PictureName, Description = @Description, LocationId = @LocationId " +
-                                      "where PictureId = @PictureId";
-                    cmd.Parameters.AddWithValue("PictureId", pictureId);
-                    cmd.Parameters.AddWithValue("URL", picture.Url);
-                    cmd.Parameters.AddWithValue("PictureName", picture.PictureName);
-                    cmd.Parameters.AddWithValue("Description", picture.Description);
-                    cmd.Parameters.AddWithValue("LocationId", locationId);
-                    cmd.ExecuteNonQuery();
-                }
-                _connection.Close();
-            }
+            throw new NotImplementedException();
+            //using (_connection = new SqlConnection(_connectionString))
+            //{
+            //    _connection.Open();
+            //    using (SqlCommand cmd = _connection.CreateCommand())
+            //    {
+            //        cmd.CommandText = "UPDATE Picture set URL = @URL, " +
+            //                          "PictureName = @PictureName, Description = @Description, LocationId = @LocationId " +
+            //                          "where PictureId = @PictureId";
+            //        cmd.Parameters.AddWithValue("PictureId", pictureId);
+            //        cmd.Parameters.AddWithValue("URL", picture.Url);
+            //        cmd.Parameters.AddWithValue("PictureName", picture.PictureName);
+            //        cmd.Parameters.AddWithValue("Description", picture.Description);
+            //        cmd.Parameters.AddWithValue("LocationId", locationId);
+            //        cmd.ExecuteNonQuery();
+            //    }
+            //    _connection.Close();
+            //}
         }
 
+        /// <summary>
+        /// Delete a picture in database
+        /// </summary>
+        /// <param name="pictureId">int</param>
         public void Delete(int pictureId)
         {
             int changes;
