@@ -12,7 +12,7 @@ namespace MobileService.Controller
 {
     public class UserCtrl
     {
-        private DbUser _dbUser = new DbUser();
+        private DbUser _dbUser;
 
         public UserCtrl()
         {
