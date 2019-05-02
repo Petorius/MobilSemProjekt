@@ -9,10 +9,20 @@ using PCLCrypto;
 
 namespace MobilSemProjekt.MVVM.ViewModel {
     public class PasswordController {
+        /// <summary>
+        /// creates a salt
+        /// </summary>
+        /// <param name="bytes"></param>
+        /// <returns>byte[]</returns>
         public static byte[] CreateSalt(int bytes) {
             return WinRTCrypto.CryptographicBuffer.GenerateRandom(bytes);
         }
-
+        /// <summary>
+        /// Generates a hash based on a password and a salt
+        /// </summary>
+        /// <param name="password"></param>
+        /// <param name="salt"></param>
+        /// <returns></returns>
         public string GenerateHashedPassword(string password, byte[] salt)
         {
             int iterations = 5000;
@@ -20,12 +30,20 @@ namespace MobilSemProjekt.MVVM.ViewModel {
             byte[] key = NetFxCrypto.DeriveBytes.GetBytes(password, salt, iterations, keyLengthInBytes);
             return Convert.ToBase64String(key);
         }
-
+        /// <summary>
+        /// Generates a random salt with 64 bit and converts it to a string
+        /// </summary>
+        /// <returns>string</returns>
         public string GenerateSalt()
         {
             return Convert.ToBase64String(CreateSalt(64));
         }
-
+        /// <summary>
+        /// Checks if the user exist in database with password
+        /// </summary>
+        /// <param name="username"></param>
+        /// <param name="password"></param>
+        /// <returns>Task<bool/></returns>
         public async Task<bool> VerifyLogin(string username, string password)
         {
             IUserRestService userRestService = new UserRestService();

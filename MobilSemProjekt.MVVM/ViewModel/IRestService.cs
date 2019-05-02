@@ -10,7 +10,6 @@ namespace MobilSemProjekt.MVVM.ViewModel
         Task<List<Location>> ReadLocationByTagNameAsync(string tagName);
         Task<Location> ReadLocationByNameAsync(string name);
         Task Create(Location location);
-        Task DeleteLocationAsync(string name);
         Task<List<Location>> GetLocationsByUserNameAsync(string name);
         Task<List<Location>> GetLocationsByCommentUserName(string username);
         void UpdateHits(Location location);

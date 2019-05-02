@@ -19,12 +19,11 @@ namespace MobilSemProjekt.MVVM.ViewModel
         {
             _client = new HttpClient();
         }
-
-        public Task DeleteLocationAsync(string name)
-        {
-            throw new NotImplementedException();
-        }
-
+        /// <summary>
+        /// Gets a location using its name in database
+        /// </summary>
+        /// <param name="name"></param>
+        /// <returns>Task<Location/></returns>
         public async Task<Location> ReadLocationByNameAsync(string name)
         {
             Location location = new Location();
@@ -46,7 +45,11 @@ namespace MobilSemProjekt.MVVM.ViewModel
 
             return location;
         }
-
+        /// <summary>
+        /// Gets a location using its tagname in database
+        /// </summary>
+        /// <param name="tagName"></param>
+        /// <returns>Task<List<Location/>/></returns>
         public async Task<List<Location>> ReadLocationByTagNameAsync(string tagName)
         {
             Items = new List<Location>();
@@ -70,7 +73,11 @@ namespace MobilSemProjekt.MVVM.ViewModel
             return Items;
         }
 
-
+        /// <summary>
+        /// Creates a location in Database
+        /// </summary>
+        /// <param name="location"></param>
+        /// <returns>Task</returns>
         public async Task Create(Location location)
         {
             // Serialize our concrete class into a JSON String
@@ -107,7 +114,10 @@ namespace MobilSemProjekt.MVVM.ViewModel
             }
         }
 
-
+        /// <summary>
+        /// Gets all locations in databse
+        /// </summary>
+        /// <returns>Task<List<Location/>/></returns>
         public async Task<List<Location>> GetAllDataAsync()
         {
 
@@ -134,6 +144,11 @@ namespace MobilSemProjekt.MVVM.ViewModel
 
             return Items;
         }
+        /// <summary>
+        /// gets all location tied to user in database
+        /// </summary>
+        /// <param name="name"></param>
+        /// <returns>Task<List<Location/>/></returns>
 
         public async Task<List<Location>> GetLocationsByUserNameAsync(string name) {
             Items = new List<Location>();
@@ -157,7 +172,11 @@ namespace MobilSemProjekt.MVVM.ViewModel
             return Items;
 
         }
-
+        /// <summary>
+        /// Gets all location tied to users rating in database
+        /// </summary>
+        /// <param name="username"></param>
+        /// <returns>Task<List<Location/>/></returns>
         public async Task<List<Location>> GetLocationsByCommentUserName(string username)
         {
             Items = new List<Location>();
@@ -183,6 +202,10 @@ namespace MobilSemProjekt.MVVM.ViewModel
 
             return Items;
         }
+        /// <summary>
+        /// Updates number of hits on a location in database
+        /// </summary>
+        /// <param name="location"></param>
 
         public async void UpdateHits(Location location)
         {
@@ -214,7 +237,10 @@ namespace MobilSemProjekt.MVVM.ViewModel
                 }
             }
         }
-
+        /// <summary>
+        /// Updates a location in database
+        /// </summary>
+        /// <param name="location"></param>
         public async void UpdateLocation(Location location) {
             // Serialize our concrete class into a JSON String
             var stringThingy = await Task.Run(() => JsonConvert.SerializeObject(location));
@@ -246,7 +272,10 @@ namespace MobilSemProjekt.MVVM.ViewModel
         }
 
 
-
+        /// <summary>
+        /// updates a location based on userinput
+        /// </summary>
+        /// <param name="location2"></param>
         public async void UserUpdateLocation(Location location2)
         {
             // Serialize our concrete class into a JSON String

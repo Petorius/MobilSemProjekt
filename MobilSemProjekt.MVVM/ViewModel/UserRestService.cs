@@ -19,7 +19,11 @@ namespace MobilSemProjekt.MVVM.ViewModel
         {
             _client = new HttpClient();
         }
-
+        /// <summary>
+        /// creates a user in databse
+        /// </summary>
+        /// <param name="user"></param>
+        /// <returns> Task </returns>
         public async Task Create(User user)
         {
             // Serialize our concrete class into a JSON String
@@ -54,7 +58,11 @@ namespace MobilSemProjekt.MVVM.ViewModel
                 }
             }
         }
-
+        /// <summary>
+        /// compares two hashes
+        /// </summary>
+        /// <param name="user"></param>
+        /// <returns>Task<bool/></returns>
         public async Task<bool> CompareHashes(User user)
         {
             // Serialize our concrete class into a JSON String
@@ -93,7 +101,11 @@ namespace MobilSemProjekt.MVVM.ViewModel
 
             return result;
         }
-
+        /// <summary>
+        /// finds a user by its name
+        /// </summary>
+        /// <param name="userName"></param>
+        /// <returns>Task<User/></returns>
         public async Task<User> FindByUserName(string userName)
         {
             User result = null;
@@ -118,7 +130,11 @@ namespace MobilSemProjekt.MVVM.ViewModel
 
             return result;
         }
-
+        /// <summary>
+        /// finds a users salt
+        /// </summary>
+        /// <param name="userName"></param>
+        /// <returns>Task<string/></returns>
         public async Task<string> FindSaltByUserName(string userName)
         {
             string result = "";

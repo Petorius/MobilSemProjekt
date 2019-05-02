@@ -10,11 +10,9 @@ namespace MobilSemProjekt.MVVM.ViewModel {
     public class TopLocationController {
         public List<Location> allLocations { get; private set; }
 
-
-        public TopLocationController() {
-
-        }
-
+        /// <summary>
+        /// finds and sets a toplocation
+        /// </summary>
         public async void SetTopLocations() {
             int allHits = 0;
             RestService restService = new RestService();
