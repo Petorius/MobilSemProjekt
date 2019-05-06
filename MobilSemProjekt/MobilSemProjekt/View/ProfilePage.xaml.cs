@@ -1,13 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using MobilSemProjekt.MVVM.Model;
-using MobilSemProjekt.MVVM.ViewModel;
+using MobilSemProjekt.MVVM.Service;
 using Xamarin.Forms;
-using Xamarin.Forms.Themes;
 using Xamarin.Forms.Xaml;
 
 namespace MobilSemProjekt.View
@@ -26,10 +22,11 @@ namespace MobilSemProjekt.View
         {
             RestService restService = new RestService();
             List<Location> userLocationList = await restService.GetLocationsByUserNameAsync(User.UserName);
-            SearchListView searchListView = new SearchListView {
-            Locations = new ObservableCollection<Location>(userLocationList)
+            SearchListView searchListView = new SearchListView
+            {
+                Locations = new ObservableCollection<Location>(userLocationList),
+                IsUserLocationSearch = true
             };
-            searchListView.IsUserLocationSearch = true;
             await Navigation.PushAsync(searchListView);
         }
 	    private async void SeeMyRatingsButton_OnClicked(object sender, EventArgs e)
@@ -39,11 +36,10 @@ namespace MobilSemProjekt.View
 	        SearchListView searchListView = new SearchListView
 	        {
 	            Locations = new ObservableCollection<Location>(locationWithCommentsList),
-	            IsUserCommentSearch = true
-            };
-	        searchListView.User = User;
-
-            await Navigation.PushAsync(searchListView);
+	            IsUserCommentSearch = true,
+	            User = User
+	        };
+	        await Navigation.PushAsync(searchListView);
 	    }
     }
 }

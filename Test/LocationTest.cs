@@ -6,6 +6,7 @@ using System.Collections.Generic;
 using System.Threading.Tasks;
 using Plugin.Geolocator;
 using System.Threading;
+using MobilSemProjekt.MVVM.Service;
 
 namespace Test
 {

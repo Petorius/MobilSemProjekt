@@ -5,6 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using MobilSemProjekt.MVVM.Model;
+using MobilSemProjekt.MVVM.Service;
 using PCLCrypto;
 
 namespace MobilSemProjekt.MVVM.ViewModel {

@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using MobilSemProjekt.MVVM.Model;
+﻿using MobilSemProjekt.MVVM.Model;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
 
@@ -11,32 +6,33 @@ namespace MobilSemProjekt.View {
     [XamlCompilation(XamlCompilationOptions.Compile)]
     public partial class TabbedMapMainPage : TabbedPage {
         public User User { private get; set; }
+        private MainPage MainPage;
+        private SettingsPage SettingsPage;
+        private ProfilePage ProfilePage;
+
+
         public TabbedMapMainPage() {
             InitializeComponent();
+            MainPage = new MainPage();
+            SettingsPage = new SettingsPage();
+            ProfilePage = new ProfilePage();
+        }
 
+        private void AddTabs()
+        {
+            this.Children.Add(MainPage);
+            this.Children.Add(SettingsPage);
         }
 
         public void StartUpWithUser() {
-            var tab1 = new MainPage();
-            var tab2 = new SettingsPage();
-            var tab3 = new ProfilePage();
-
-            tab1.User = User;
-            tab3.User = User;
-            this.Children.Add(tab1);
-            this.Children.Add(tab2);
-            this.Children.Add(tab3);
-
+            MainPage.User = User;
+            ProfilePage.User = User;
+            AddTabs();
+            this.Children.Add(ProfilePage);
         }
 
         public void StartUpWithoutUser() {
-            var tab1 = new MainPage();
-            var tab2 = new SettingsPage();
-
-            this.Children.Add(tab1);
-            this.Children.Add(tab2);
-
+            AddTabs();
         }
-
     }
 }

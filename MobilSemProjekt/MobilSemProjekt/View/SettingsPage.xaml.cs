@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-using Xamarin.Forms;
+﻿using Xamarin.Forms;
 using Xamarin.Forms.Themes;
 using Xamarin.Forms.Xaml;
 
@@ -30,19 +24,17 @@ namespace MobilSemProjekt.View
                 SettingsPageColorThemeSwitch.IsToggled = true;
             }
         }
-
-    
-
-    private void SettingsPageColorThemeSwitch_OnToggled(object sender, ToggledEventArgs e)
+        
+        private void SettingsPageColorThemeSwitch_OnToggled(object sender, ToggledEventArgs e)
         {
             if (SettingsPageColorThemeSwitch.IsToggled)
             {
-                App.Current.Resources = new DarkThemeResources();
+                Application.Current.Resources = new DarkThemeResources();
                 Application.Current.Properties["ThemePreference"] = "Dark";
             }
             else
             {
-                App.Current.Resources = new LightThemeResources();
+                Application.Current.Resources = new LightThemeResources();
                 Application.Current.Properties["ThemePreference"] = "Light";
 
             }

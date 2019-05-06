@@ -1,5 +1,6 @@
 ﻿using System;
 using MobilSemProjekt.MVVM.Model;
+using MobilSemProjekt.MVVM.Service;
 using MobilSemProjekt.MVVM.ViewModel;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
@@ -12,7 +13,7 @@ namespace MobilSemProjekt.View {
 
         public StartUpPage ()
 		{
-			InitializeComponent ();
+			InitializeComponent();
             TabbedMapMainPage = new TabbedMapMainPage();
             TopLocationController topLocationController = new TopLocationController();
             topLocationController.SetTopLocations();
@@ -45,9 +46,6 @@ namespace MobilSemProjekt.View {
 
                 if (user != null)
                 {
-                    //MapMainPage.User = user;
-                    //await Navigation.PushAsync(MapMainPage);
-
                     TabbedMapMainPage = new TabbedMapMainPage();
                     TabbedMapMainPage.User = user;
                     TabbedMapMainPage.StartUpWithUser();

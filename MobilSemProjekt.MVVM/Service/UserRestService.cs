@@ -7,7 +7,7 @@ using System.Text;
 using System.Threading.Tasks;
 using MobilSemProjekt.MVVM.Model;
 
-namespace MobilSemProjekt.MVVM.ViewModel
+namespace MobilSemProjekt.MVVM.Service
 {
     public class UserRestService : IUserRestService
     {

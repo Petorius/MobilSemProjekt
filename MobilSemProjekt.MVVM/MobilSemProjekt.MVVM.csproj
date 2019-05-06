@@ -44,20 +44,23 @@
     <Compile Include="Model\User.cs" />
     <Compile Include="Model\UserType.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="ViewModel\IRatingRestService.cs" />
-    <Compile Include="ViewModel\IUserRestService.cs" />
-    <Compile Include="ViewModel\IRestService.cs" />
-    <Compile Include="ViewModel\RatingRestService.cs" />
+    <Compile Include="Service\IRatingRestService.cs" />
+    <Compile Include="Service\IUserRestService.cs" />
+    <Compile Include="Service\IRestService.cs" />
+    <Compile Include="Service\RatingRestService.cs" />
     <Compile Include="ViewModel\TopLocationController.cs" />
-    <Compile Include="ViewModel\UserRestService.cs" />
+    <Compile Include="Service\UserRestService.cs" />
     <Compile Include="ViewModel\PasswordController.cs" />
-    <Compile Include="ViewModel\RestService.cs" />
+    <Compile Include="Service\RestService.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
     <None Include="Properties\ServiceReferences.Designer.ClientConfig" />
   </ItemGroup>
   <ItemGroup>
+    <Reference Include="Mono.Android">
+      <HintPath>..\..\..\..\..\..\..\Program Files (x86)\Microsoft Visual Studio\2017\Enterprise\Common7\IDE\ReferenceAssemblies\Microsoft\Framework\MonoAndroid\v8.1\Mono.Android.dll</HintPath>
+    </Reference>
     <Reference Include="Newtonsoft.Json, Version=12.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
       <HintPath>..\packages\Newtonsoft.Json.12.0.1\lib\portable-net45+win8+wp8+wpa81\Newtonsoft.Json.dll</HintPath>
     </Reference>
