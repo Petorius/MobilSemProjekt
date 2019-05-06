@@ -20,9 +20,9 @@ namespace MobilSemProjekt.MVVM.ViewModel
             _client = new HttpClient();
         }
         /// <summary>
-        /// create a rating in the database
+        /// Create a rating in the database
         /// </summary>
-        /// <param name="rating"></param>
+        /// <param name="rating">Rating</param>
         /// <returns>Task</returns>
         public async Task Create(Rating rating)
         {
@@ -59,9 +59,9 @@ namespace MobilSemProjekt.MVVM.ViewModel
             }
         }
         /// <summary>
-        /// gets the average rating of a location
+        /// Gets the average rating of a location
         /// </summary>
-        /// <param name="location"></param>
+        /// <param name="location">Location</param>
         /// <returns>Task<double/></returns>
         public async Task<double> GetAverageRating(Location location)
         {
@@ -90,9 +90,9 @@ namespace MobilSemProjekt.MVVM.ViewModel
 
         
         /// <summary>
-        ///     Updates a rating in Database
+        /// Updates a rating in Database
         /// </summary>
-        /// <param name="rating"></param>
+        /// <param name="rating">Rating</param>
         public async void Update(Rating rating2)
         {
             Rating rating = new Rating
@@ -142,7 +142,7 @@ namespace MobilSemProjekt.MVVM.ViewModel
         /// <summary>
         /// Gets all ratings tied to user in database
         /// </summary>
-        /// <param name="name"></param>
+        /// <param name="name">string</param>
         /// <returns>Task<List<Rating/>/></returns>
         public async Task<List<Rating>> GetRatingsByUserName(string name)
         {
@@ -173,7 +173,7 @@ namespace MobilSemProjekt.MVVM.ViewModel
         /// <summary>
         /// Deletes a Rating in database
         /// </summary>
-        /// <param name="rating"></param>
+        /// <param name="rating">Rating</param>
         /// <returns>Task<bool/></returns>
         public async Task<bool> Delete(Rating rating)
         {

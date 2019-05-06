@@ -11,7 +11,7 @@ namespace MobilSemProjekt.MVVM.ViewModel {
         public List<Location> allLocations { get; private set; }
 
         /// <summary>
-        /// finds and sets a toplocation
+        /// Finds and sets a toplocation
         /// </summary>
         public async void SetTopLocations() {
             int allHits = 0;
@@ -22,9 +22,11 @@ namespace MobilSemProjekt.MVVM.ViewModel {
                 location.Hits += allHits;
             }
 
-            foreach (var location in allLocations) {
+            foreach (var location in allLocations)
+            {
                 var averageRating = 0;
-                foreach (var rating in location.Ratings) {
+                foreach (var rating in location.Ratings)
+                {
                     rating.Rate += averageRating;
                 }
 
@@ -33,15 +35,14 @@ namespace MobilSemProjekt.MVVM.ViewModel {
                     averageRating = averageRating / location.Ratings.Count();
 
                 }
+
                 if (location.Hits > allHits / 10000 || location.Hits > 1000 && averageRating >= 4.5
                                                     || location.Hits > 10000 && averageRating >= 4 ||
-                                                    location.Ratings.Count > 100 && averageRating >= 4.5) {
+                                                    location.Ratings.Count > 100 && averageRating >= 4.5)
+                {
                     location.IsTopLocation = true;
                 }
             }
-
         }
-
-
     }
 }
