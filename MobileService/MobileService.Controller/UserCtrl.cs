@@ -18,11 +18,21 @@ namespace MobileService.Controller
         {
             _dbUser = new DbUser();
         }
+        /// <summary>
+        /// creates a user in database
+        /// </summary>
+        /// <param name="user"></param>
+        /// <returns>int</returns>
         public int CreateUser(User user)
         {
             return _dbUser.Create(user);
         }
-
+        /// <summary>
+        /// compares two hashes
+        /// </summary>
+        /// <param name="userName"></param>
+        /// <param name="userHash"></param>
+        /// <returns>bool</returns>
         public bool CompareHashes(string userName, string userHash)
         {   
             string dbHash = FindHashByUserName(userName);
@@ -32,17 +42,30 @@ namespace MobileService.Controller
             }
             return true;
         }
-
+        /// <summary>
+        /// finds a user by its name
+        /// </summary>
+        /// <param name="userName"></param>
+        /// <returns>user</returns>
         public User FindByUserName(string userName)
         {
             return _dbUser.FindUserByUserName(userName, false);
         }
 
+        /// <summary>
+        /// finds a user by its name for login purpose
+        /// </summary>
+        /// <param name="userName"></param>
+        /// <returns></returns>
         private User FindUserForLogin(string userName)
         {
             return _dbUser.FindUserByUserName(userName, true);
         }
-
+        /// <summary>
+        /// gets a hash from a user
+        /// </summary>
+        /// <param name="userName"></param>
+        /// <returns>string</returns>
         private string FindHashByUserName(string userName)
         {
             User u = FindUserForLogin(userName);
@@ -53,7 +76,11 @@ namespace MobileService.Controller
             }
             return val;
         }
-
+        /// <summary>
+        /// gets a salt from a user
+        /// </summary>
+        /// <param name="userName"></param>
+        /// <returns>string</returns>
         public string FindSaltByUserName(string userName)
         {
             User u = FindUserForLogin(userName);
@@ -64,7 +91,12 @@ namespace MobileService.Controller
             }
             return val;
         }
-
+        /// <summary>
+        /// updates a user
+        /// </summary>
+        /// <param name="loggedInUser"></param>
+        /// <param name="userToUpdate"></param>
+        /// <returns>bool</returns>
         public bool UpdateUser(User loggedInUser, User userToUpdate)
         {
             bool status = false;
