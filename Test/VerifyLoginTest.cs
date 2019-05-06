@@ -9,7 +9,7 @@ namespace Test
     public class VerifyLoginTest
     {
         [TestMethod]
-        public async Task VerifyLoginWithWithCorrectNameAndCorrectPassword()
+        public async Task VerifyLoginWithCorrectNameAndCorrectPassword()
         {
             try
             {
@@ -22,7 +22,7 @@ namespace Test
             }
         }
         [TestMethod]
-        public async Task VerifyLoginWithWithCorrectPasswordButWrongName()
+        public async Task VerifyLoginWithCorrectPasswordButWrongName()
         {
             try
             {
@@ -35,7 +35,7 @@ namespace Test
             }
         }
         [TestMethod]
-        public async Task VerifyLoginWithWithWrongPasswordAndWrongName()
+        public async Task VerifyLoginWithWrongPasswordAndWrongName()
         {
             try
             {
@@ -48,7 +48,7 @@ namespace Test
             }
         }
         [TestMethod]
-        public async Task VerifyLoginWithWithWrongPasswordAndCorrectName()
+        public async Task VerifyLoginWithWrongPasswordAndCorrectName()
         {
             try
             {
