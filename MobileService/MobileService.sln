@@ -9,8 +9,6 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MobileService.Controller", 
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MobileService.Database", "MobileService.Database\MobileService.Database.csproj", "{51B0E1D7-FA89-4C34-BBC7-BB36F44A55D6}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MobileService.Service", "MobileService.Service\MobileService.Service.csproj", "{6A090B63-084B-4840-A5EF-B711DE2FCC86}"
-EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MobileService.WcfService", "MobileService.WcfService\MobileService.WcfService.csproj", "{A500AAEA-C690-49C7-9EE9-F069C5CA6CAE}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MobileService.Exception", "MobileService.Exception\MobileService.Exception.csproj", "{A30EF766-1A70-45E6-9BA0-69DCEEC28112}"
@@ -35,10 +33,6 @@ Global
 		{51B0E1D7-FA89-4C34-BBC7-BB36F44A55D6}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{51B0E1D7-FA89-4C34-BBC7-BB36F44A55D6}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{51B0E1D7-FA89-4C34-BBC7-BB36F44A55D6}.Release|Any CPU.Build.0 = Release|Any CPU
-		{6A090B63-084B-4840-A5EF-B711DE2FCC86}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{6A090B63-084B-4840-A5EF-B711DE2FCC86}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{6A090B63-084B-4840-A5EF-B711DE2FCC86}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{6A090B63-084B-4840-A5EF-B711DE2FCC86}.Release|Any CPU.Build.0 = Release|Any CPU
 		{A500AAEA-C690-49C7-9EE9-F069C5CA6CAE}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{A500AAEA-C690-49C7-9EE9-F069C5CA6CAE}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{A500AAEA-C690-49C7-9EE9-F069C5CA6CAE}.Release|Any CPU.ActiveCfg = Release|Any CPU
