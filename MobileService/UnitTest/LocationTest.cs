@@ -27,16 +27,11 @@ namespace MobileService.UnitTest
                 };
 
                 int id = dbLocation.Create(location);
+                Assert.IsTrue(id > 0);
                 dbLocation.Delete(id);
             }
-            catch (FaultException<DbConnectionException> e)
+            catch (FaultException<System.Exception>)
             {
-                Console.WriteLine(e);
-                Assert.Fail();
-            }
-            catch (FaultException<System.Exception> e)
-            {
-                Console.WriteLine(e);
                 Assert.Fail();
             }
         }
@@ -50,14 +45,8 @@ namespace MobileService.UnitTest
                 Location location = dbLocation.FindById(1);
                 Assert.IsNotNull(location);
             }
-            catch (FaultException<DbConnectionException> e)
+            catch (FaultException<System.Exception>)
             {
-                Console.WriteLine(e);
-                Assert.Fail();
-            }
-            catch (FaultException<System.Exception> e)
-            {
-                Console.WriteLine(e);
                 Assert.Fail();
             }
         }
@@ -89,24 +78,11 @@ namespace MobileService.UnitTest
                 newlocation.LocationId = id;
                 dbLocation.UserUpdateLocation(newlocation);
                 string foundLocationName = dbLocation.FindById(id).LocationName;
-                if (foundLocationName.Equals("TESTSPOT2"))
-                {
-                    Assert.IsTrue(true);
-                }
-                else
-                {
-                    Assert.IsTrue(false);
-                }
+                Assert.Equals(foundLocationName, "TESTSPOT2");
                 dbLocation.Delete(id);
             }
-            catch (FaultException<DbConnectionException> e)
+            catch (FaultException<System.Exception>)
             {
-                Console.WriteLine(e);
-                Assert.Fail();
-            }
-            catch (FaultException<System.Exception> e)
-            {
-                Console.WriteLine(e);
                 Assert.Fail();
             }
         }
@@ -130,14 +106,7 @@ namespace MobileService.UnitTest
                 location.LocationId = id;
                 dbLocation.UpdateHits(location);
                 Location newLocation = dbLocation.FindById(id);
-                if (location.Hits < newLocation.Hits)
-                {
-                    Assert.IsTrue(true);
-                }
-                else
-                {
-                    Assert.IsTrue(false);
-                }
+                Assert.IsTrue(location.Hits < newLocation.Hits);
             }
             catch (System.Exception e)
             {
