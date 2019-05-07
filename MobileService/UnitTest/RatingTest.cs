@@ -36,12 +36,12 @@ namespace MobileService.UnitTest
         public void ReadRatingTest()
         {
             DbRating dbRating = new DbRating();
-            Rating Rating = null;
+            Rating rating = null;
 
             try
             {
-                Rating = dbRating.FindById(1);
-                Assert.IsNotNull(Rating);
+                rating = dbRating.FindById(1);
+                Assert.IsNotNull(rating);
             }
             catch (FaultException<DbConnectionException> e)
             {
@@ -54,12 +54,12 @@ namespace MobileService.UnitTest
         public void UpdateRatingTest()
         {
             DbRating dbRating = new DbRating();
-            Rating Rating = null;
+            Rating rating = null;
 
             try
             {
-                Rating = dbRating.FindById(1);
-                bool status = dbRating.UserUpdateRating(Rating);
+                rating = dbRating.FindById(1);
+                bool status = dbRating.UserUpdateRating(rating);
                 Assert.IsTrue(status);
             }
             catch (FaultException<DbConnectionException> e)
