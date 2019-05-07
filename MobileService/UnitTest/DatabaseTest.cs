@@ -13,10 +13,12 @@ namespace MobileService.UnitTest
         [TestMethod]
         public void ConnectionTest()
         {
+            Assert.IsTrue(true);
             try
             {
                 DbConnection dbConnection = new DbConnection();
                 dbConnection.ConnectionTest();
+                Assert.IsTrue(true);
             }
             catch (FaultException<DbConnectionException> e)
             {
