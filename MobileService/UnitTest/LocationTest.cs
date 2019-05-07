@@ -108,7 +108,7 @@ namespace MobileService.UnitTest
                 Location newLocation = dbLocation.FindById(id);
                 Assert.IsTrue(location.Hits < newLocation.Hits);
             }
-            catch (System.Exception e)
+            catch (FaultException<System.Exception>)
             {
                 Assert.Fail();
             }
@@ -123,7 +123,7 @@ namespace MobileService.UnitTest
                 List<Location> list = dbLocation.LocationsByCommentUserName("Aksel");
                 Assert.IsTrue(list.Count > 0);
             }
-            catch (System.Exception e)
+            catch (FaultException<System.Exception>)
             {
                 Assert.Fail();
             }
