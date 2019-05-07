@@ -40,9 +40,15 @@ namespace Test
                 PasswordController passwordController = new PasswordController();
                 string pass = "Test";
                 string salt =
-                    "ThN0qWHV8YV4nOI/kGwjNWRpw16kBt9enVuJaDQFFCRBxQNBFEgu6vhHMb/9++njP32Z5fkrYC0K/cre9KKbgw==";
+                    "ThN0qWHV8YV4nOI/kGwjNWRpw16kBt9enVuJaDQFFCRBxQNBFE" +
+                    "gu6vhHMb/9++njP32Z5fkrYC0K/cre9KKbgw==";
                 string expectedOutput =
-                    "NPU+/EqR5h0Cs8SnFsJREoAIsmezp/8m4M3NPhLMY/GHz+SPBA0dk7+VmZHlRAUMZzsYJWm1ZvZtr7XEaTwzRr/M5sKPrtvtSQrWKEEprczoCoPTxPbq20OzXzLUgZ5CPVekeC617vYfvsc57vv9Ekj7hmpoLd05EJ9UHItwUzwhuXLlMFoBK8/8WjKXZ09Hm1h8Sh+LUBXUqyEd4/zswOg2QQDcMjg8YiIQumQfk3mZoVz3fFYv8uBHsKE2M0VzH7F7fyR70yP1Oq0VxIXF/qmJbVYn7yAbuNsaQDXRoXwa2LjM/HQKjlAQhqTAzwephHD+x3/FOKAvpJMqKZNcug==";
+                    "NPU+/EqR5h0Cs8SnFsJREoAIsmezp/8m4M3NPhLMY/GHz+SPBA0dk" +
+                    "7+VmZHlRAUMZzsYJWm1ZvZtr7XEaTwzRr/M5sKPrtvtSQrWKEEprczoC" +
+                    "oPTxPbq20OzXzLUgZ5CPVekeC617vYfvsc57vv9Ekj7hmpoLd05EJ9UHItwU" +
+                    "zwhuXLlMFoBK8/8WjKXZ09Hm1h8Sh+LUBXUqyEd4/zswOg2QQDcMjg8YiIQumQfk" +
+                    "3mZoVz3fFYv8uBHsKE2M0VzH7F7fyR70yP1Oq0VxIXF/qmJbVYn7yAbuNsaQDXRoXwa" +
+                    "2LjM/HQKjlAQhqTAzwephHD+x3/FOKAvpJMqKZNcug==";
                 byte[] saltByte = Encoding.UTF8.GetBytes(salt);
                 string hashOutput = passwordController.GenerateHashedPassword(pass,saltByte);
                 Debug.WriteLine(hashOutput);
@@ -63,7 +69,8 @@ namespace Test
                 PasswordController passwordController = new PasswordController();
                 string pass = "Test";
                 string salt =
-                    "ThN0qWHV8YV4nOI/kGwjNWRpw16kBt9enVuJaDQFFCRBxQNBFEgu6vhHMb/9++njP32Z5fkrYC0K/cre9KKbgw==";
+                    "ThN0qWHV8YV4nOI/kGwjNWRpw16kBt9enVuJaDQFFCRBxQNBFEgu6vhHMb/" +
+                    "9++njP32Z5fkrYC0K/cre9KKbgw==";
                 string expectedOutput =
                     "Lille peter edderkop kravlede op af muren";
                 byte[] saltByte = Encoding.UTF8.GetBytes(salt);
