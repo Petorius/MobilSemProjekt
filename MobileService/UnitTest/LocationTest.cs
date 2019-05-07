@@ -69,8 +69,36 @@ namespace MobileService.UnitTest
             try
             {
                 DbLocation dbLocation = new DbLocation();
-                Location location = dbLocation.FindById(1);
-                dbLocation.UserUpdateLocation(location);
+                Location location = new Location
+                {
+                    User = new User { UserId = 1 },
+                    Latitude = 1,
+                    Longitude = 1,
+                    LocationDescription = "TESTING",
+                    LocationName = "TESTSPOT"
+                };
+                Location newlocation = new Location
+                {
+                    User = new User { UserId = 1 },
+                    Latitude = 1,
+                    Longitude = 1,
+                    LocationDescription = "TESTING2",
+                    LocationName = "TESTSPOT2"
+                };
+                int id = dbLocation.Create(location);
+                location.LocationId = id;
+                newlocation.LocationId = id;
+                dbLocation.UserUpdateLocation(newlocation);
+                string foundLocationName = dbLocation.FindById(1).LocationName;
+                if (foundLocationName.Equals("testing"))
+                {
+                    Assert.IsTrue(true);
+                }
+                else
+                {
+                    Assert.IsTrue(false);
+                }
+                dbLocation.Delete(id);
             }
             catch (FaultException<DbConnectionException> e)
             {

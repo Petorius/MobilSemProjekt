@@ -22,7 +22,7 @@ namespace MobileService.UnitTest
                     
                 };
 
-                int ratingId = dbRating.Create(Rating);
+                int ratingId = dbRating.Create(rating);
                 Assert.IsTrue(ratingId > 0);
             }
             catch (FaultException<DbConnectionException> e)
