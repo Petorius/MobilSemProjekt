@@ -103,11 +103,13 @@ namespace MobileService.UnitTest
                 dbLocation.UpdateHits(location);
                 Location newLocation = dbLocation.FindById(id);
                 Assert.IsTrue(location.Hits < newLocation.Hits);
+                dbLocation.Delete(location.LocationId);
             }
             catch (FaultException<System.Exception>)
             {
                 Assert.Fail();
             }
+            
         }
 
         [TestMethod]
