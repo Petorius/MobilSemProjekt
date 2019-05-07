@@ -74,7 +74,7 @@ namespace MobileService.UnitTest
                 newLocation.LocationId = id;
                 dbLocation.UserUpdateLocation(newLocation);
                 string foundLocationName = dbLocation.FindById(id).LocationName;
-                Assert.Equals(foundLocationName, "UpdateTest2");
+                Assert.IsTrue(foundLocationName.Equals("UpdateTest2"));
                 dbLocation.Delete(id);
             }
             catch (FaultException<System.Exception>)
