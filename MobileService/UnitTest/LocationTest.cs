@@ -88,8 +88,8 @@ namespace MobileService.UnitTest
                 location.LocationId = id;
                 newlocation.LocationId = id;
                 dbLocation.UserUpdateLocation(newlocation);
-                string foundLocationName = dbLocation.FindById(1).LocationName;
-                if (foundLocationName.Equals("testing"))
+                string foundLocationName = dbLocation.FindById(id).LocationName;
+                if (foundLocationName.Equals("TESTSPOT2"))
                 {
                     Assert.IsTrue(true);
                 }
