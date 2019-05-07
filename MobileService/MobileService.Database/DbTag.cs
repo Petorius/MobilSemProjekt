@@ -37,7 +37,7 @@ namespace MobileService.Database
 
                 using (SqlCommand cmd = _connection.CreateCommand())
                 {
-                    cmd.CommandText = "INSERT INTO Tag(TagName) VALUES (@TagName); ";
+                    cmd.CommandText = "INSERT INTO Tag(TagName) VALUES (@TagName); SELECT SCOPE_IDENTITY()";
                     cmd.Parameters.AddWithValue("TagName", tag.TagName);
                     
                     id = Convert.ToInt32(cmd.ExecuteScalar());

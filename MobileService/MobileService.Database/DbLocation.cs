@@ -33,15 +33,16 @@ namespace MobileService.Database
         /// <returns>int</returns>
         public int Create(Location location)
         {
-            int locationId;
+            int locationId = 0;
             using (_connection = new SqlConnection(_connectionString))
             {
                 _connection.Open();
 
                 using (SqlCommand cmd = _connection.CreateCommand())
                 {
-                    cmd.CommandText = "INSERT INTO Locations(Hits, IsTopLocation, LocationName, Latitude, Longitude, UserId, LocationDescription) VALUES " +
-                                      "(@Hits, @IsTopLocation, @LocationName, @Latitude, @Longitude, @UserId, @LocationDescription); ";
+                    cmd.CommandText = "INSERT INTO Locations(Hits, IsTopLocation, LocationName, Latitude, Longitude, " +
+                                      "UserId, LocationDescription) VALUES (@Hits, @IsTopLocation, @LocationName, " +
+                                      "@Latitude, @Longitude, @UserId, @LocationDescription); SELECT SCOPE_IDENTITY()";
                     cmd.Parameters.AddWithValue("Hits", location.Hits);
                     cmd.Parameters.AddWithValue("IsTopLocation", location.IsTopLocation);
                     cmd.Parameters.AddWithValue("LocationName", location.LocationName);
@@ -59,7 +60,8 @@ namespace MobileService.Database
                     }
                     
                     locationId = Convert.ToInt32(cmd.ExecuteScalar());
-
+                    Console.WriteLine("some text: " + locationId);
+                    
                     if (location.Pictures != null)
                     {
                         foreach (Picture picture in location.Pictures)

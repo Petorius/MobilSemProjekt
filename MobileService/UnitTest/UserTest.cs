@@ -28,7 +28,8 @@ namespace MobileService.UnitTest
                     }
                 };
 
-                dbUser.Create(user);
+                int userId = dbUser.Create(user);
+                Assert.IsTrue(userId > 0);
             }
             catch (FaultException<DbConnectionException> e)
             {

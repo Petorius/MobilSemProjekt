@@ -27,7 +27,8 @@ namespace MobileService.Database
 
                 using (SqlCommand cmd = _connection.CreateCommand())
                 {
-                    cmd.CommandText = "INSERT INTO UserType(TypeName) VALUES (@TypeName); ";
+                    cmd.CommandText = "INSERT INTO UserType(TypeName) VALUES " +
+                                      "(@TypeName); SELECT SCOPE_IDENTITY()";
                     cmd.Parameters.AddWithValue("TypeName", userType.TypeName);
                     
                     id = Convert.ToInt32(cmd.ExecuteScalar());

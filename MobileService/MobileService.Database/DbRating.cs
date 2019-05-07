@@ -34,7 +34,7 @@ namespace MobileService.Database
                 using (SqlCommand cmd = _connection.CreateCommand())
                 {
                     cmd.CommandText = "INSERT INTO Rating(rate, comment, locationId, userId) VALUES " +
-                                      "(@rate, @comment, @locationId, @userId); ";
+                                      "(@rate, @comment, @locationId, @userId); SELECT SCOPE_IDENTITY()";
                     cmd.Parameters.AddWithValue("rate", rating.Rate);
                     cmd.Parameters.AddWithValue("comment", rating.Comment);
                     

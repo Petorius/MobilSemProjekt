@@ -33,7 +33,7 @@ namespace MobileService.Database
                 using (SqlCommand cmd = _connection.CreateCommand())
                 {
                     cmd.CommandText = "INSERT INTO Picture(URL, PictureName, Description, LocationId) VALUES " +
-                                      "(@URL, @PictureName, @Description, @LocationId); ";
+                                      "(@URL, @PictureName, @Description, @LocationId); SELECT SCOPE_IDENTITY()";
                     cmd.Parameters.AddWithValue("URL", picture.Url);
                     cmd.Parameters.AddWithValue("PictureName", picture.PictureName);
                     cmd.Parameters.AddWithValue("Description", picture.Description);

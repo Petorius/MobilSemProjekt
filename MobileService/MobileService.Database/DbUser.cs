@@ -36,7 +36,7 @@ namespace MobileService.Database
                 using (SqlCommand cmd = _connection.CreateCommand())
                 {
                     cmd.CommandText = "INSERT INTO [User](UserName, HashPassword, Salt, UserTypeId) VALUES " +
-                                      "(@UserName, @HashPassword, @Salt, @UserTypeId); ";
+                                      "(@UserName, @HashPassword, @Salt, @UserTypeId); SELECT SCOPE_IDENTITY()";
                     cmd.Parameters.AddWithValue("UserName", user.UserName);
                     cmd.Parameters.AddWithValue("HashPassword", user.HashPassword);
                     cmd.Parameters.AddWithValue("Salt", user.Salt);

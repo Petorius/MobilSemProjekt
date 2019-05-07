@@ -22,7 +22,8 @@ namespace MobileService.UnitTest
                     TagName = "Tag"
                 };
 
-                dbTag.Create(tag);
+                int tagId = dbTag.Create(tag);
+                Assert.IsTrue(tagId > 0);
             }
             catch (FaultException<DbConnectionException> e)
             {

@@ -17,12 +17,13 @@ namespace MobileService.UnitTest
 
             try
             {
-                Rating Rating = new Rating
+                Rating rating = new Rating
                 {
                     
                 };
 
-                //dbRating.Create(Rating);
+                int ratingId = dbRating.Create(Rating);
+                Assert.IsTrue(ratingId > 0);
             }
             catch (FaultException<DbConnectionException> e)
             {

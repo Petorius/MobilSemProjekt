@@ -24,7 +24,8 @@ namespace MobileService.UnitTest
                     Url = "http://AStrangeUrl.dk/picture.jpg"
                 };
 
-                dbPicture.Create(picture, 1);
+                int pictureId = dbPicture.Create(picture, 1);
+                Assert.IsTrue(pictureId > 0);
             }
             catch (FaultException<DbConnectionException> e)
             {
