@@ -46,8 +46,10 @@ namespace MobilSemProjekt.View {
 
                 if (user != null)
                 {
-                    TabbedMapMainPage = new TabbedMapMainPage();
-                    TabbedMapMainPage.User = user;
+                    TabbedMapMainPage = new TabbedMapMainPage
+                    {
+                        User = user
+                    };
                     TabbedMapMainPage.StartUpWithUser();
                     await Navigation.PushAsync(TabbedMapMainPage);
                     Navigation.RemovePage(this);

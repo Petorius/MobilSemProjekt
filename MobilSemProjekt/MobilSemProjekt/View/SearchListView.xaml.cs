@@ -49,16 +49,20 @@ namespace MobilSemProjekt.View
             if (IsUserLocationSearch)
             {
                 Location location = (Location)e.Item;
-                EditLocationPage editLocationPage = new EditLocationPage();
-                editLocationPage.Location = location;
+                EditLocationPage editLocationPage = new EditLocationPage
+                {
+                    Location = location
+                };
                 editLocationPage.SetPlaceholders();
                 await Navigation.PushAsync(editLocationPage);
             }
             else if (IsUserCommentSearch && User != null)
             {
                 Location location = (Location)e.Item;
-                EditRatingPage editRatingPage = new EditRatingPage();
-                editRatingPage.Rating = location.Ratings.Find(x => x.User.UserId == User.UserId);
+                EditRatingPage editRatingPage = new EditRatingPage
+                {
+                    Rating = location.Ratings.Find(x => x.User.UserId == User.UserId)
+                };
                 editRatingPage.SetPlaceholders();
                 await Navigation.PushAsync(editRatingPage);
             }

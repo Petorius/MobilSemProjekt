@@ -11,9 +11,11 @@
 
   <ItemGroup>
     <PackageReference Include="Acr.UserDialogs" Version="7.0.4" />
-    <PackageReference Include="Microsoft.Net.Http" Version="2.2.29" />
-    <PackageReference Include="Newtonsoft.Json" Version="12.0.1" />
-    <PackageReference Include="PCLCrypto" Version="2.0.147" />
+    <PackageReference Include="Microsoft.UnitTestFramework.Extensions" Version="2.0.0" />
+    <PackageReference Include="Microsoft.VisualStudio.QualityTools.UnitTestFramework" Version="11.0.50727.1" />
+    <PackageReference Include="MSTest.TestFramework" Version="1.4.0" />
+    <PackageReference Include="Newtonsoft.Json" Version="12.0.2" />
+    <PackageReference Include="PInvoke.Windows.Core" Version="0.5.184" />
     <PackageReference Include="sqlite-net-pcl" Version="1.5.231" />
     <PackageReference Include="System.ServiceModel.Duplex" Version="4.4.*" />
     <PackageReference Include="System.ServiceModel.Http" Version="4.4.*" />
@@ -40,10 +42,11 @@
 
   <ItemGroup>
     <Folder Include="Connected Services\" />
+    <Folder Include="Properties\" />
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\..\MobilSemProjekt.MVVM\MobilSemProjekt.MVVM.csproj" />
+    <ProjectReference Include="..\MobilSemProjekt.MVVM\MobilSemProjekt.MVVM.csproj" />
   </ItemGroup>
 
   <ItemGroup>
