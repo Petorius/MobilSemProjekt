@@ -6,12 +6,10 @@ using Xamarin.Forms.GoogleMaps;
 using Plugin.Geolocator;
 using Xamarin.Essentials;
 using System.Linq;
-using MobilSemProjekt.MVVM.ViewModel;
 using Acr.UserDialogs;
 using System.Collections.ObjectModel;
-using System.ComponentModel.Design;
-using System.Diagnostics;
 using MobilSemProjekt.MVVM.Model;
+using MobilSemProjekt.MVVM.Service;
 using Location = MobilSemProjekt.MVVM.Model.Location;
 using Math = System.Math;
 using Exception = System.Exception;
@@ -23,6 +21,7 @@ namespace MobilSemProjekt.View
         public User User { private get; set; }
         private string StartUrl { get; set; }
         private string TopLocation;
+        private ObservableCollection<Location> Locations;
         public MainPage()
         {
             InitializeComponent();
@@ -80,13 +79,13 @@ namespace MobilSemProjekt.View
             if (location != null)
             {
                 restservice.UpdateHits(location);
-                var Page = new DescPage
+                var page = new DescPage
                 {
                     Location = location,
                     User = User
                 };
 
-                await Navigation.PushAsync(Page);
+                await Navigation.PushAsync(page);
             }
             else
             {
@@ -97,7 +96,8 @@ namespace MobilSemProjekt.View
         private async Task UpdateLocationsOnMap()
         {
             string labelText;
-            List<Location> list = await GetLocations();
+            IRestService restService = new RestService();
+            List<Location> list = await restService.GetAllDataAsync();
             foreach (var location in list)
             {
                 if (location.IsTopLocation)
@@ -118,14 +118,7 @@ namespace MobilSemProjekt.View
                 });
             }
         }
-
-
-        private async Task<List<Location>> GetLocations()
-        {
-            IRestService restService = new RestService();
-            return await restService.GetAllDataAsync();
-        }
-
+        
         private async void PlaceMarker(MapClickedEventArgs e)
         {
             var answer = await DisplayAlert("Marker", "Would you like to place a marker", "Yes", "No");
@@ -227,7 +220,6 @@ namespace MobilSemProjekt.View
                 
                 IRestService restService = new RestService();
                 await restService.Create(location);
-
                 //To be added: InfoWindow that contain most of the description and are tied to markers..
             }
         }
@@ -236,9 +228,9 @@ namespace MobilSemProjekt.View
         {
             List<Location> combinedList = new List<Location>();
             RestService restService = new RestService();
-            var locationListVar = await restService.ReadLocationByTagNameAsync(OurEntry.Text.ToString());
-            var locationVar = await restService.ReadLocationByNameAsync(OurEntry.Text.ToString());
-            var locationListUserVar = await restService.GetLocationsByUserNameAsync(OurEntry.Text.ToString());
+            var locationListVar = await restService.ReadLocationByTagNameAsync(OurEntry.Text);
+            var locationVar = await restService.ReadLocationByNameAsync(OurEntry.Text);
+            var locationListUserVar = await restService.GetLocationsByUserNameAsync(OurEntry.Text);
             if (locationListVar != null)
             {
                 combinedList.AddRange(locationListVar);
@@ -258,7 +250,7 @@ namespace MobilSemProjekt.View
             {
                 try
                 {
-                    var address = OurEntry.Text.ToString();
+                    var address = OurEntry.Text;
                     var geocodeLocationList = await Geocoding.GetLocationsAsync(address);
                     if (geocodeLocationList != null)
                     {
@@ -332,9 +324,9 @@ namespace MobilSemProjekt.View
             }
         }
 
-        public void GoToLocation(double Latitude, double Longitude)
+        public void GoToLocation(double latitude, double longitude)
         {
-            GoogleMap.MoveToRegion(MapSpan.FromCenterAndRadius(new Position(Latitude, Longitude),
+            GoogleMap.MoveToRegion(MapSpan.FromCenterAndRadius(new Position(latitude, longitude),
                 Distance.FromMiles(1)));
         }
 

@@ -1,6 +1,6 @@
 ﻿using MobilSemProjekt.MVVM.Model;
 using System;
-using MobilSemProjekt.MVVM.ViewModel;
+using MobilSemProjekt.MVVM.Service;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
 

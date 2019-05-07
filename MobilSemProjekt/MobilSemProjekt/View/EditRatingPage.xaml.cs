@@ -1,10 +1,6 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using MobilSemProjekt.MVVM.Model;
-using MobilSemProjekt.MVVM.ViewModel;
+using MobilSemProjekt.MVVM.Service;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
 

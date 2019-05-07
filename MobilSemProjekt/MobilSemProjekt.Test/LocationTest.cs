@@ -1,11 +1,9 @@
 ﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
-using MobilSemProjekt.MVVM.Model;
-using MobilSemProjekt.MVVM.ViewModel;
-using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
-using Plugin.Geolocator;
-using System.Threading;
+//using Plugin.Geolocator;
+using MobilSemProjekt.MVVM.Model;
+using MobilSemProjekt.MVVM.Service;
 
 namespace Test
 {
@@ -44,16 +42,13 @@ namespace Test
         //    Assert.IsTrue(en.Equals(to));
         //}
         
-        private async Task<string> GetCurrentLocation()
-        {
-            var locator = CrossGeolocator.Current;
-            var position = await locator.GetPositionAsync(TimeSpan.FromSeconds(1));
-            string latitude = position.Latitude.ToString();
-            string longitude = position.Longitude.ToString();
-
-
-            return latitude + ", " + longitude;
-
-        }
+        //private async Task<string> GetCurrentLocation()
+        //{
+        //    var locator = CrossGeolocator.Current;
+        //    var position = await locator.GetPositionAsync(TimeSpan.FromSeconds(1));
+        //    string latitude = position.Latitude.ToString();
+        //    string longitude = position.Longitude.ToString();
+        //    return latitude + ", " + longitude;
+        //}
     }
 }

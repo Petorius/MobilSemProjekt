@@ -1,15 +1,12 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Collections.ObjectModel;
-using System.ComponentModel;
 using System.Diagnostics;
 using System.Linq;
-using System.Threading.Tasks;
 using MobilSemProjekt.MVVM.Model;
-using MobilSemProjekt.MVVM.ViewModel;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
 using Acr.UserDialogs;
+using MobilSemProjekt.MVVM.Service;
 using Xamarin.Essentials;
 using Location = MobilSemProjekt.MVVM.Model.Location;
 
@@ -52,16 +49,20 @@ namespace MobilSemProjekt.View
             if (IsUserLocationSearch)
             {
                 Location location = (Location)e.Item;
-                EditLocationPage editLocationPage = new EditLocationPage();
-                editLocationPage.Location = location;
+                EditLocationPage editLocationPage = new EditLocationPage
+                {
+                    Location = location
+                };
                 editLocationPage.SetPlaceholders();
                 await Navigation.PushAsync(editLocationPage);
             }
             else if (IsUserCommentSearch && User != null)
             {
                 Location location = (Location)e.Item;
-                EditRatingPage editRatingPage = new EditRatingPage();
-                editRatingPage.Rating = location.Ratings.Find(x => x.User.UserId == User.UserId);
+                EditRatingPage editRatingPage = new EditRatingPage
+                {
+                    Rating = location.Ratings.Find(x => x.User.UserId == User.UserId)
+                };
                 editRatingPage.SetPlaceholders();
                 await Navigation.PushAsync(editRatingPage);
             }
@@ -99,7 +100,6 @@ namespace MobilSemProjekt.View
                                 $"{placemark.PostalCode}, " +
                                 $"{placemark.Thoroughfare} ";
 
-
                             try
                             {
                                 PromptResult pResult = await UserDialogs.Instance.PromptAsync(new PromptConfig
@@ -119,8 +119,6 @@ namespace MobilSemProjekt.View
                             }
                         }
                     }
-
-
                     catch (Exception ex)
                     {
                         Console.WriteLine(ex.StackTrace);
@@ -135,6 +133,5 @@ namespace MobilSemProjekt.View
             //Deselect Item
             ((ListView)sender).SelectedItem = null;
         }
-
     }
 }

@@ -7,7 +7,7 @@ using System.Text;
 using System.Threading.Tasks;
 using MobilSemProjekt.MVVM.Model;
 
-namespace MobilSemProjekt.MVVM.ViewModel
+namespace MobilSemProjekt.MVVM.Service
 {
     public class UserRestService : IUserRestService
     {
@@ -20,10 +20,10 @@ namespace MobilSemProjekt.MVVM.ViewModel
             _client = new HttpClient();
         }
         /// <summary>
-        /// creates a user in databse
+        /// Creates a user in database
         /// </summary>
-        /// <param name="user"></param>
-        /// <returns> Task </returns>
+        /// <param name="user">User</param>
+        /// <returns>Task</returns>
         public async Task Create(User user)
         {
             // Serialize our concrete class into a JSON String
@@ -34,7 +34,6 @@ namespace MobilSemProjekt.MVVM.ViewModel
 
             using (var httpClient = new HttpClient())
             {
-
                 // Do the actual request and await the response
                 var httpResponse =
                     await httpClient.PostAsync(RestUrl + "UserService.svc/CreateUser",
@@ -59,9 +58,9 @@ namespace MobilSemProjekt.MVVM.ViewModel
             }
         }
         /// <summary>
-        /// compares two hashes
+        /// Compares two hashes
         /// </summary>
-        /// <param name="user"></param>
+        /// <param name="user">User</param>
         /// <returns>Task<bool/></returns>
         public async Task<bool> CompareHashes(User user)
         {
@@ -98,13 +97,12 @@ namespace MobilSemProjekt.MVVM.ViewModel
                     Debug.WriteLine("CompareHashes - Error: " + e.Message);
                 }
             }
-
             return result;
         }
         /// <summary>
         /// finds a user by its name
         /// </summary>
-        /// <param name="userName"></param>
+        /// <param name="userName">string</param>
         /// <returns>Task<User/></returns>
         public async Task<User> FindByUserName(string userName)
         {
@@ -133,7 +131,7 @@ namespace MobilSemProjekt.MVVM.ViewModel
         /// <summary>
         /// finds a users salt
         /// </summary>
-        /// <param name="userName"></param>
+        /// <param name="userName">string</param>
         /// <returns>Task<string/></returns>
         public async Task<string> FindSaltByUserName(string userName)
         {

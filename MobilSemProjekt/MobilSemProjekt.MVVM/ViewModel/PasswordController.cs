@@ -5,14 +5,15 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using MobilSemProjekt.MVVM.Model;
+using MobilSemProjekt.MVVM.Service;
 using PCLCrypto;
 
 namespace MobilSemProjekt.MVVM.ViewModel {
     public class PasswordController {
         /// <summary>
-        /// creates a salt
+        /// Creates a salt
         /// </summary>
-        /// <param name="bytes"></param>
+        /// <param name="bytes">int</param>
         /// <returns>byte[]</returns>
         public static byte[] CreateSalt(int bytes) {
             return WinRTCrypto.CryptographicBuffer.GenerateRandom(bytes);
@@ -20,9 +21,9 @@ namespace MobilSemProjekt.MVVM.ViewModel {
         /// <summary>
         /// Generates a hash based on a password and a salt
         /// </summary>
-        /// <param name="password"></param>
-        /// <param name="salt"></param>
-        /// <returns></returns>
+        /// <param name="password">string</param>
+        /// <param name="salt">byte[]</param>
+        /// <returns>string</returns>
         public string GenerateHashedPassword(string password, byte[] salt)
         {
             int iterations = 5000;
@@ -41,8 +42,8 @@ namespace MobilSemProjekt.MVVM.ViewModel {
         /// <summary>
         /// Checks if the user exist in database with password
         /// </summary>
-        /// <param name="username"></param>
-        /// <param name="password"></param>
+        /// <param name="username">string</param>
+        /// <param name="password">string</param>
         /// <returns>Task<bool/></returns>
         public async Task<bool> VerifyLogin(string username, string password)
         {
@@ -54,7 +55,6 @@ namespace MobilSemProjekt.MVVM.ViewModel {
             bool status = await userRestService.CompareHashes(userToCompare);
             return status;
         }
-
     }
 }
 
