@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Diagnostics;
 using System.ServiceModel;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using MobileService.Database;
@@ -115,39 +114,50 @@ namespace MobileService.UnitTest
         [TestMethod]
         public void UpdateHitsTest()
         {
-            Location location = new Location
-            {
-                LocationId = 1
-            };
-            DbLocation dbLocation = new DbLocation();
             try
             {
+                DbLocation dbLocation = new DbLocation();
+                Location location = new Location
+                {
+                    User = new User { UserId = 1 },
+                    Latitude = 1,
+                    Longitude = 1,
+                    LocationDescription = "Testing",
+                    LocationName = "Testing",
+                    Hits = 0
+                };
+                int id = dbLocation.Create(location);
+                location.LocationId = id;
                 dbLocation.UpdateHits(location);
+                Location newLocation = dbLocation.FindById(id);
+                if (location.Hits < newLocation.Hits)
+                {
+                    Assert.IsTrue(true);
+                }
+                else
+                {
+                    Assert.IsTrue(false);
+                }
             }
             catch (System.Exception e)
             {
-                Console.WriteLine("Error: " + e.Message);
+                Assert.Fail();
             }
         }
 
         [TestMethod]
         public void GetListOfLocationsRatedByUser()
         {
-            DbLocation dbLocation = new DbLocation();
-            List<Location> list = new List<Location>();
             try
             {
-                list = dbLocation.LocationsByCommentUserName("Aksel");
-                foreach (var element in list)
-                {
-                    Console.WriteLine(element.LocationName);
-                }
+                DbLocation dbLocation = new DbLocation();
+                List<Location> list = dbLocation.LocationsByCommentUserName("Aksel");
+                Assert.IsTrue(list.Count > 0);
             }
             catch (System.Exception e)
             {
-                Console.WriteLine("Error: " + e.Message);
+                Assert.Fail();
             }
-            Assert.IsTrue(list.Count > 0);
         }
     }
 }
