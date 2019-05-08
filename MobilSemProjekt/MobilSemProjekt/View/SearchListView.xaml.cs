@@ -7,6 +7,7 @@ using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
 using Acr.UserDialogs;
 using MobilSemProjekt.MVVM.Service;
+using MobilSemProjekt.MVVM.ViewModel;
 using Xamarin.Essentials;
 using Location = MobilSemProjekt.MVVM.Model.Location;
 
@@ -19,36 +20,25 @@ namespace MobilSemProjekt.View
         public bool IsUserLocationSearch { get; set; }
         public bool IsUserCommentSearch { get; set; }
         public User User { get; set; }
-
+        
         public SearchListView()
         {
             InitializeComponent();
-
-            //Locations = new ObservableCollection<Location>();
-
-            //MyListView.ItemsSource = Locations;
-
-            //Content = new StackLayout() {
-            //    Spacing = 5,
-            //    Children =
-            //    {
-            //        SearchListViewDisplay
-            //    }
-
-            //};
-
         }
 
         protected override void OnAppearing()
         {
-            SearchListViewDisplay.ItemsSource = Locations;
+            LocationViewModel.AddParameters(Locations);
+            SearchListViewDisplay.ItemsSource = LocationViewModel.All;
         }
 
         async void Handle_ItemTapped(object sender, ItemTappedEventArgs e)
         {
+            LocationViewModel locationViewModel = (LocationViewModel)e.Item;
+            Location location = locationViewModel.Location;
+
             if (IsUserLocationSearch)
             {
-                Location location = (Location)e.Item;
                 EditLocationPage editLocationPage = new EditLocationPage
                 {
                     Location = location
@@ -58,7 +48,6 @@ namespace MobilSemProjekt.View
             }
             else if (IsUserCommentSearch && User != null)
             {
-                Location location = (Location)e.Item;
                 EditRatingPage editRatingPage = new EditRatingPage
                 {
                     Rating = location.Ratings.Find(x => x.User.UserId == User.UserId)
@@ -69,11 +58,8 @@ namespace MobilSemProjekt.View
 
             else
             {
-
                 var itemTappedAnswer = await DisplayAlert("Lokation", "What do you want to do?", "Go to location",
                     "Add location");
-                Location location = (Location)e.Item;
-
 
                 if (itemTappedAnswer)
                 {
@@ -122,7 +108,6 @@ namespace MobilSemProjekt.View
                     catch (Exception ex)
                     {
                         Console.WriteLine(ex.StackTrace);
-                        // Handle exception that may have occurred in geocoding
                     }
 
                     IRestService restService = new RestService();
