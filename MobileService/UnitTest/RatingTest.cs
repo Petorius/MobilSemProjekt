@@ -25,7 +25,7 @@ namespace MobileService.UnitTest
                 int ratingId = dbRating.Create(rating);
                 Assert.IsTrue(ratingId > 0);
             }
-            catch (FaultException<DbConnectionException> e)
+            catch (FaultException<Exception.Exception> e)
             {
                 Console.WriteLine(e);
                 Assert.Fail();
@@ -43,7 +43,7 @@ namespace MobileService.UnitTest
                 rating = dbRating.FindById(1);
                 Assert.IsNotNull(rating);
             }
-            catch (FaultException<DbConnectionException> e)
+            catch (FaultException<Exception.Exception> e)
             {
                 Console.WriteLine(e);
                 Assert.Fail();
@@ -62,7 +62,7 @@ namespace MobileService.UnitTest
                 bool status = dbRating.UserUpdateRating(rating);
                 Assert.IsTrue(status);
             }
-            catch (FaultException<DbConnectionException> e)
+            catch (FaultException<Exception.Exception> e)
             {
                 Console.WriteLine(e);
                 Assert.Fail();

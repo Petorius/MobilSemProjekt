@@ -20,7 +20,7 @@ namespace MobileService.UnitTest
                 dbConnection.ConnectionTest();
                 Assert.IsTrue(true);
             }
-            catch (FaultException<DbConnectionException> e)
+            catch (FaultException<Exception.Exception> e)
             {
                 Console.WriteLine(e);
             }

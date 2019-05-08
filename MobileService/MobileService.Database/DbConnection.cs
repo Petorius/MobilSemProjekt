@@ -34,7 +34,7 @@ namespace MobileService.Database
                         int idStatus = Convert.ToInt32(cmd.ExecuteScalar());
                         if (idStatus != 1)
                         {
-                            throw new FaultException<DbConnectionException>(new DbConnectionException());
+                            throw new FaultException<Exception.Exception>(new Exception.Exception());
                         }
                     }
                    _connection.Close();
@@ -42,7 +42,7 @@ namespace MobileService.Database
             }
             catch (SqlException e)
             {
-                throw new FaultException<DbConnectionException>(new DbConnectionException());
+                throw new FaultException<Exception.Exception>(new Exception.Exception());
             }
         }
     }
