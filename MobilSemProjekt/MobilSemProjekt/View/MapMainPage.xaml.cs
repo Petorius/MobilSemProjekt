@@ -167,7 +167,7 @@ namespace MobilSemProjekt.View
                             }
                         }
 
-                        var imageAnswer = await DisplayAlert("Marker", "Would you like to give the marker a name?", "Yes", "No");
+                        var imageAnswer = await DisplayAlert("Marker", "Would you like to give the marker an image?", "Yes", "No");
                         if (imageAnswer)
                         {
                             try

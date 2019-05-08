@@ -9,7 +9,6 @@
             ItemTapped="Handle_ItemTapped"
             CachingStrategy="RecycleElement"
             HasUnevenRows="True">
-        <!--//              ItemsSource="{Binding Items}"-->
         <ListView.ItemTemplate>
             <DataTemplate>
                 <ViewCell Height="100">
