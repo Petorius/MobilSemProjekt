@@ -27,7 +27,7 @@ namespace MobileService.UnitTest
                 int pictureId = dbPicture.Create(picture, 1);
                 Assert.IsTrue(pictureId > 0);
             }
-            catch (FaultException<DbConnectionException> e)
+            catch (FaultException<Exception.Exception> e)
             {
                 Console.WriteLine(e);
                 Assert.Fail();
@@ -45,7 +45,7 @@ namespace MobileService.UnitTest
                 picture = dbPicture.FindById(1);
                 Assert.IsNotNull(picture);
             }
-            catch (FaultException<DbConnectionException> e)
+            catch (FaultException<Exception.Exception> e)
             {
                 Console.WriteLine(e);
                 Assert.Fail();
@@ -63,7 +63,7 @@ namespace MobileService.UnitTest
                 picture = dbPicture.FindById(1);
                 dbPicture.Update(picture, 1, picture.PictureId);
             }
-            catch (FaultException<DbConnectionException> e)
+            catch (FaultException<Exception.Exception> e)
             {
                 Console.WriteLine(e);
                 Assert.Fail();

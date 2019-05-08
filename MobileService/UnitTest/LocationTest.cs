@@ -126,5 +126,46 @@ namespace MobileService.UnitTest
                 Assert.Fail();
             }
         }
+        [TestMethod]
+        public void GetAvgRatingTest()
+        {
+            try
+            {
+                DbLocation dbLocation = new DbLocation();
+                DbRating dbRating = new DbRating();
+                Location location = new Location
+                {
+                    Latitude = 1,
+                    Longitude = 1,
+                    LocationName = "AVGTEST",
+                    LocationDescription = "AVGDescription"
+                };
+                int id = dbLocation.Create(location);
+                Rating rating1 = new Rating
+                {
+                    LocationId = id,
+                    Rate = 1,
+                    Comment = "RateTest1"
+                };
+                Rating rating2 = new Rating
+                {
+                    LocationId = id,
+                    Rate = 5,
+                    Comment = "RateTest2"
+                };
+                rating1.RatingId = dbRating.Create(rating1);
+                rating2.RatingId = dbRating.Create(rating2);
+                double rate = dbRating.GetAverageRating(id);
+                Assert.IsTrue(rate == 3);
+                dbRating.Delete(rating1);
+                dbRating.Delete(rating2);
+                dbLocation.Delete(id);
+
+            }
+            catch (FaultException<System.Exception>)
+            {
+                Assert.Fail();
+            }
+        }
     }
 }

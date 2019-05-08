@@ -63,6 +63,10 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\MobileService.Controller\MobileService.Controller.csproj">
+      <Project>{B2818C85-0F67-4C01-A4B5-6744977F3559}</Project>
+      <Name>MobileService.Controller</Name>
+    </ProjectReference>
     <ProjectReference Include="..\MobileService.Database\MobileService.Database.csproj">
       <Project>{51B0E1D7-FA89-4C34-BBC7-BB36F44A55D6}</Project>
       <Name>MobileService.Database</Name>

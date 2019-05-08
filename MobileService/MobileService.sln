@@ -13,7 +13,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MobileService.WcfService", 
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MobileService.Exception", "MobileService.Exception\MobileService.Exception.csproj", "{A30EF766-1A70-45E6-9BA0-69DCEEC28112}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "UnitTest", "UnitTest\UnitTest.csproj", "{DE539B00-29BD-4FA9-9C0B-08EF71D7B6D5}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Test", "UnitTest\Test.csproj", "{DE539B00-29BD-4FA9-9C0B-08EF71D7B6D5}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

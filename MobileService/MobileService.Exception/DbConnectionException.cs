@@ -3,7 +3,7 @@
 namespace MobileService.Exception
 {
     [DataContract]
-    public class DbConnectionException
+    public class Exception
     {   
         public override string ToString()
         {
