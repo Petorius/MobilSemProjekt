@@ -4,7 +4,7 @@ using MobilSemProjekt.MVVM.Model;
 
 namespace MobilSemProjekt.MVVM.Service
 {
-    public interface IRestService
+    public interface ILocationRestService
     {
         Task<List<Location>> GetAllDataAsync();
         Task<List<Location>> ReadLocationByTagNameAsync(string tagName);
@@ -15,5 +15,6 @@ namespace MobilSemProjekt.MVVM.Service
         void UpdateHits(Location location);
         void UpdateLocation(Location location);
         void UserUpdateLocation(Location location);
+        void SetTopLocations();
     }
 }

@@ -9,21 +9,21 @@ namespace MobilSemProjekt.View {
     [XamlCompilation(XamlCompilationOptions.Compile)]
 	public partial class StartUpPage : ContentPage
 	{
-        private TabbedMapMainPage TabbedMapMainPage;
+        private TabbedMapMainPage _tabbedMapMainPage;
 
         public StartUpPage ()
 		{
 			InitializeComponent();
-            TabbedMapMainPage = new TabbedMapMainPage();
-            TopLocationController topLocationController = new TopLocationController();
-            topLocationController.SetTopLocations();
-        }
+		    _tabbedMapMainPage = new TabbedMapMainPage();
+            ILocationRestService iRestService = new LocationRestService();
+		    iRestService.SetTopLocations();
+		}
 
         private async void ContinueWithoutAccountButton_OnClicked(object sender, EventArgs e)
         {
-            TabbedMapMainPage = new TabbedMapMainPage();
-            TabbedMapMainPage.StartUpWithoutUser();
-            await Navigation.PushAsync(TabbedMapMainPage);
+            _tabbedMapMainPage = new TabbedMapMainPage();
+            _tabbedMapMainPage.StartUpWithoutUser();
+            await Navigation.PushAsync(_tabbedMapMainPage);
             Navigation.RemovePage(this);
         }
 
@@ -46,12 +46,12 @@ namespace MobilSemProjekt.View {
 
                 if (user != null)
                 {
-                    TabbedMapMainPage = new TabbedMapMainPage
+                    _tabbedMapMainPage = new TabbedMapMainPage
                     {
                         User = user
                     };
-                    TabbedMapMainPage.StartUpWithUser();
-                    await Navigation.PushAsync(TabbedMapMainPage);
+                    _tabbedMapMainPage.StartUpWithUser();
+                    await Navigation.PushAsync(_tabbedMapMainPage);
                     Navigation.RemovePage(this);
                 }
             }           

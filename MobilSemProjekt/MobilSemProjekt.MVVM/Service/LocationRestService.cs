@@ -9,13 +9,13 @@ using MobilSemProjekt.MVVM.Model;
 
 namespace MobilSemProjekt.MVVM.Service
 {
-    public class RestService : IRestService
+    public class LocationRestService : ILocationRestService
     {
         private HttpClient _client;
         private const string RestUrl = "http://dmax0917.hegr.dk/";
         public List<Location> Items { get; private set; }
 
-        public RestService()
+        public LocationRestService()
         {
             _client = new HttpClient();
         }
@@ -205,8 +205,12 @@ namespace MobilSemProjekt.MVVM.Service
         /// Updates number of hits on a location in database
         /// </summary>
         /// <param name="location">Location</param>
-        public async void UpdateHits(Location location)
+        public async void UpdateHits(Location location2)
         {
+            Location location = new Location
+            {
+                LocationId = location2.LocationId
+            };
             // Serialize our concrete class into a JSON String
             var stringThingy = await Task.Run(() => JsonConvert.SerializeObject(location));
 
@@ -313,6 +317,27 @@ namespace MobilSemProjekt.MVVM.Service
                 {
                     Debug.WriteLine("UserUpdateLocation - Error: " + e.Message);
                 }
+            }
+        }
+
+        /// <summary>
+        /// Finds and sets a toplocation
+        /// </summary>
+        public async void SetTopLocations()
+        {
+            string locService = "LocationService.svc/SetTopLocations";
+            var uri = new Uri(string.Format(RestUrl + locService));
+            try
+            {
+                var response = await _client.GetAsync(uri);
+                if (response.IsSuccessStatusCode)
+                {
+                    Debug.WriteLine("SetTopLocations - You aren't catched - " + response);
+                }
+            }
+            catch (Exception e)
+            {
+                Debug.WriteLine("GetLocationsByCommentUserName - Error: " + e.Message);
             }
         }
     }

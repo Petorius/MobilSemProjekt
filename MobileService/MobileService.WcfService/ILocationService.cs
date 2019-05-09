@@ -79,5 +79,11 @@ namespace MobileService.WcfService
             RequestFormat = WebMessageFormat.Json,
             ResponseFormat = WebMessageFormat.Json)]
         int UserUpdateLocation(Location location);
+
+        [OperationContract]
+        [WebGet(UriTemplate = "SetTopLocations",
+            RequestFormat = WebMessageFormat.Json,
+            ResponseFormat = WebMessageFormat.Json)]
+        void SetTopLocations();
     }
 }

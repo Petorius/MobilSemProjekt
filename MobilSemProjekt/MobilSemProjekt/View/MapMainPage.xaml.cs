@@ -66,7 +66,7 @@ namespace MobilSemProjekt.View
 
         private async void OnTouchAsync(PinClickedEventArgs e)
         {
-            RestService restservice = new RestService();
+            LocationRestService restservice = new LocationRestService();
             string label = e.Pin.Label;
 
             int pos = label.IndexOf(TopLocation, StringComparison.Ordinal);
@@ -96,7 +96,7 @@ namespace MobilSemProjekt.View
         private async Task UpdateLocationsOnMap()
         {
             string labelText;
-            IRestService restService = new RestService();
+            ILocationRestService restService = new LocationRestService();
             List<Location> list = await restService.GetAllDataAsync();
             foreach (var location in list)
             {
@@ -218,7 +218,7 @@ namespace MobilSemProjekt.View
 
                 location.Pictures.Add(picture);
                 
-                IRestService restService = new RestService();
+                ILocationRestService restService = new LocationRestService();
                 await restService.Create(location);
                 //To be added: InfoWindow that contain most of the description and are tied to markers..
             }
@@ -227,7 +227,7 @@ namespace MobilSemProjekt.View
         private async void OurEntry_OnCompleted(object sender, EventArgs e)
         {
             List<Location> combinedList = new List<Location>();
-            RestService restService = new RestService();
+            LocationRestService restService = new LocationRestService();
             var locationListVar = await restService.ReadLocationByTagNameAsync(OurEntry.Text);
             var locationVar = await restService.ReadLocationByNameAsync(OurEntry.Text);
             var locationListUserVar = await restService.GetLocationsByUserNameAsync(OurEntry.Text);

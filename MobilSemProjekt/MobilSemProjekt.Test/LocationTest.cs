@@ -16,7 +16,7 @@ namespace Test
         [TestMethod]
         public async Task FindAllTopSpotsTest()
         {
-            RestService restService = new RestService();
+            LocationRestService restService = new LocationRestService();
             List<Location> list = await restService.GetAllDataAsync();
             List<Location> topSpotList = new List<Location>();
             foreach (var location in list)

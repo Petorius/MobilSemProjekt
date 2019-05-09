@@ -110,7 +110,7 @@ namespace MobilSemProjekt.View
                         Console.WriteLine(ex.StackTrace);
                     }
 
-                    IRestService restService = new RestService();
+                    ILocationRestService restService = new LocationRestService();
                     await restService.Create(location);
                 }
             }

@@ -1,5 +1,6 @@
 ﻿using MobilSemProjekt.MVVM.Model;
 using System;
+using Android.Content;
 using MobilSemProjekt.MVVM.Service;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
@@ -24,15 +25,13 @@ namespace MobilSemProjekt.View
 		    StartUrl = "http://dmax0917.hegr.dk/";
             GrayStar = "star-gray.png";
             YellowStar = "star.png";
-
-            //StarURL = @"img\stjerne.png";
-		    VotingStar1.GestureRecognizers.Add(ReturnCall(1));
+		    
+            VotingStar1.GestureRecognizers.Add(ReturnCall(1));
 		    VotingStar2.GestureRecognizers.Add(ReturnCall(2));
 		    VotingStar3.GestureRecognizers.Add(ReturnCall(3));
 		    VotingStar4.GestureRecognizers.Add(ReturnCall(4));
 		    VotingStar5.GestureRecognizers.Add(ReturnCall(5));
 		    
-
             Content = new StackLayout()
 		    {
 		        Spacing = 5,
@@ -43,6 +42,22 @@ namespace MobilSemProjekt.View
 		    };
         }
 
+	    private void LoadContent()
+	    {
+	        SetImage(Picture, StartUrl + "img.png");
+	        if (Location.Pictures != null)
+	        {
+	            if (Location.Pictures.Count != 0)
+	            {
+	                SetImage(Picture, Location.Pictures[0].Url);
+	            }
+	        }
+
+	        LocationName.Text = Location.LocationName;
+	        LocationDesc.Text = Location.LocationDescription;
+	        LoadStars();
+        }
+
 	    private void SetImage(Image image, string url)
 	    {
 	        image.Source = ImageSource.FromUri(new Uri(url));
@@ -51,19 +66,14 @@ namespace MobilSemProjekt.View
 	    protected override void OnAppearing()
 	    {
             base.OnAppearing();
+	        LoadContent();
+            UpdateHits();
+	    }
 
-	        SetImage(Picture, StartUrl + "img.png");
-            if (Location.Pictures != null)
-	        {
-	            if (Location.Pictures.Count != 0)
-	            {
-                    SetImage(Picture, Location.Pictures[0].Url);
-	            }
-            }
-            
-	        LocationName.Text = Location.LocationName;
-            LocationDesc.Text = Location.LocationDescription;
-            LoadStars();
+	    private void UpdateHits()
+	    {
+	        ILocationRestService iRestService = new LocationRestService();
+	        iRestService.UpdateHits(Location);
 	    }
 
 	    private async void LoadStars()

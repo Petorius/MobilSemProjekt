@@ -79,6 +79,11 @@ namespace MobileService.WcfService
             _locationCtrl.UserUpdateLocation(location);
             return 1;
         }
-
+        
+        public void SetTopLocations()
+        {
+            _locationCtrl = new LocationCtrl();
+            _locationCtrl.SetTopLocations();
+        }
     }
 }

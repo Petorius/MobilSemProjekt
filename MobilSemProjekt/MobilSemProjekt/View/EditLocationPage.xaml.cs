@@ -28,7 +28,7 @@ namespace MobilSemProjekt.View
             Location.LocationName = LocationNameEntry.Text;
             Location.LocationDescription = LocationDescriptionEditor.Text;
 
-            IRestService restService = new RestService();
+            ILocationRestService restService = new LocationRestService();
             restService.UserUpdateLocation(Location);
         }
     }

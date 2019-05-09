@@ -347,6 +347,28 @@ namespace MobileService.Database
             }
         }
 
+
+        /// <summary>
+        /// Update isTopLocation on database
+        /// </summary>
+        /// <param name="location">Location</param>
+        public void UpdateLocationAsTopLocation(Location location)
+        {
+            using (_connection = new SqlConnection(_connectionString))
+            {
+                _connection.Open();
+                using (SqlCommand cmd = _connection.CreateCommand())
+                {
+                    cmd.CommandText = "UPDATE Locations set IsTopLocation = @IsTopLocation " +
+                                      "where LocationId = @LocationId";
+                    cmd.Parameters.AddWithValue("LocationId", location.LocationId);
+                    cmd.Parameters.AddWithValue("IsTopLocation", location.IsTopLocation);
+                    cmd.ExecuteNonQuery();
+                }
+                _connection.Close();
+            }
+        }
+
         /// <summary>
         /// Update the amount of hits on a location in the database
         /// </summary>
