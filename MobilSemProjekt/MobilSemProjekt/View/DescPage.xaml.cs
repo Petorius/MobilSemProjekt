@@ -67,15 +67,8 @@ namespace MobilSemProjekt.View
 	    {
             base.OnAppearing();
 	        LoadContent();
-            UpdateHits();
 	    }
-
-	    private void UpdateHits()
-	    {
-	        ILocationRestService iRestService = new LocationRestService();
-	        iRestService.UpdateHits(Location);
-	    }
-
+        
 	    private async void LoadStars()
 	    {
             IRatingRestService ratingRestService = new RatingRestService();
