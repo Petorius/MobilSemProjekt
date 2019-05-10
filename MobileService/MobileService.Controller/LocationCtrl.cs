@@ -141,6 +141,7 @@ namespace MobileService.Controller
 
             foreach (var location in allLocations)
             {
+                bool oldIsTopLocation = location.IsTopLocation;
                 location.IsTopLocation = false;
                 double averageRating = 0;
                 foreach (var rating in location.Ratings)
@@ -159,7 +160,11 @@ namespace MobileService.Controller
                 {
                     location.IsTopLocation = true;
                 }
-                _dbLocation.UpdateLocationAsTopLocation(location);
+
+                if (oldIsTopLocation != location.IsTopLocation)
+                {
+                    _dbLocation.UpdateLocationAsTopLocation(location);
+                }
             }
         }
     }
