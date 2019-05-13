@@ -49,6 +49,10 @@ namespace MobileService.UnitTest
                 user = dbUser.FindById(1);
                 Assert.IsNotNull(user);
             }
+            catch (FaultException<UserNotFoundException>)
+            {
+                Assert.Fail();
+            }
             catch (FaultException<DbConnectionException>)
             {
                 Assert.Fail();
@@ -66,6 +70,10 @@ namespace MobileService.UnitTest
                 user = dbUser.FindById(1);
                 bool status = dbUser.Update(user);
                 Assert.IsTrue(status);
+            }
+            catch (FaultException<UserNotFoundException>)
+            {
+                Assert.Fail();
             }
             catch (FaultException<DbConnectionException>)
             {
@@ -90,6 +98,10 @@ namespace MobileService.UnitTest
                 bool status = userCtrl.CompareHashes("Aksel", hash);
                 Assert.IsTrue(status);
             }
+            catch (FaultException<UserNotFoundException>)
+            {
+                Assert.Fail();
+            }
             catch (FaultException<DbConnectionException>)
             {
                 Assert.Fail();
@@ -108,7 +120,7 @@ namespace MobileService.UnitTest
             }
             catch (FaultException<UserOrPasswordException>)
             {
-                Assert.IsFalse(status);
+                Assert.Fail();
             }
             catch (FaultException<DbConnectionException>)
             {
@@ -125,6 +137,10 @@ namespace MobileService.UnitTest
                 string saltInDB = "yR9c4qazcTfrnEJb8USdqruRe+3+iq/s95r+GmFJW0ed" +
                                   "AvJLGgHbW0o59L+JGMWWB9aU4SSa5Z24n37laq+DeA==";
                 Assert.IsTrue(salt.Equals(saltInDB));
+            }
+            catch (FaultException<UserOrPasswordException>)
+            {
+                Assert.Fail();
             }
             catch (FaultException<DbConnectionException>)
             {
