@@ -5,6 +5,7 @@ using System.Diagnostics;
 using System.Net.Http;
 using System.Text;
 using System.Threading.Tasks;
+using MobilSemProjekt.MVVM.Exception;
 using MobilSemProjekt.MVVM.Model;
 
 namespace MobilSemProjekt.MVVM.Service
@@ -38,22 +39,15 @@ namespace MobilSemProjekt.MVVM.Service
                 var httpResponse =
                     await httpClient.PostAsync(RestUrl + "UserService.svc/CreateUser",
                         httpContent);
-                try
+                // If the response contains content we want to read it!
+                if (httpResponse.IsSuccessStatusCode)
                 {
-                    // If the response contains content we want to read it!
-                    if (httpResponse.IsSuccessStatusCode)
-                    {
-                        //var responseContent = await httpResponse.Content.ReadAsStringAsync();
-                        Debug.WriteLine("CreateUser - Success!");
-                    }
-                    else
-                    {
-                        Debug.WriteLine("CreateUser - Failure");
-                    }
+                    //var responseContent = await httpResponse.Content.ReadAsStringAsync();
+                    Debug.WriteLine("CreateUser - successful");
                 }
-                catch (Exception e)
+                else
                 {
-                    Debug.WriteLine("CreateUser - Error: " + e.Message);
+                    Debug.WriteLine("CreateUser - Failure");
                 }
             }
         }
@@ -76,25 +70,19 @@ namespace MobilSemProjekt.MVVM.Service
                 var httpResponse =
                     await httpClient.PostAsync(RestUrl + "UserService.svc/CompareHashes",
                         httpContent);
-                try
+                // If the response contains content we want to read it!
+                if (httpResponse.IsSuccessStatusCode)
                 {
-                    // If the response contains content we want to read it!
-                    if (httpResponse.IsSuccessStatusCode)
-                    {
-                        //var responseContent = await httpResponse.Content.ReadAsStringAsync();
-                        Debug.WriteLine("CompareHashes - Success!");
-                    
-                        var content = await httpResponse.Content.ReadAsStringAsync();
-                        result = JsonConvert.DeserializeObject<bool>(content);
-                    }
-                    else
-                    {
-                        Debug.WriteLine("CompareHashes - Failure");
-                    }
+                    //var responseContent = await httpResponse.Content.ReadAsStringAsync();
+                    Debug.WriteLine("CompareHashes - successful");
+                
+                    var content = await httpResponse.Content.ReadAsStringAsync();
+                    result = JsonConvert.DeserializeObject<bool>(content);
                 }
-                catch (Exception e)
+                else
                 {
-                    Debug.WriteLine("CompareHashes - Error: " + e.Message);
+                    Debug.WriteLine("CompareHashes - Failure");
+                    throw new UserOrPasswordException();
                 }
             }
             return result;
@@ -109,27 +97,18 @@ namespace MobilSemProjekt.MVVM.Service
             User result = null;
             string locService = "UserService.svc/FindByUserName/" + userName;
             var uri = new Uri(string.Format(RestUrl + locService));
-            var response = new HttpResponseMessage();
-            try
+            var response = await _client.GetAsync(uri);
+            if (response.IsSuccessStatusCode)
             {
-                response = await _client.GetAsync(uri);
-                if (response.IsSuccessStatusCode)
-                {
-                    var content = await response.Content.ReadAsStringAsync();
-                    result = JsonConvert.DeserializeObject<User>(content);
-                }
-
-                Debug.WriteLine("FindByUserName - Error: you aren't catched - the result is: " + result);
-            }
-            catch (Exception e)
-            {
-                Debug.WriteLine("FindByUserName - Error: " + e.Message);
+                var content = await response.Content.ReadAsStringAsync();
+                result = JsonConvert.DeserializeObject<User>(content);
+                Debug.WriteLine("FindByUserName - successful");
             }
 
             return result;
         }
         /// <summary>
-        /// finds a users salt
+        /// Finds a users salt
         /// </summary>
         /// <param name="userName">string</param>
         /// <returns>Task<string/></returns>
@@ -138,23 +117,18 @@ namespace MobilSemProjekt.MVVM.Service
             string result = "";
             string locService = "UserService.svc/FindSaltByUserName/" + userName;
             var uri = new Uri(string.Format(RestUrl + locService));
-            var response = new HttpResponseMessage();
-            try
+            var response = await _client.GetAsync(uri);
+            if (response.IsSuccessStatusCode)
             {
-                response = await _client.GetAsync(uri);
-                if (response.IsSuccessStatusCode)
-                {
-                    var content = await response.Content.ReadAsStringAsync();
-                    result = JsonConvert.DeserializeObject<string>(content);
-                }
-
-                Debug.WriteLine("FindSaltByUserName - Error: you aren't catched - the result is: " + result);
+                var content = await response.Content.ReadAsStringAsync();
+                result = JsonConvert.DeserializeObject<string>(content);
+                Debug.WriteLine("FindSaltByUserName - successful");
             }
-            catch (Exception e)
+            else
             {
-                Debug.WriteLine("FindSaltByUserName - Error: " + e.Message);
+                throw new UserOrPasswordException();
             }
-
+            
             return result;
         }
     }

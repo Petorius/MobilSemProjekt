@@ -25,9 +25,8 @@ namespace MobileService.UnitTest
                 int tagId = dbTag.Create(tag);
                 Assert.IsTrue(tagId > 0);
             }
-            catch (FaultException<Exception.Exception> e)
+            catch (FaultException<DbConnectionException>)
             {
-                Console.WriteLine(e);
                 Assert.Fail();
             }
         }
@@ -43,9 +42,8 @@ namespace MobileService.UnitTest
                 tag = dbTag.FindById(1);
                 Assert.IsNotNull(tag);
             }
-            catch (FaultException<Exception.Exception> e)
+            catch (FaultException<DbConnectionException>)
             {
-                Console.WriteLine(e);
                 Assert.Fail();
             }
         }
@@ -62,9 +60,8 @@ namespace MobileService.UnitTest
                 bool status = dbTag.Update(tag);
                 Assert.IsTrue(status);
             }
-            catch (FaultException<Exception.Exception> e)
+            catch (FaultException<DbConnectionException>)
             {
-                Console.WriteLine(e);
                 Assert.Fail();
             }
         }

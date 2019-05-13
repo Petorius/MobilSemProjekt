@@ -32,9 +32,8 @@ namespace MobileService.UnitTest
                 int userId = dbUser.Create(user);
                 Assert.IsTrue(userId > 0);
             }
-            catch (FaultException<Exception.Exception> e)
+            catch (FaultException<DbConnectionException>)
             {
-                Console.WriteLine(e);
                 Assert.Fail();
             }
         }
@@ -50,9 +49,8 @@ namespace MobileService.UnitTest
                 user = dbUser.FindById(1);
                 Assert.IsNotNull(user);
             }
-            catch (FaultException<Exception.Exception> e)
+            catch (FaultException<DbConnectionException>)
             {
-                Console.WriteLine(e);
                 Assert.Fail();
             }
         }
@@ -69,9 +67,8 @@ namespace MobileService.UnitTest
                 bool status = dbUser.Update(user);
                 Assert.IsTrue(status);
             }
-            catch (FaultException<Exception.Exception> e)
+            catch (FaultException<DbConnectionException>)
             {
-                Console.WriteLine(e);
                 Assert.Fail();
             }
         }
@@ -93,7 +90,7 @@ namespace MobileService.UnitTest
                 bool status = userCtrl.CompareHashes("Aksel", hash);
                 Assert.IsTrue(status);
             }
-            catch (FaultException<Exception.Exception> e)
+            catch (FaultException<DbConnectionException>)
             {
                 Assert.Fail();
             }
@@ -113,7 +110,7 @@ namespace MobileService.UnitTest
             {
                 Assert.IsFalse(status);
             }
-            catch (FaultException<Exception.Exception> e)
+            catch (FaultException<DbConnectionException>)
             {
                 Assert.Fail();
             }
@@ -129,7 +126,7 @@ namespace MobileService.UnitTest
                                   "AvJLGgHbW0o59L+JGMWWB9aU4SSa5Z24n37laq+DeA==";
                 Assert.IsTrue(salt.Equals(saltInDB));
             }
-            catch (FaultException<Exception.Exception> e)
+            catch (FaultException<DbConnectionException>)
             {
                 Assert.Fail();
             }

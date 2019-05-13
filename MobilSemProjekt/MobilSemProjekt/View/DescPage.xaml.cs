@@ -1,5 +1,7 @@
 ﻿using MobilSemProjekt.MVVM.Model;
 using System;
+using System.ServiceModel;
+using System.Threading.Tasks;
 using Android.Content;
 using MobilSemProjekt.MVVM.Service;
 using Xamarin.Forms;
@@ -71,21 +73,28 @@ namespace MobilSemProjekt.View
         
 	    private async void LoadStars()
 	    {
-            IRatingRestService ratingRestService = new RatingRestService();
-	        AvgStars = await ratingRestService.GetAverageRating(Location);
-	        VotingList.ItemsSource = Location.Ratings;
-            
-            MakeStarYellow(1, Star1);
-            MakeStarYellow(2, Star2);
-	        MakeStarYellow(3, Star3);
-	        MakeStarYellow(4, Star4);
-	        MakeStarYellow(5, Star5);
+	        try
+	        {
+	            IRatingRestService ratingRestService = new RatingRestService();
+	            AvgStars = await ratingRestService.GetAverageRating(Location);
+	            VotingList.ItemsSource = Location.Ratings;
 
-	        ColorizeRatings(0, 1, VotingStar1);
-	        ColorizeRatings(0, 2, VotingStar2);
-	        ColorizeRatings(0, 3, VotingStar3);
-	        ColorizeRatings(0, 4, VotingStar4);
-	        ColorizeRatings(0, 5, VotingStar5);
+	            MakeStarYellow(1, Star1);
+	            MakeStarYellow(2, Star2);
+	            MakeStarYellow(3, Star3);
+	            MakeStarYellow(4, Star4);
+	            MakeStarYellow(5, Star5);
+
+	            ColorizeRatings(0, 1, VotingStar1);
+	            ColorizeRatings(0, 2, VotingStar2);
+	            ColorizeRatings(0, 3, VotingStar3);
+	            ColorizeRatings(0, 4, VotingStar4);
+	            ColorizeRatings(0, 5, VotingStar5);
+            }
+            catch (FaultException<Exception> exc)
+	        {
+	            await DisplayAlert("Fejl", exc.Message, "OK");
+	        }
         }
 
 	    private void MakeStarYellow(int starNo, Image image)
@@ -121,7 +130,6 @@ namespace MobilSemProjekt.View
 	        };
 	    }
         
-
 	    private void SetLocalVote(int votingStarNo)
 	    {
 	        CurrVote = votingStarNo;
@@ -132,33 +140,26 @@ namespace MobilSemProjekt.View
 	        ColorizeRatings(votingStarNo, 5, VotingStar5);
 	    }
 
-        private void SendVote(object sender, EventArgs eventArgs)
+        private async void SendVote(object sender, EventArgs eventArgs)
 	    {
-	        IRatingRestService ratingRestService = new RatingRestService();
-	        Rating rating = new Rating
+	        try
 	        {
-	            Comment = RatingComment.Text,
-	            User = User,
-	            Rate = CurrVote,
-                LocationId = Location.LocationId
-	        };
-	        ratingRestService.Create(rating);
-	        LoadStars();
-	        CurrVote = 0;
+	            IRatingRestService ratingRestService = new RatingRestService();
+	            Rating rating = new Rating
+	            {
+	                Comment = RatingComment.Text,
+	                User = User,
+	                Rate = CurrVote,
+	                LocationId = Location.LocationId
+	            };
+                await ratingRestService.Create(rating);
+	            LoadStars();
+	            CurrVote = 0;
+            }
+            catch (FaultException<Exception> exc)
+	        {
+	            await DisplayAlert("Fejl", exc.Message, "OK");
+	        }
 	    }
-        /*
-	    private void BtnEdit_OnClicked(object sender, EventArgs e)
-	    {
-	        IRatingRestService ratingRestService = new RatingRestService();
-	        Rating rating = (Rating)sender;
-            ratingRestService.Update(rating);
-	    }
-
-	    private void BtnDelete_OnClicked(object sender, EventArgs e)
-	    {
-	        IRatingRestService ratingRestService = new RatingRestService();
-	        Rating rating = (Rating) sender;
-	        ratingRestService.Delete(rating);
-	    }*/
 	}
 }

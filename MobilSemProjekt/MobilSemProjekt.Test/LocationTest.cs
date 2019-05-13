@@ -1,6 +1,9 @@
-﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
+﻿using System;
+using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System.Collections.Generic;
+using System.ServiceModel;
 using System.Threading.Tasks;
+using MobilSemProjekt.MVVM.Exception;
 //using Plugin.Geolocator;
 using MobilSemProjekt.MVVM.Model;
 using MobilSemProjekt.MVVM.Service;
@@ -16,18 +19,29 @@ namespace Test
         [TestMethod]
         public async Task FindAllTopSpotsTest()
         {
-            LocationRestService restService = new LocationRestService();
-            List<Location> list = await restService.GetAllDataAsync();
-            List<Location> topSpotList = new List<Location>();
-            foreach (var location in list)
+            try
             {
-                if (location.IsTopLocation)
+                LocationRestService restService = new LocationRestService();
+                List<Location> list = await restService.GetAllDataAsync();
+                List<Location> topSpotList = new List<Location>();
+                foreach (var location in list)
                 {
-                    topSpotList.Add(location);
+                    if (location.IsTopLocation)
+                    {
+                        topSpotList.Add(location);
+                    }
                 }
-            }
 
-            Assert.IsTrue(topSpotList.Count > 0);
+                Assert.IsTrue(topSpotList.Count > 0);
+            }
+            catch (FaultException<NoLocationsInDatabaseException> e)
+            {
+                Assert.Fail(e.Message);
+            }
+            catch (FaultException<Exception>)
+            {
+                Assert.Fail();
+            }
         }
 
         // this method is not implemented due to the

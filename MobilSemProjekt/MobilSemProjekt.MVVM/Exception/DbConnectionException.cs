@@ -1,6 +1,6 @@
 ﻿using System.Runtime.Serialization;
 
-namespace MobileService.Exception
+namespace MobilSemProjekt.MVVM.Exception
 {
     [DataContract]
     public class DbConnectionException

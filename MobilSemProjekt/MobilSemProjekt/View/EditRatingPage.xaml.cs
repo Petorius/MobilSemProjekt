@@ -1,4 +1,5 @@
 ﻿using System;
+using System.ServiceModel;
 using MobilSemProjekt.MVVM.Model;
 using MobilSemProjekt.MVVM.Service;
 using Xamarin.Forms;
@@ -23,15 +24,22 @@ namespace MobilSemProjekt.View
             CommentEditor.Placeholder = Rating.Comment;
         }
 
-        private void SaveRatingEditsButton_OnClicked(object sender, EventArgs e)
+        private async void SaveRatingEditsButton_OnClicked(object sender, EventArgs e)
         {
-            bool status = double.TryParse(RatingEntry.Text, out double result);
-            if (status)
+            try
             {
-                Rating.Rate = result;
-                Rating.Comment = CommentEditor.Text;
-                IRatingRestService restService = new RatingRestService();
-                restService.Update(Rating);
+                bool status = double.TryParse(RatingEntry.Text, out double result);
+                if (status)
+                {
+                    Rating.Rate = result;
+                    Rating.Comment = CommentEditor.Text;
+                    IRatingRestService restService = new RatingRestService();
+                    restService.Update(Rating);
+                }
+            }
+            catch (FaultException<Exception> exc)
+            {
+                await DisplayAlert("Fejl", exc.Message, "OK");
             }
         }
     }

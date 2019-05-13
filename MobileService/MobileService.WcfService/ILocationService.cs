@@ -2,6 +2,7 @@
 using System.ServiceModel;
 using System.ServiceModel.Web;
 using System.Web.Services.Description;
+using MobileService.Exception;
 using MobileService.Model;
 
 namespace MobileService.WcfService
@@ -57,6 +58,7 @@ namespace MobileService.WcfService
         [WebGet(UriTemplate = "GetAllLocations",
             RequestFormat = WebMessageFormat.Json,
             ResponseFormat = WebMessageFormat.Json)]
+        [FaultContract(typeof(NoLocationsInDatabaseException))]
         List<Location> GetAllLocations();
 
         [OperationContract]
@@ -84,6 +86,13 @@ namespace MobileService.WcfService
         [WebGet(UriTemplate = "SetTopLocations",
             RequestFormat = WebMessageFormat.Json,
             ResponseFormat = WebMessageFormat.Json)]
+        [FaultContract(typeof(NoLocationsInDatabaseException))]
         void SetTopLocations();
+        
+        [WebGet(UriTemplate = "DeleteLocation/{locationId}",
+            RequestFormat = WebMessageFormat.Json,
+            ResponseFormat = WebMessageFormat.Json)]
+        [FaultContract(typeof(LocationNotDeletedException))]
+        void Delete(string locationId);
     }
 }

@@ -1,10 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Configuration;
 using System.Data.SqlClient;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using System.ServiceModel;
+using MobileService.Exception;
 using MobileService.Model;
 
 namespace MobileService.Database
@@ -294,6 +292,11 @@ namespace MobileService.Database
                 _connection.Close();
             }
 
+            if (locations.Count == 0)
+            {
+                throw new FaultException<NoLocationsInDatabaseException>(new NoLocationsInDatabaseException());
+            }
+
             return locations;
         }
 
@@ -450,8 +453,7 @@ namespace MobileService.Database
             bool status = changes > 0;
             if (status == false)
             {
-                throw new System.Exception();
-                //throw new FaultException<CustomerNotDeletedException>(new CustomerNotDeletedException(customer._phone));
+                throw new FaultException<LocationNotDeletedException>(new LocationNotDeletedException());
             }
         }
     }

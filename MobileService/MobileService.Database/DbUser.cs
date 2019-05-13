@@ -13,11 +13,11 @@ namespace MobileService.Database
                         "Database=dmaa0917_1067347;User ID=dmaa0917_1067347;" +
                         "Password=Password1!;";
 
-        private DbUserType DbUserType;
+        private readonly DbUserType _dbUserType;
 
         public DbUser()
         {
-            DbUserType = new DbUserType();
+            _dbUserType = new DbUserType();
         }
         
         /// <summary>
@@ -76,12 +76,17 @@ namespace MobileService.Database
                             UserName = reader.GetString(reader.GetOrdinal("UserName")),
                             HashPassword = reader.GetString(reader.GetOrdinal("HashPassword")),
                             Salt = reader.GetString(reader.GetOrdinal("Salt")),
-                            UserType = DbUserType.FindById(userTypeId)
+                            UserType = _dbUserType.FindById(userTypeId)
                         };
 
                     }
                 }
                 _connection.Close();
+            }
+
+            if (user == null)
+            {
+                throw new FaultException<UserNotFoundException>(new UserNotFoundException(""));
             }
             return user;
         }
@@ -116,7 +121,7 @@ namespace MobileService.Database
                             UserName = userName,
                             HashPassword = reader.GetString(reader.GetOrdinal("HashPassword")),
                             Salt = reader.GetString(reader.GetOrdinal("Salt")),
-                            UserType = DbUserType.FindById(userTypeId)
+                            UserType = _dbUserType.FindById(userTypeId)
                         };
                     }
 
@@ -126,7 +131,7 @@ namespace MobileService.Database
                         {
                             throw new FaultException<UserOrPasswordException>(new UserOrPasswordException());
                         }
-                        throw new FaultException<UserNotDeletedException>(new UserNotDeletedException(userName));
+                        throw new FaultException<UserNotFoundException>(new UserNotFoundException(userName));
                     }
                 }
                 _connection.Close();

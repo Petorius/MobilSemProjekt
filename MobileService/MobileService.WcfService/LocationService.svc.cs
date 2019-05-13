@@ -85,5 +85,12 @@ namespace MobileService.WcfService
             _locationCtrl = new LocationCtrl();
             _locationCtrl.SetTopLocations();
         }
+
+        public void Delete(string locationId)
+        {
+            _locationCtrl = new LocationCtrl();
+            int.TryParse(locationId, out int locId);
+            _locationCtrl.Delete(locId);
+        }
     }
 }

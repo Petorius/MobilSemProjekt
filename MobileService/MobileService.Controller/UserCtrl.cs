@@ -18,6 +18,7 @@ namespace MobileService.Controller
         {
             _dbUser = new DbUser();
         }
+
         /// <summary>
         /// creates a user in database
         /// </summary>
@@ -27,6 +28,7 @@ namespace MobileService.Controller
         {
             return _dbUser.Create(user);
         }
+
         /// <summary>
         /// compares two hashes
         /// </summary>
@@ -34,14 +36,16 @@ namespace MobileService.Controller
         /// <param name="userHash"></param>
         /// <returns>bool</returns>
         public bool CompareHashes(string userName, string userHash)
-        {   
+        {
             string dbHash = FindHashByUserName(userName);
             if (!dbHash.Equals(userHash))
             {
                 throw new FaultException<UserOrPasswordException>(new UserOrPasswordException());
             }
+
             return true;
         }
+
         /// <summary>
         /// finds a user by its name
         /// </summary>
@@ -61,6 +65,7 @@ namespace MobileService.Controller
         {
             return _dbUser.FindUserByUserName(userName, true);
         }
+
         /// <summary>
         /// gets a hash from a user
         /// </summary>
@@ -74,8 +79,10 @@ namespace MobileService.Controller
             {
                 val = u.HashPassword;
             }
+
             return val;
         }
+
         /// <summary>
         /// gets a salt from a user
         /// </summary>
@@ -89,8 +96,10 @@ namespace MobileService.Controller
             {
                 val = u.Salt;
             }
+
             return val;
         }
+
         /// <summary>
         /// updates a user
         /// </summary>
@@ -104,7 +113,13 @@ namespace MobileService.Controller
             {
                 status = _dbUser.Update(userToUpdate);
             }
+
             return status;
+        }
+
+        public void Delete(string userName)
+        {
+            _dbUser.Delete(userName);
         }
     }
 }

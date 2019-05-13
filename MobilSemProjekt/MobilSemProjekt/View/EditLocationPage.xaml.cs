@@ -1,4 +1,5 @@
 ﻿using System;
+using System.ServiceModel;
 using MobilSemProjekt.MVVM.Model;
 using MobilSemProjekt.MVVM.Service;
 using Xamarin.Forms;
@@ -23,13 +24,20 @@ namespace MobilSemProjekt.View
             LocationDescriptionEditor.Placeholder = Location.LocationDescription;
         }
 
-        private void SaveLocationEditsButton_OnClicked(object sender, EventArgs e)
+        private async void SaveLocationEditsButton_OnClicked(object sender, EventArgs e)
         {
-            Location.LocationName = LocationNameEntry.Text;
-            Location.LocationDescription = LocationDescriptionEditor.Text;
+            try
+            {
+                Location.LocationName = LocationNameEntry.Text;
+                Location.LocationDescription = LocationDescriptionEditor.Text;
 
-            ILocationRestService restService = new LocationRestService();
-            restService.UserUpdateLocation(Location);
+                ILocationRestService restService = new LocationRestService();
+                restService.UserUpdateLocation(Location);
+            }
+            catch (FaultException<Exception> exc)
+            {
+                await DisplayAlert("Fejl", exc.Message, "OK");
+            }
         }
     }
 }

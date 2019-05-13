@@ -29,20 +29,14 @@ namespace MobilSemProjekt.MVVM.Service
             Location location = new Location();
             string locService = "LocationService.svc/GetLocationByLocationName/" + name;
             var uri = new Uri(string.Format(RestUrl + locService));
-            var response = new HttpResponseMessage();
-            try {
-                response = await _client.GetAsync(uri);
-                if (response.IsSuccessStatusCode) {
-                    var content = await response.Content.ReadAsStringAsync();
-                    location = JsonConvert.DeserializeObject<Location>(content);
-                }
-
-                Debug.WriteLine("ReadLocationByName - Error: you aren't catched - " + response);
-            }
-            catch (Exception e) {
-                Debug.WriteLine("ReadLocationByName - Error: " + e.Message);
+            var response = await _client.GetAsync(uri);
+            if (response.IsSuccessStatusCode) {
+                var content = await response.Content.ReadAsStringAsync();
+                location = JsonConvert.DeserializeObject<Location>(content);
             }
 
+            Debug.WriteLine("ReadLocationByName - successful");
+            
             return location;
         }
         /// <summary>
@@ -55,21 +49,15 @@ namespace MobilSemProjekt.MVVM.Service
             Items = new List<Location>();
             string locService = "LocationService.svc/GetLocationsByTagName/" + tagName;
             var uri = new Uri(string.Format(RestUrl + locService));
-            var response = new HttpResponseMessage();
-            try {
-                response = await _client.GetAsync(uri);
-                if (response.IsSuccessStatusCode) {
-                    var content = await response.Content.ReadAsStringAsync();
-                    Items = JsonConvert.DeserializeObject<List<Location>>(content);
-                    Debug.WriteLine(Items.Count);
-                }
-
-                Debug.WriteLine("ReadLocationByTagName - Error: you aren't catched - " + response);
-            }
-            catch (Exception e) {
-                Debug.WriteLine("ReadLocationByTagName - Error: " + e.Message + " hej " + response);
+            var response = await _client.GetAsync(uri);
+            if (response.IsSuccessStatusCode) {
+                var content = await response.Content.ReadAsStringAsync();
+                Items = JsonConvert.DeserializeObject<List<Location>>(content);
+                Debug.WriteLine(Items.Count);
             }
 
+            Debug.WriteLine("ReadLocationByTagName  - successful");
+            
             return Items;
         }
 
@@ -93,23 +81,16 @@ namespace MobilSemProjekt.MVVM.Service
                 var httpResponse =
                     await httpClient.PostAsync(RestUrl + "LocationService.svc/CreateLocation",
                         httpContent);
-
-                try
+                
+                // If the response contains content we want to read it!
+                if (httpResponse.IsSuccessStatusCode)
                 {
-                    // If the response contains content we want to read it!
-                    if (httpResponse.IsSuccessStatusCode)
-                    {
-                        //var responseContent = await httpResponse.Content.ReadAsStringAsync();
-                        Debug.WriteLine("CreateLocation - Success!");
-                    }
-                    else
-                    {
-                        Debug.WriteLine("CreateLocation - Failure");
-                    }
+                    //var responseContent = await httpResponse.Content.ReadAsStringAsync();
+                    Debug.WriteLine("CreateLocation - successful");
                 }
-                catch (Exception e)
+                else
                 {
-                    Debug.WriteLine("CreateLocation - Error: " + e.Message);
+                    Debug.WriteLine("CreateLocation - Failure");
                 }
             }
         }
@@ -124,26 +105,19 @@ namespace MobilSemProjekt.MVVM.Service
             Items = new List<Location>();
             string locService = "LocationService.svc/GetAllLocations";
             var uri = new Uri(string.Format(RestUrl + locService));
-            var response = new HttpResponseMessage();
-            try
+            var response = await _client.GetAsync(uri);
+            if (response.IsSuccessStatusCode)
             {
-                response = await _client.GetAsync(uri);
-                if (response.IsSuccessStatusCode)
-                {
-                    var content = await response.Content.ReadAsStringAsync();
-                    Items = JsonConvert.DeserializeObject<List<Location>>(content);
-                    Debug.WriteLine(Items.Count);
-                }
+                var content = await response.Content.ReadAsStringAsync();
+                Items = JsonConvert.DeserializeObject<List<Location>>(content);
+                Debug.WriteLine(Items.Count);
+            }
 
-                Debug.WriteLine("GetAllData - Error: you aren't catched - " + response);
-            }
-            catch (Exception e)
-            {
-                Debug.WriteLine("GetAllData - Error: " + e.Message + " hej " + response);
-            }
+            Debug.WriteLine("GetAllData - successful");
 
             return Items;
         }
+
         /// <summary>
         /// Gets all locations created by user in database
         /// </summary>
@@ -153,21 +127,15 @@ namespace MobilSemProjekt.MVVM.Service
             Items = new List<Location>();
             string locService = "LocationService.svc/GetLocationsByUserName/" + name;
             var uri = new Uri(string.Format(RestUrl + locService));
-            var response = new HttpResponseMessage();
-            try {
-                response = await _client.GetAsync(uri);
-                if (response.IsSuccessStatusCode) {
-                    var content = await response.Content.ReadAsStringAsync();
-                    Items = JsonConvert.DeserializeObject<List<Location>>(content);
-                    Debug.WriteLine(Items.Count);
-                }
-
-                Debug.WriteLine("GetLocationsByUserName - Error: you aren't catched - " + response);
-            }
-            catch (Exception e) {
-                Debug.WriteLine("GetLocationsByUserName - Error: " + e.Message);
+            var response = await _client.GetAsync(uri);
+            if (response.IsSuccessStatusCode) {
+                var content = await response.Content.ReadAsStringAsync();
+                Items = JsonConvert.DeserializeObject<List<Location>>(content);
+                Debug.WriteLine(Items.Count);
             }
 
+            Debug.WriteLine("GetLocationsByUserName - successful");
+            
             return Items;
 
         }
@@ -181,24 +149,16 @@ namespace MobilSemProjekt.MVVM.Service
             Items = new List<Location>();
             string locService = "LocationService.svc/GetLocationsByCommentUserName/" + username;
             var uri = new Uri(string.Format(RestUrl + locService));
-            var response = new HttpResponseMessage();
-            try
+            var response = await _client.GetAsync(uri);
+            if (response.IsSuccessStatusCode)
             {
-                response = await _client.GetAsync(uri);
-                if (response.IsSuccessStatusCode)
-                {
-                    var content = await response.Content.ReadAsStringAsync();
-                    Items = JsonConvert.DeserializeObject<List<Location>>(content);
-                    Debug.WriteLine(Items.Count);
-                }
-
-                Debug.WriteLine("GetLocationsByCommentUserName - Error: you aren't catched - " + response);
-            }
-            catch (Exception e)
-            {
-                Debug.WriteLine("GetLocationsByCommentUserName - Error: " + e.Message);
+                var content = await response.Content.ReadAsStringAsync();
+                Items = JsonConvert.DeserializeObject<List<Location>>(content);
+                Debug.WriteLine(Items.Count);
             }
 
+            Debug.WriteLine("GetLocationsByCommentUserName - successful");
+            
             return Items;
         }
         /// <summary>
@@ -223,18 +183,13 @@ namespace MobilSemProjekt.MVVM.Service
                 var httpResponse =
                     await httpClient.PostAsync(RestUrl + "LocationService.svc/UpdateHits",
                         httpContent);
-                try {
-                    // If the response contains content we want to read it!
-                    if (httpResponse.IsSuccessStatusCode) {
-                        //var responseContent = await httpResponse.Content.ReadAsStringAsync();
-                        Debug.WriteLine("UpdateHits - Success!");
-                    }
-                    else {
-                        Debug.WriteLine("UpdateHits - Failure");
-                    }
+                // If the response contains content we want to read it!
+                if (httpResponse.IsSuccessStatusCode) {
+                    //var responseContent = await httpResponse.Content.ReadAsStringAsync();
+                    Debug.WriteLine("UpdateHits - successful");
                 }
-                catch (Exception e) {
-                    Debug.WriteLine("UpdateHits - Error: " + e.Message);
+                else {
+                    Debug.WriteLine("UpdateHits - Failure");
                 }
             }
         }
@@ -256,18 +211,13 @@ namespace MobilSemProjekt.MVVM.Service
                     await httpClient.PostAsync(RestUrl + "LocationService.svc/UpdateLocation",
                         httpContent);
 
-                try {
-                    // If the response contains content we want to read it!
-                    if (httpResponse.IsSuccessStatusCode) {
-                        //var responseContent = await httpResponse.Content.ReadAsStringAsync();
-                        Debug.WriteLine("UpdateLocation - Success!");
-                    }
-                    else {
-                        Debug.WriteLine("UpdateLocation - Failure");
-                    }
+                // If the response contains content we want to read it!
+                if (httpResponse.IsSuccessStatusCode) {
+                    //var responseContent = await httpResponse.Content.ReadAsStringAsync();
+                    Debug.WriteLine("UpdateLocation - successful");
                 }
-                catch (Exception e) {
-                    Debug.WriteLine("UpdateLocation - Error: " + e.Message);
+                else {
+                    Debug.WriteLine("UpdateLocation - Failure");
                 }
             }
         }
@@ -294,28 +244,20 @@ namespace MobilSemProjekt.MVVM.Service
 
             using (var httpClient = new HttpClient())
             {
-
                 // Do the actual request and await the response
                 var httpResponse =
                     await httpClient.PostAsync(RestUrl + "LocationService.svc/UserUpdateLocation",
                         httpContent);
 
-                try
+                // If the response contains content we want to read it!
+                if (httpResponse.IsSuccessStatusCode)
                 {
-                    // If the response contains content we want to read it!
-                    if (httpResponse.IsSuccessStatusCode)
-                    {
-                        //var responseContent = await httpResponse.Content.ReadAsStringAsync();
-                        Debug.WriteLine("UserUpdateLocation - Success!");
-                    }
-                    else
-                    {
-                        Debug.WriteLine("UserUpdateLocation - Failure");
-                    }
+                    //var responseContent = await httpResponse.Content.ReadAsStringAsync();
+                    Debug.WriteLine("UserUpdateLocation - successful");
                 }
-                catch (Exception e)
+                else
                 {
-                    Debug.WriteLine("UserUpdateLocation - Error: " + e.Message);
+                    Debug.WriteLine("UserUpdateLocation - Failure");
                 }
             }
         }
@@ -327,17 +269,10 @@ namespace MobilSemProjekt.MVVM.Service
         {
             string locService = "LocationService.svc/SetTopLocations";
             var uri = new Uri(string.Format(RestUrl + locService));
-            try
+            var response = await _client.GetAsync(uri);
+            if (response.IsSuccessStatusCode)
             {
-                var response = await _client.GetAsync(uri);
-                if (response.IsSuccessStatusCode)
-                {
-                    Debug.WriteLine("SetTopLocations - You aren't catched - " + response);
-                }
-            }
-            catch (Exception e)
-            {
-                Debug.WriteLine("GetLocationsByCommentUserName - Error: " + e.Message);
+                Debug.WriteLine("SetTopLocations - successful");
             }
         }
     }

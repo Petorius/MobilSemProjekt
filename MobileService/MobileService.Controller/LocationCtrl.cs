@@ -167,5 +167,10 @@ namespace MobileService.Controller
                 }
             }
         }
+
+        public void Delete(int locationId)
+        {
+            _dbLocation.Delete(locationId);
+        }
     }
 }

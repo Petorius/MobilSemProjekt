@@ -16,6 +16,9 @@
     <Reference Include="Microsoft.VisualStudio.TestPlatform.TestFramework">
       <HintPath>..\..\packages\MSTest.TestFramework.1.4.0\lib\net45\Microsoft.VisualStudio.TestPlatform.TestFramework.dll</HintPath>
     </Reference>
+    <Reference Include="System.ServiceModel.Primitives">
+      <HintPath>..\..\..\..\..\..\.nuget\packages\system.servicemodel.primitives\4.4.4\ref\netstandard2.0\System.ServiceModel.Primitives.dll</HintPath>
+    </Reference>
   </ItemGroup>
 
 </Project>

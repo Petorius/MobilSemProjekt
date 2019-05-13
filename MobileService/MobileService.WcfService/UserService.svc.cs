@@ -41,5 +41,10 @@ namespace MobileService.WcfService
             _userCtrl = new UserCtrl();
             return _userCtrl.FindByUserName(userName);
         }
+
+        public void Delete(string userName)
+        {
+            _userCtrl.Delete(userName);
+        }
     }
 }

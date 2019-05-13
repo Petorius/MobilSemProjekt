@@ -2,8 +2,10 @@
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
+using System.ServiceModel;
 using System.Text;
 using System.Threading.Tasks;
+using MobilSemProjekt.MVVM.Exception;
 using MobilSemProjekt.MVVM.Model;
 using MobilSemProjekt.MVVM.Service;
 using PCLCrypto;
@@ -39,6 +41,7 @@ namespace MobilSemProjekt.MVVM.ViewModel {
         {
             return Convert.ToBase64String(CreateSalt(64));
         }
+
         /// <summary>
         /// Checks if the user exist in database with password
         /// </summary>
@@ -47,12 +50,21 @@ namespace MobilSemProjekt.MVVM.ViewModel {
         /// <returns>Task<bool/></returns>
         public async Task<bool> VerifyLogin(string username, string password)
         {
-            IUserRestService userRestService = new UserRestService();
-            string salt = await userRestService.FindSaltByUserName(username);
-            byte[] theSalt = Encoding.UTF8.GetBytes(salt);
-            string hashPassword = GenerateHashedPassword(password, theSalt);
-            User userToCompare = new User {UserName = username, HashPassword = hashPassword}; 
-            bool status = await userRestService.CompareHashes(userToCompare);
+            bool status = false;
+            if (username != null && password != null)
+            {
+                IUserRestService userRestService = new UserRestService();
+                string salt = await userRestService.FindSaltByUserName(username);
+                byte[] theSalt = Encoding.UTF8.GetBytes(salt);
+                string hashPassword = GenerateHashedPassword(password, theSalt);
+                User userToCompare = new User { UserName = username, HashPassword = hashPassword };
+                status = await userRestService.CompareHashes(userToCompare);
+            }
+            else
+            {
+                throw new EmptyInputException();
+            }
+            
             return status;
         }
     }

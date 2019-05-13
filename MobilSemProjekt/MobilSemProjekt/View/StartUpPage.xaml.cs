@@ -1,4 +1,6 @@
 ﻿using System;
+using System.ServiceModel;
+using MobilSemProjekt.MVVM.Exception;
 using MobilSemProjekt.MVVM.Model;
 using MobilSemProjekt.MVVM.Service;
 using MobilSemProjekt.MVVM.ViewModel;
@@ -14,9 +16,16 @@ namespace MobilSemProjekt.View {
         public StartUpPage ()
 		{
 			InitializeComponent();
-		    _tabbedMapMainPage = new TabbedMapMainPage();
-            ILocationRestService iRestService = new LocationRestService();
-		    iRestService.SetTopLocations();
+		    try
+		    {
+		        _tabbedMapMainPage = new TabbedMapMainPage();
+		        ILocationRestService iRestService = new LocationRestService();
+		        iRestService.SetTopLocations();
+		    }
+		    catch (FaultException<Exception> exc)
+		    {
+		        DisplayAlert("Fejl", exc.Message, "OK");
+            }
 		}
 
         private async void ContinueWithoutAccountButton_OnClicked(object sender, EventArgs e)
@@ -35,26 +44,45 @@ namespace MobilSemProjekt.View {
 
         private async void SignInButton_OnClicked(object sender, EventArgs e)
         {
-            var uName = UserNameEntry.Text;
-            var pWord = PasswordEntry.Text;
-            PasswordController pCtrl = new PasswordController();
-            bool status = await pCtrl.VerifyLogin(uName, pWord);
-            if (status)
+            try
             {
-                IUserRestService restService = new UserRestService();
-                User user = await restService.FindByUserName(uName);
-
-                if (user != null)
+                var uName = UserNameEntry.Text;
+                var pWord = PasswordEntry.Text;
+                PasswordController pCtrl = new PasswordController();
+                bool status = await pCtrl.VerifyLogin(uName, pWord);
+                if (status)
                 {
-                    _tabbedMapMainPage = new TabbedMapMainPage
+                    IUserRestService restService = new UserRestService();
+                    User user = await restService.FindByUserName(uName);
+
+                    if (user != null)
                     {
-                        User = user
-                    };
-                    _tabbedMapMainPage.StartUpWithUser();
-                    await Navigation.PushAsync(_tabbedMapMainPage);
-                    Navigation.RemovePage(this);
+                        _tabbedMapMainPage = new TabbedMapMainPage
+                        {
+                            User = user
+                        };
+                        _tabbedMapMainPage.StartUpWithUser();
+                        await Navigation.PushAsync(_tabbedMapMainPage);
+                        Navigation.RemovePage(this);
+                    }
                 }
-            }           
+            }
+            catch (EmptyInputException exc)
+            {
+                await DisplayAlert("Fejl", exc.ReturnMessage, "OK");
+            }
+            catch (UserOrPasswordException exc)
+            {
+                await DisplayAlert("Fejl", exc.ReturnMessage, "OK");
+            }
+            catch (FaultException<UserNotFoundException> exc)
+            {
+                await DisplayAlert("Fejl", exc.Message, "OK");
+            }
+            catch (FaultException<Exception> exc)
+            {
+                await DisplayAlert("Fejl", exc.Message, "OK");
+            }
         }
     }
 }

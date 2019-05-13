@@ -8,6 +8,8 @@ using Xamarin.Essentials;
 using System.Linq;
 using Acr.UserDialogs;
 using System.Collections.ObjectModel;
+using System.ServiceModel;
+using MobilSemProjekt.MVVM.Exception;
 using MobilSemProjekt.MVVM.Model;
 using MobilSemProjekt.MVVM.Service;
 using Location = MobilSemProjekt.MVVM.Model.Location;
@@ -20,8 +22,8 @@ namespace MobilSemProjekt.View
     {
         public User User { private get; set; }
         private string StartUrl { get; set; }
-        private string TopLocation;
-        private ObservableCollection<Location> Locations;
+        private readonly string _topLocation;
+
         public MainPage()
         {
             InitializeComponent();
@@ -36,7 +38,7 @@ namespace MobilSemProjekt.View
                 }
             };
 
-            TopLocation = "**Top Location** ";
+            _topLocation = "**Top Location** ";
             StartUrl = "http://dmax0917.hegr.dk/";
             BtnFindMyLocation.Source = ImageSource.FromUri(new Uri(StartUrl + "navArrow.png"));
             BtnFindMyLocation.GestureRecognizers.Add(ReturnCall());
@@ -66,86 +68,104 @@ namespace MobilSemProjekt.View
 
         private async void OnTouchAsync(PinClickedEventArgs e)
         {
-            LocationRestService restservice = new LocationRestService();
-            string label = e.Pin.Label;
-
-            int pos = label.IndexOf(TopLocation, StringComparison.Ordinal);
-            if (label.Contains(TopLocation) && pos >= 0)
+            try
             {
-                label = label.Remove(0, TopLocation.Length);
-            }
+                LocationRestService restservice = new LocationRestService();
+                string label = e.Pin.Label;
 
-            Location location = await restservice.ReadLocationByNameAsync(label);
-            if (location != null)
-            {
-                restservice.UpdateHits(location);
-                var page = new DescPage
+                int pos = label.IndexOf(_topLocation, StringComparison.Ordinal);
+                if (label.Contains(_topLocation) && pos >= 0)
                 {
-                    Location = location,
-                    User = User
-                };
+                    label = label.Remove(0, _topLocation.Length);
+                }
 
-                await Navigation.PushAsync(page);
+                Location location = await restservice.ReadLocationByNameAsync(label);
+                if (location != null)
+                {
+                    restservice.UpdateHits(location);
+                    var page = new DescPage
+                    {
+                        Location = location,
+                        User = User
+                    };
+
+                    await Navigation.PushAsync(page);
+                }
+                else
+                {
+                    await UpdateLocationsOnMap();
+                }
             }
-            else
+            catch (FaultException<Exception> exc)
             {
-                await UpdateLocationsOnMap();
+                await DisplayAlert("Fejl", exc.Message, "OK");
             }
         }
 
         private async Task UpdateLocationsOnMap()
         {
-            string labelText;
-            ILocationRestService restService = new LocationRestService();
-            List<Location> list = await restService.GetAllDataAsync();
-            foreach (var location in list)
+            try
             {
-                if (location.IsTopLocation)
+                string labelText;
+                ILocationRestService restService = new LocationRestService();
+                List<Location> list = await restService.GetAllDataAsync();
+                foreach (var location in list)
                 {
-                    labelText = TopLocation + location.LocationName;
+                    if (location.IsTopLocation)
+                    {
+                        labelText = _topLocation + location.LocationName;
+                    }
+                    else
+                    {
+                        labelText = location.LocationName;
+                    }
+
+                    GoogleMap.Pins.Add(new Pin
+                    {
+                        Label = labelText,
+                        Position = new Position(location.Latitude, location.Longitude),
+                        Address = location.LocationDescription
+                        //Burde opdateres til at tage en location address
+                    });
                 }
-                else
-                {
-                    labelText = location.LocationName;
-                }
-                
-                GoogleMap.Pins.Add(new Pin
-                {
-                    Label = labelText,
-                    Position = new Position(location.Latitude, location.Longitude),
-                    Address = location.LocationDescription
-                    //Burde opdateres til at tage en location address
-                });
             }
+            catch (FaultException<NoLocationsInDatabaseException> e)
+            {
+                await DisplayAlert("Fejl", e.Message, "OK");
+            }
+            catch (FaultException<Exception> e)
+            {
+                await DisplayAlert("Fejl", e.Message, "OK");
+            }
+
         }
         
         private async void PlaceMarker(MapClickedEventArgs e)
         {
-            var answer = await DisplayAlert("Marker", "Would you like to place a marker", "Yes", "No");
-            string geocodeAddress = "";
-            string nameMarker = "Unnamed location";
-            string urlMarker = "http://dmax0917.hegr.dk/img.png";
-
-            if (answer)
+            try
             {
-                try
+                var answer = await DisplayAlert("Marker", "Would you like to place a marker", "Yes", "No");
+                string geocodeAddress = "";
+                string nameMarker = "Unnamed location";
+                string urlMarker = "http://dmax0917.hegr.dk/img.png";
+
+                if (answer)
                 {
 
                     var lat = e.Point.Latitude;
                     var lon = e.Point.Longitude;
-
                     var placemarks = await Geocoding.GetPlacemarksAsync(lat, lon);
-
                     var placemark = placemarks?.FirstOrDefault();
                     if (placemark != null)
                     {
                         geocodeAddress =
-                           $"{placemark.CountryName}, " +
-                           $"{placemark.Locality}, " +
-                           $"{placemark.PostalCode}, " +
-                           $"{placemark.Thoroughfare} ";
+                            $"{placemark.Thoroughfare}, " +
+                            $"{placemark.PostalCode} " +
+                            $"{placemark.Locality}, " +
+                            $"{placemark.CountryName}";
 
-                        var nameAnswer = await DisplayAlert("Marker", "Would you like to give the marker a name?", "Yes", "No");
+                        var nameAnswer = await DisplayAlert("Marker", "Would you like to give the marker a name?",
+                            "Yes", "No");
                         if (nameAnswer)
                         {
                             try
@@ -161,46 +181,36 @@ namespace MobilSemProjekt.View
                                     nameMarker = pResult.Text;
                                 }
                             }
-                            catch (Exception exception)
+                            catch (FaultException<Exception> exc)
                             {
-                                Console.WriteLine(exception.StackTrace);
+                                await DisplayAlert("Fejl", exc.Message, "OK");
                             }
                         }
 
-                        var imageAnswer = await DisplayAlert("Marker", "Would you like to give the marker an image?", "Yes", "No");
+                        var imageAnswer = await DisplayAlert("Marker", "Would you like to give the marker an image?",
+                            "Yes", "No");
                         if (imageAnswer)
                         {
-                            try
+                            PromptResult pResult = await UserDialogs.Instance.PromptAsync(new PromptConfig
                             {
-                                PromptResult pResult = await UserDialogs.Instance.PromptAsync(new PromptConfig
-                                {
-                                    InputType = InputType.Name,
-                                    OkText = "Add",
-                                    Title = "Enter imageurl",
-                                });
-                                if (pResult.Ok && !string.IsNullOrWhiteSpace(pResult.Text))
-                                {
-                                    urlMarker = pResult.Text;
-                                }
-                            }
-                            catch (Exception exception)
+                                InputType = InputType.Name,
+                                OkText = "Add",
+                                Title = "Enter imageurl",
+                            });
+                            if (pResult.Ok && !string.IsNullOrWhiteSpace(pResult.Text))
                             {
-                                Console.WriteLine(exception.StackTrace);
+                                urlMarker = pResult.Text;
                             }
                         }
                     }
-                }
-                catch (Exception ex)
-                {
-                    Console.WriteLine(ex.StackTrace);
-                    // Handle exception that may have occurred in geocoding
+
+                    GoogleMap.Pins.Add(new Pin
+                    {
+                        Label = geocodeAddress,
+                        Position = new Position(e.Point.Latitude, e.Point.Longitude)
+                    });
                 }
 
-                GoogleMap.Pins.Add(new Pin
-                {
-                    Label = geocodeAddress,
-                    Position = new Position(e.Point.Latitude, e.Point.Longitude)
-                });
                 Location location = new Location()
                 {
                     LocationName = nameMarker,
@@ -217,38 +227,42 @@ namespace MobilSemProjekt.View
                 };
 
                 location.Pictures.Add(picture);
-                
+
                 ILocationRestService restService = new LocationRestService();
                 await restService.Create(location);
                 //To be added: InfoWindow that contain most of the description and are tied to markers..
+            }
+            catch (FaultException<Exception> exc)
+            {
+                await DisplayAlert("Fejl", exc.Message, "OK");
             }
         }
 
         private async void OurEntry_OnCompleted(object sender, EventArgs e)
         {
-            List<Location> combinedList = new List<Location>();
-            LocationRestService restService = new LocationRestService();
-            var locationListVar = await restService.ReadLocationByTagNameAsync(OurEntry.Text);
-            var locationVar = await restService.ReadLocationByNameAsync(OurEntry.Text);
-            var locationListUserVar = await restService.GetLocationsByUserNameAsync(OurEntry.Text);
-            if (locationListVar != null)
+            try
             {
-                combinedList.AddRange(locationListVar);
-            }
+                List<Location> combinedList = new List<Location>();
+                LocationRestService restService = new LocationRestService();
+                var locationListVar = await restService.ReadLocationByTagNameAsync(OurEntry.Text);
+                var locationVar = await restService.ReadLocationByNameAsync(OurEntry.Text);
+                var locationListUserVar = await restService.GetLocationsByUserNameAsync(OurEntry.Text);
+                if (locationListVar != null)
+                {
+                    combinedList.AddRange(locationListVar);
+                }
 
-            if (locationVar != null)
-            {
-                combinedList.Add(locationVar);
-            }
+                if (locationVar != null)
+                {
+                    combinedList.Add(locationVar);
+                }
 
-            if (locationListUserVar != null)
-            {
-                combinedList.AddRange(locationListUserVar);
-            }
+                if (locationListUserVar != null)
+                {
+                    combinedList.AddRange(locationListUserVar);
+                }
 
-            if (combinedList.Count == 0)
-            {
-                try
+                if (combinedList.Count == 0)
                 {
                     var address = OurEntry.Text;
                     var geocodeLocationList = await Geocoding.GetLocationsAsync(address);
@@ -306,21 +320,18 @@ namespace MobilSemProjekt.View
                     }
                 }
 
-                catch (Exception geocodeException)
+                if (combinedList.Count > 0)
                 {
-                    Console.WriteLine(geocodeException.StackTrace);
+                    SearchListView searchListView = new SearchListView
+                    {
+                        Locations = new ObservableCollection<Location>(combinedList)
+                    };
+                    await Navigation.PushAsync(searchListView);
                 }
             }
-
-            if (combinedList.Count > 0)
+            catch (FaultException<Exception> exc)
             {
-                SearchListView searchListView = new SearchListView
-                {
-                    Locations = new ObservableCollection<Location>(combinedList)
-                };
-                await Navigation.PushAsync(searchListView);
-                //Location location = combinedList.First();
-                //Debug.Write("GPS punkter " + location.Latitude + " " + location.Longitude);
+                await DisplayAlert("Fejl", exc.Message, "OK");
             }
         }
 

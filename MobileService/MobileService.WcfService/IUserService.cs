@@ -21,7 +21,8 @@ namespace MobileService.WcfService
         [WebGet(UriTemplate = "FindByUserName/{userName}",
             RequestFormat = WebMessageFormat.Json,
             ResponseFormat = WebMessageFormat.Json)]
-        [FaultContract(typeof(UserNotDeletedException))]
+        [FaultContract(typeof(UserOrPasswordException))]
+        [FaultContract(typeof(UserNotFoundException))]
         User FindByUserName(string userName);
 
         [OperationContract]
@@ -29,7 +30,7 @@ namespace MobileService.WcfService
             UriTemplate = "CompareHashes",
             RequestFormat = WebMessageFormat.Json,
             ResponseFormat = WebMessageFormat.Json)]
-        [FaultContract(typeof(UserNotDeletedException))]
+        [FaultContract(typeof(UserNotFoundException))]
         [FaultContract(typeof(UserOrPasswordException))]
         bool CompareHashes(User user);
         
@@ -37,7 +38,7 @@ namespace MobileService.WcfService
         [WebGet(UriTemplate = "FindSaltByUserName/{userName}",
             RequestFormat = WebMessageFormat.Json,
             ResponseFormat = WebMessageFormat.Json)]
-        [FaultContract(typeof(UserNotDeletedException))]
+        [FaultContract(typeof(UserNotFoundException))]
         string FindSaltByUserName(string userName);
 
         [OperationContract]
@@ -46,5 +47,13 @@ namespace MobileService.WcfService
             RequestFormat = WebMessageFormat.Json,
             ResponseFormat = WebMessageFormat.Json)]
         bool UpdateUser(List<User> users);
+
+        [OperationContract]
+        [WebGet(UriTemplate = "Delete/{userName}",
+            RequestFormat = WebMessageFormat.Json,
+            ResponseFormat = WebMessageFormat.Json)]
+        [FaultContract(typeof(UserNotFoundException))]
+        [FaultContract(typeof(UserNotDeletedException))]
+        void Delete(string userName);
     }
 }

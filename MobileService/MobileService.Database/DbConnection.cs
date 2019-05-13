@@ -1,11 +1,6 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Data.SqlClient;
-using System.Diagnostics;
-using System.Linq;
 using System.ServiceModel;
-using System.Text;
-using System.Threading.Tasks;
 using MobileService.Exception;
 
 namespace MobileService.Database
@@ -34,15 +29,15 @@ namespace MobileService.Database
                         int idStatus = Convert.ToInt32(cmd.ExecuteScalar());
                         if (idStatus != 1)
                         {
-                            throw new FaultException<Exception.Exception>(new Exception.Exception());
+                            throw new FaultException<DbConnectionException>(new DbConnectionException());
                         }
                     }
                    _connection.Close();
                 }
             }
-            catch (SqlException e)
+            catch (SqlException)
             {
-                throw new FaultException<Exception.Exception>(new Exception.Exception());
+                throw new FaultException<DbConnectionException>(new DbConnectionException());
             }
         }
     }
