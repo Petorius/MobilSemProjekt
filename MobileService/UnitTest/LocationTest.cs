@@ -42,7 +42,8 @@ namespace MobileService.UnitTest
             try
             {
                 DbLocation dbLocation = new DbLocation();
-                Location location = dbLocation.FindById(1);
+                Location location = dbLocation.FindById(10);
+                Console.WriteLine(location.User.UserId + " is " + 2);
                 Assert.IsNotNull(location);
             }
             catch (FaultException<System.Exception>)

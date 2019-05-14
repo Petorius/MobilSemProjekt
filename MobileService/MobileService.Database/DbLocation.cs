@@ -103,7 +103,7 @@ namespace MobileService.Database
                             Longitude = reader.GetDouble(reader.GetOrdinal("Longitude")),
                             Pictures = _dbPicture.FindByLocationId(locationId),
                             Ratings = _dbRating.FindByLocationId(locationId),
-                            User = _dbUser.FindById(reader.GetOrdinal("UserId")),
+                            User = _dbUser.FindById(reader.GetInt32(reader.GetOrdinal("UserId"))),
                             RowVersion = (byte[])reader.GetValue(reader.GetOrdinal("rowVersion"))
                         };
                     }
@@ -145,7 +145,7 @@ namespace MobileService.Database
                             Longitude = reader.GetDouble(reader.GetOrdinal("Longitude")),
                             Pictures = _dbPicture.FindByLocationId(locationId),
                             Ratings = _dbRating.FindByLocationId(locationId),
-                            User = _dbUser.FindById(reader.GetOrdinal("UserId")),
+                            User = _dbUser.FindById(reader.GetInt32(reader.GetOrdinal("UserId"))),
                             RowVersion = (byte[]) reader.GetValue(reader.GetOrdinal("rowVersion"))
                         };
                     }
