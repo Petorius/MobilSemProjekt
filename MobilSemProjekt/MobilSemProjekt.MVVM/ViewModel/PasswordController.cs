@@ -51,7 +51,8 @@ namespace MobilSemProjekt.MVVM.ViewModel {
         public async Task<bool> VerifyLogin(string username, string password)
         {
             bool status = false;
-            if (username != null && password != null)
+            if (username != null && password != null &&
+                username.Length != 0 && password.Length != 0)
             {
                 IUserRestService userRestService = new UserRestService();
                 string salt = await userRestService.FindSaltByUserName(username);

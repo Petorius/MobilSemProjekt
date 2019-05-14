@@ -83,6 +83,10 @@ namespace MobilSemProjekt.View {
             {
                 await DisplayAlert("Fejl", exc.Message, "OK");
             }
+            catch (Exception exc)
+            {
+                await DisplayAlert("Fejl", exc.Message, "OK");
+            }
         }
     }
 }
