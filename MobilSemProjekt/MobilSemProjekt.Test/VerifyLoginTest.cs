@@ -1,9 +1,11 @@
 ﻿using System;
+using System.ServiceModel;
 using System.Threading.Tasks;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
+using MobilSemProjekt.MVVM.Exception;
 using MobilSemProjekt.MVVM.ViewModel;
 
-namespace Test
+namespace MobilSemProjekt.Test
 {
     [TestClass]
     public class VerifyLoginTest
@@ -16,9 +18,29 @@ namespace Test
                 PasswordController passwordController = new PasswordController();
                 Assert.IsTrue(await passwordController.VerifyLogin("aksel", "1234"));
             }
-            catch (Exception e)
+            catch (EmptyInputException)
             {
-                Console.WriteLine(e);
+                Assert.Fail();
+            }
+            catch (UserOrPasswordException)
+            {
+                Assert.Fail();
+            }
+            catch (FaultException<UserOrPasswordException>)
+            {
+                Assert.Fail();
+            }
+            catch (FaultException<UserNotFoundException>)
+            {
+                Assert.Fail();
+            }
+            catch (FaultException<Exception>)
+            {
+                Assert.Fail();
+            }
+            catch (Exception)
+            {
+                Assert.Fail();
             }
         }
         [TestMethod]
@@ -29,9 +51,29 @@ namespace Test
                 PasswordController passwordController = new PasswordController();
                 Assert.IsFalse(await passwordController.VerifyLogin("wrong", "1234"));
             }
-            catch (Exception e)
+            catch (EmptyInputException)
             {
-                Console.WriteLine(e);
+                Assert.Fail();
+            }
+            catch (UserOrPasswordException)
+            {
+                Assert.Fail();
+            }
+            catch (FaultException<UserOrPasswordException>)
+            {
+                Assert.Fail();
+            }
+            catch (FaultException<UserNotFoundException>)
+            {
+                Assert.Fail();
+            }
+            catch (FaultException<Exception>)
+            {
+                Assert.Fail();
+            }
+            catch (Exception)
+            {
+                Assert.Fail();
             }
         }
         [TestMethod]
@@ -42,9 +84,29 @@ namespace Test
                 PasswordController passwordController = new PasswordController();
                 Assert.IsFalse(await passwordController.VerifyLogin("wrong", "Wrong"));
             }
-            catch (Exception e)
+            catch (EmptyInputException)
             {
-                Console.WriteLine(e);
+                Assert.Fail();
+            }
+            catch (UserOrPasswordException)
+            {
+                Assert.Fail();
+            }
+            catch (FaultException<UserOrPasswordException>)
+            {
+                Assert.Fail();
+            }
+            catch (FaultException<UserNotFoundException>)
+            {
+                Assert.Fail();
+            }
+            catch (FaultException<Exception>)
+            {
+                Assert.Fail();
+            }
+            catch (Exception)
+            {
+                Assert.Fail();
             }
         }
         [TestMethod]
@@ -55,9 +117,29 @@ namespace Test
                 PasswordController passwordController = new PasswordController();
                 Assert.IsFalse(await passwordController.VerifyLogin("aksel", "Wrong"));
             }
-            catch (Exception e)
+            catch (EmptyInputException)
             {
-                Console.WriteLine(e);
+                Assert.Fail();
+            }
+            catch (UserOrPasswordException)
+            {
+                Assert.Fail();
+            }
+            catch (FaultException<UserOrPasswordException>)
+            {
+                Assert.Fail();
+            }
+            catch (FaultException<UserNotFoundException>)
+            {
+                Assert.Fail();
+            }
+            catch (FaultException<Exception>)
+            {
+                Assert.Fail();
+            }
+            catch (Exception)
+            {
+                Assert.Fail();
             }
         }
     }

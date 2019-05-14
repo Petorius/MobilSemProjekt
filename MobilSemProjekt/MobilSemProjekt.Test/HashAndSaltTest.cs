@@ -3,9 +3,8 @@ using System.Diagnostics;
 using System.Text;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using MobilSemProjekt.MVVM.ViewModel;
-//using PCLCrypto;
 
-namespace Test
+namespace MobilSemProjekt.Test
 {
     [TestClass]
     public class LoginTest

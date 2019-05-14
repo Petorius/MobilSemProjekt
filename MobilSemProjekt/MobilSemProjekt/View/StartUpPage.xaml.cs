@@ -75,6 +75,10 @@ namespace MobilSemProjekt.View {
             {
                 await DisplayAlert("Fejl", exc.ReturnMessage, "OK");
             }
+            catch (FaultException<UserOrPasswordException> exc)
+            {
+                await DisplayAlert("Fejl", exc.Message, "OK");
+            }
             catch (FaultException<UserNotFoundException> exc)
             {
                 await DisplayAlert("Fejl", exc.Message, "OK");

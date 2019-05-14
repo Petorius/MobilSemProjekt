@@ -50,7 +50,7 @@ namespace MobilSemProjekt.MVVM.ViewModel {
         /// <returns>Task<bool/></returns>
         public async Task<bool> VerifyLogin(string username, string password)
         {
-            bool status = false;
+            bool status;
             if (username != null && password != null &&
                 username.Length != 0 && password.Length != 0)
             {

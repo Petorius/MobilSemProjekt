@@ -1,14 +1,14 @@
 ﻿using System;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System.Collections.Generic;
-using System.ServiceModel;
 using System.Threading.Tasks;
 using MobilSemProjekt.MVVM.Exception;
 //using Plugin.Geolocator;
 using MobilSemProjekt.MVVM.Model;
 using MobilSemProjekt.MVVM.Service;
+using System.ServiceModel;
 
-namespace Test
+namespace MobilSemProjekt.Test
 {
     /// <summary>
     /// Summary description for LocationTest
