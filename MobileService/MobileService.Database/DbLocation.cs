@@ -282,9 +282,12 @@ namespace MobileService.Database
                             Longitude = reader.GetDouble(reader.GetOrdinal("Longitude")),
                             Pictures = _dbPicture.FindByLocationId(locationId),
                             Ratings = _dbRating.FindByLocationId(locationId),
-                            User = _dbUser.FindById(userId),
                             RowVersion = (byte[])reader.GetValue(reader.GetOrdinal("rowVersion"))
                         };
+                        if (userId != 0)
+                        {
+                            location.User = _dbUser.FindById(userId);
+                        }
 
                         locations.Add(location);
                     }
