@@ -120,7 +120,7 @@ namespace MobileService.UnitTest
             }
             catch (FaultException<UserOrPasswordException>)
             {
-                Assert.Fail();
+                Assert.IsTrue(true);
             }
             catch (FaultException<DbConnectionException>)
             {

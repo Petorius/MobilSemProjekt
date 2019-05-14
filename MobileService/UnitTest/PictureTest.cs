@@ -50,21 +50,22 @@ namespace MobileService.UnitTest
             }
         }
 
-        [TestMethod]
-        public void UpdatePictureTest()
-        {
-            DbPicture dbPicture = new DbPicture();
-            Picture picture = null;
+        //Not Implemented
+        //[TestMethod]
+        //public void UpdatePictureTest()
+        //{
+        //    DbPicture dbPicture = new DbPicture();
+        //    Picture picture = null;
 
-            try
-            {
-                picture = dbPicture.FindById(1);
-                dbPicture.Update(picture, 1, picture.PictureId);
-            }
-            catch (FaultException<DbConnectionException>)
-            {
-                Assert.Fail();
-            }
-        }
+        //    try
+        //    {
+        //        picture = dbPicture.FindById(1);
+        //        dbPicture.Update(picture, 1, picture.PictureId);
+        //    }
+        //    catch (FaultException<DbConnectionException>)
+        //    {
+        //        Assert.Fail();
+        //    }
+        //}
     }
 }

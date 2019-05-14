@@ -19,9 +19,14 @@ namespace MobileService.UnitTest
             {
                 Rating rating = new Rating
                 {
-                    
+                    Rate = 4,
+                    Comment = "Hej",
+                    LocationId = 5,
+                    User = new User{
+                        UserId = 2
+                    }
                 };
-
+                
                 int ratingId = dbRating.Create(rating);
                 Assert.IsTrue(ratingId > 0);
             }

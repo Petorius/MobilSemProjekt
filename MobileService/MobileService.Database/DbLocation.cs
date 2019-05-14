@@ -80,7 +80,7 @@ namespace MobileService.Database
         public Location FindById(int locationId)
         {
             Location location = null;
-            
+
             using (_connection = new SqlConnection(_connectionString))
             {
                 _connection.Open();
