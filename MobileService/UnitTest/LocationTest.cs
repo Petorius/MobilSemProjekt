@@ -52,6 +52,25 @@ namespace MobileService.UnitTest
         }
 
         [TestMethod]
+        public void ReadAllLocationsTest()
+        {
+            try
+            {
+                DbLocation dbLocation = new DbLocation();
+                List<Location> locations = dbLocation.FindAll();
+                Assert.IsTrue(locations.Count > 0);
+            }
+            catch (FaultException<NoLocationsInDatabaseException>)
+            {
+                Assert.Fail();
+            }
+            catch (FaultException<System.Exception>)
+            {
+                Assert.Fail();
+            }
+        }
+
+        [TestMethod]
         public void UpdateLocationTest()
         {
             try

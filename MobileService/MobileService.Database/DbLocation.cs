@@ -269,7 +269,7 @@ namespace MobileService.Database
                     while (reader.Read())
                     {
                         int locationId = reader.GetInt32(reader.GetOrdinal("LocationId"));
-                        int userId = reader.GetInt32(reader.GetOrdinal("LocationId"));
+                        int userId = reader.GetInt32(reader.GetOrdinal("UserId"));
 
                         Location location = new Location
                         {
