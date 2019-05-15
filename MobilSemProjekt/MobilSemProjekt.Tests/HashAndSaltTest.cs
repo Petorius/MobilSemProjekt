@@ -4,7 +4,7 @@ using System.Text;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using MobilSemProjekt.MVVM.ViewModel;
 
-namespace MobilSemProjekt.Test
+namespace MobilSemProjekt.Tests
 {
     [TestClass]
     public class LoginTest
@@ -29,6 +29,7 @@ namespace MobilSemProjekt.Test
             Debug.WriteLine("saltyfish: " + salty1 + ", " + salty2);
             Assert.IsFalse(salty1.Equals(salty2));
         }
+        
         [TestMethod]
         public void HashingExpectTrue()
         {

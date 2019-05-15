@@ -8,7 +8,7 @@ using MobilSemProjekt.MVVM.Model;
 using MobilSemProjekt.MVVM.Service;
 using System.ServiceModel;
 
-namespace MobilSemProjekt.Test
+namespace MobilSemProjekt.Tests
 {
     /// <summary>
     /// Summary description for LocationTest
@@ -36,10 +36,12 @@ namespace MobilSemProjekt.Test
             }
             catch (FaultException<NoLocationsInDatabaseException> e)
             {
-                Assert.Fail(e.Message);
+                Console.WriteLine(e.Message);
+                Assert.Fail();
             }
-            catch (FaultException<Exception>)
+            catch (FaultException<Exception> e)
             {
+                Console.WriteLine(e.Message);
                 Assert.Fail();
             }
         }
