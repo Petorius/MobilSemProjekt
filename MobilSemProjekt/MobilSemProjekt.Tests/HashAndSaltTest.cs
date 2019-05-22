@@ -12,22 +12,21 @@ namespace MobilSemProjekt.Tests
         [TestMethod]
         public void SaltConsistencyTest()
         {
-            string salty1 = "";
-            string salty2 = "";
+            string salt1 = "";
+            string salt2 = "";
 
             try
             {
                 PasswordController passwordController = new PasswordController();
-                salty1 = passwordController.GenerateSalt();
-                salty2 = passwordController.GenerateSalt();
+                salt1 = passwordController.GenerateSalt();
+                salt2 = passwordController.GenerateSalt();
             }
             catch (Exception e)
             {
                 Console.WriteLine(e);
             }
 
-            Debug.WriteLine("saltyfish: " + salty1 + ", " + salty2);
-            Assert.IsFalse(salty1.Equals(salty2));
+            Assert.IsFalse(salt1.Equals(salt2));
         }
         
         [TestMethod]
