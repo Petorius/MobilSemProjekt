@@ -2,7 +2,6 @@
 using System;
 using System.ServiceModel;
 using System.Threading.Tasks;
-using Android.Content;
 using MobilSemProjekt.MVVM.Service;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
