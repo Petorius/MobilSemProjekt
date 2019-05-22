@@ -31,7 +31,7 @@ namespace MobileService.Database
         /// <returns>int</returns>
         public int Create(Location location)
         {
-            int locationId;
+            int locationId = 0;
             using (_connection = new SqlConnection(_connectionString))
             {
                 _connection.Open();
@@ -58,6 +58,7 @@ namespace MobileService.Database
                     }
                     
                     locationId = Convert.ToInt32(cmd.ExecuteScalar());
+                    Console.WriteLine("some text: " + locationId);
                     
                     if (location.Pictures != null)
                     {
